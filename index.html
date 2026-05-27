@@ -37,7 +37,44 @@
       overflow-x: hidden;
     }
 
-    /* ===== HERO SECTION ===== */
+    /* ===== LANGUAGE SWITCHER ===== */
+    #lang-switcher {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 9999;
+      display: flex;
+      direction: ltr;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 9999px;
+      padding: 4px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+      gap: 2px;
+    }
+    .lang-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 7px 14px;
+      border-radius: 9999px;
+      font-family: 'Heebo', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+      line-height: 1;
+    }
+    .lang-btn.active {
+      background: var(--life-blue);
+      color: white;
+    }
+    .lang-btn:hover:not(.active) {
+      background: var(--bg-tertiary);
+    }
+
+    /* ===== HERO ===== */
     .hero {
       position: relative;
       min-height: 100vh;
@@ -47,59 +84,25 @@
       justify-content: center;
       overflow: hidden;
     }
-
     .hero::before {
       content: '';
       position: absolute;
-      top: -120px;
-      left: -80px;
-      width: 400px;
-      height: 400px;
+      top: -120px; left: -80px;
+      width: 400px; height: 400px;
       border-radius: 50%;
       background: rgba(255,255,255,0.08);
     }
-
     .hero::after {
       content: '';
       position: absolute;
-      bottom: -60px;
-      right: -40px;
-      width: 300px;
-      height: 300px;
+      bottom: -60px; right: -40px;
+      width: 300px; height: 300px;
       border-radius: 50%;
       background: rgba(196,180,154,0.12);
     }
-
-    .hero-deco-1 {
-      position: absolute;
-      top: 15%;
-      right: 8%;
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.06);
-      animation: float 8s ease-in-out infinite;
-    }
-    .hero-deco-2 {
-      position: absolute;
-      bottom: 20%;
-      left: 5%;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background: rgba(196,180,154,0.1);
-      animation: float 6s ease-in-out infinite reverse;
-    }
-    .hero-deco-3 {
-      position: absolute;
-      top: 60%;
-      right: 15%;
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.05);
-      animation: float 10s ease-in-out infinite 2s;
-    }
+    .hero-deco-1 { position: absolute; top: 15%; right: 8%; width: 180px; height: 180px; border-radius: 50%; background: rgba(255,255,255,0.06); animation: float 8s ease-in-out infinite; }
+    .hero-deco-2 { position: absolute; bottom: 20%; left: 5%; width: 120px; height: 120px; border-radius: 50%; background: rgba(196,180,154,0.1); animation: float 6s ease-in-out infinite reverse; }
+    .hero-deco-3 { position: absolute; top: 60%; right: 15%; width: 80px; height: 80px; border-radius: 50%; background: rgba(255,255,255,0.05); animation: float 10s ease-in-out infinite 2s; }
 
     @keyframes float {
       0%, 100% { transform: translateY(0) scale(1); }
@@ -107,973 +110,291 @@
     }
 
     .hero-content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      color: white;
-      padding: 40px 20px;
-      max-width: 800px;
+      position: relative; z-index: 2;
+      text-align: center; color: white;
+      padding: 40px 20px; max-width: 800px;
     }
-
-    .hero-logo {
-      width: 100px;
-      height: 100px;
-      margin: 0 auto 24px;
-      border-radius: 24px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-    }
-
-    .hero-title {
-      font-size: 56px;
-      font-weight: 900;
-      margin-bottom: 8px;
-      letter-spacing: -1px;
-      text-shadow: 0 2px 20px rgba(0,0,0,0.15);
-    }
-
-    .hero-subtitle {
-      font-size: 28px;
-      font-weight: 300;
-      opacity: 0.95;
-      margin-bottom: 16px;
-    }
-
-    .hero-tagline {
-      font-size: 18px;
-      font-weight: 400;
-      opacity: 0.85;
-      max-width: 550px;
-      margin: 0 auto 40px;
-      line-height: 1.8;
-    }
-
+    .hero-logo { width: 100px; height: 100px; margin: 0 auto 24px; border-radius: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+    .hero-title { font-size: 56px; font-weight: 900; margin-bottom: 8px; letter-spacing: -1px; text-shadow: 0 2px 20px rgba(0,0,0,0.15); }
+    .hero-subtitle { font-size: 28px; font-weight: 300; opacity: 0.95; margin-bottom: 16px; }
+    .hero-tagline { font-size: 18px; font-weight: 400; opacity: 0.85; max-width: 550px; margin: 0 auto 40px; line-height: 1.8; }
     .hero-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: white;
-      color: var(--life-blue);
-      font-family: 'Heebo', sans-serif;
-      font-size: 18px;
-      font-weight: 700;
-      padding: 16px 40px;
-      border-radius: 9999px;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
-      transition: transform 0.2s, box-shadow 0.2s;
+      display: inline-flex; align-items: center; gap: 10px;
+      background: white; color: var(--life-blue);
+      font-family: 'Heebo', sans-serif; font-size: 18px; font-weight: 700;
+      padding: 16px 40px; border-radius: 9999px; border: none; cursor: pointer;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15); transition: transform 0.2s, box-shadow 0.2s;
     }
-    .hero-cta:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 32px rgba(0,0,0,0.2);
-    }
-
-    .hero-wave {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 80px;
-    }
-
-    .hero-languages {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 32px;
-    }
+    .hero-cta:hover { transform: scale(1.05); box-shadow: 0 6px 32px rgba(0,0,0,0.2); }
+    .hero-wave { position: absolute; bottom: 0; left: 0; width: 100%; height: 80px; }
+    .hero-languages { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 32px; }
     .lang-pill {
-      background: rgba(255,255,255,0.18);
-      backdrop-filter: blur(8px);
-      padding: 8px 20px;
-      border-radius: 9999px;
-      font-size: 14px;
-      font-weight: 500;
-      border: 1px solid rgba(255,255,255,0.25);
-      color: white;
+      background: rgba(255,255,255,0.18); backdrop-filter: blur(8px);
+      padding: 8px 20px; border-radius: 9999px; font-size: 14px; font-weight: 500;
+      border: 1px solid rgba(255,255,255,0.25); color: white;
     }
 
-    /* ===== TOWER SECTION ===== */
+    /* ===== BABEL SECTION ===== */
     .babel-section {
-      padding: 100px 20px;
-      background: var(--bg-primary);
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+      padding: 100px 20px; background: var(--bg-primary);
+      text-align: center; position: relative; overflow: hidden;
     }
-
     .babel-section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 1px;
-      height: 80px;
-      background: linear-gradient(to bottom, var(--life-blue), transparent);
+      content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 1px; height: 80px; background: linear-gradient(to bottom, var(--life-blue), transparent);
     }
-
     .section-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(74,159,217,0.1);
-      color: var(--life-blue);
-      padding: 8px 20px;
-      border-radius: 9999px;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 20px;
-      border: 1px solid rgba(74,159,217,0.2);
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(74,159,217,0.1); color: var(--life-blue);
+      padding: 8px 20px; border-radius: 9999px; font-size: 14px; font-weight: 600;
+      margin-bottom: 20px; border: 1px solid rgba(74,159,217,0.2);
     }
-
-    .section-title {
-      font-size: 42px;
-      font-weight: 800;
-      margin-bottom: 16px;
-      color: var(--text-primary);
-    }
-
-    .section-desc {
-      font-size: 18px;
-      color: var(--text-secondary);
-      max-width: 680px;
-      margin: 0 auto 60px;
-      line-height: 1.8;
-    }
-
-    .babel-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 24px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
+    .section-title { font-size: 42px; font-weight: 800; margin-bottom: 16px; color: var(--text-primary); }
+    .section-desc { font-size: 18px; color: var(--text-secondary); max-width: 680px; margin: 0 auto 60px; line-height: 1.8; }
+    .babel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; max-width: 1100px; margin: 0 auto; }
     .babel-card {
-      background: var(--bg-primary);
-      border: 1px solid var(--life-gray-light);
-      border-radius: var(--radius-card);
-      padding: 32px 24px;
-      text-align: center;
+      background: var(--bg-primary); border: 1px solid var(--life-gray-light);
+      border-radius: var(--radius-card); padding: 32px 24px; text-align: center;
       transition: transform 0.2s, box-shadow 0.2s;
     }
-    .babel-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .babel-card-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 16px;
-    }
+    .babel-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .babel-card-icon { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
     .babel-card-icon.blue { background: rgba(74,159,217,0.12); color: var(--life-blue); }
     .babel-card-icon.sand { background: rgba(196,180,154,0.18); color: var(--life-sand); }
     .babel-card-icon.green { background: rgba(180,196,106,0.15); color: #8a9a3f; }
+    .babel-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .babel-card p { font-size: 15px; color: var(--text-secondary); line-height: 1.7; }
 
-    .babel-card h3 {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .babel-card p {
-      font-size: 15px;
-      color: var(--text-secondary);
-      line-height: 1.7;
-    }
-
-    /* ===== FEATURES SECTION ===== */
-    .features-section {
-      padding: 100px 20px;
-      background: var(--bg-secondary);
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      max-width: 1100px;
-      margin: 0 auto;
-      align-items: center;
-    }
-
-    .feature-block {
-      margin-bottom: 80px;
-    }
-
-    .feature-text h3 {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-    .feature-text p {
-      font-size: 16px;
-      color: var(--text-secondary);
-      line-height: 1.8;
-    }
+    /* ===== FEATURES ===== */
+    .features-section { padding: 100px 20px; background: var(--bg-secondary); }
+    .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; max-width: 1100px; margin: 0 auto; align-items: center; }
+    .feature-text h3 { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+    .feature-text p { font-size: 16px; color: var(--text-secondary); line-height: 1.8; }
 
     /* ===== PHONE MOCKUP ===== */
-    .phone-mockup {
-      width: 280px;
-      margin: 0 auto;
-      background: #1a1a1a;
-      border-radius: 36px;
-      padding: 12px;
-      box-shadow: var(--shadow-xl), 0 0 0 2px #333;
-      position: relative;
-    }
+    .phone-mockup { width: 280px; margin: 0 auto; background: #1a1a1a; border-radius: 36px; padding: 12px; box-shadow: var(--shadow-xl), 0 0 0 2px #333; position: relative; }
+    .phone-notch { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 100px; height: 24px; background: #1a1a1a; border-radius: 0 0 16px 16px; z-index: 10; }
+    .phone-screen { background: white; border-radius: 28px; overflow: hidden; min-height: 520px; }
+    .screen-header { background: var(--life-blue); color: white; padding: 36px 16px 16px; border-radius: 0 0 var(--radius-page) var(--radius-page); position: relative; overflow: hidden; }
+    .screen-header::before { content: ''; position: absolute; top: -20px; left: -20px; width: 100px; height: 100px; border-radius: 50%; background: rgba(255,255,255,0.08); }
+    .screen-header::after { content: ''; position: absolute; bottom: -10px; right: -10px; width: 70px; height: 70px; border-radius: 50%; background: rgba(196,180,154,0.08); }
+    .screen-header-title { font-size: 20px; font-weight: 700; position: relative; z-index: 1; }
+    .screen-header-subtitle { font-size: 12px; opacity: 0.8; position: relative; z-index: 1; }
 
-    .phone-notch {
-      position: absolute;
-      top: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 24px;
-      background: #1a1a1a;
-      border-radius: 0 0 16px 16px;
-      z-index: 10;
-    }
+    /* Chat */
+    .chat-area { padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+    .chat-bubble { max-width: 85%; padding: 10px 14px; border-radius: 18px; font-size: 13px; line-height: 1.5; position: relative; }
+    .chat-bubble .original { font-size: 11px; color: var(--text-secondary); border-top: 1px solid rgba(0,0,0,0.08); margin-top: 6px; padding-top: 4px; }
+    .chat-bubble .time { font-size: 10px; color: var(--life-gray-dark); margin-top: 4px; }
+    .translation-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; color: var(--life-blue); background: rgba(74,159,217,0.08); padding: 2px 8px; border-radius: 9999px; margin-top: 4px; }
 
-    .phone-screen {
-      background: white;
-      border-radius: 28px;
-      overflow: hidden;
-      min-height: 520px;
-    }
+    /* LTR chat alignment */
+    html[dir="ltr"] .chat-bubble.sent { align-self: flex-end; background: #dcf8c6; color: #1e293b; border-bottom-right-radius: 4px; }
+    html[dir="ltr"] .chat-bubble.received { align-self: flex-start; background: var(--bg-tertiary); color: #1e293b; border-bottom-left-radius: 4px; }
+    html[dir="ltr"] .chat-bubble .time { text-align: right; }
 
-    /* Screen Header */
-    .screen-header {
-      background: var(--life-blue);
-      color: white;
-      padding: 36px 16px 16px;
-      border-radius: 0 0 var(--radius-page) var(--radius-page);
-      position: relative;
-      overflow: hidden;
-    }
+    /* RTL chat alignment */
+    html[dir="rtl"] .chat-bubble.sent { align-self: flex-start; background: #dcf8c6; color: #1e293b; border-bottom-left-radius: 4px; }
+    html[dir="rtl"] .chat-bubble.received { align-self: flex-end; background: var(--bg-tertiary); color: #1e293b; border-bottom-right-radius: 4px; }
+    html[dir="rtl"] .chat-bubble .time { text-align: left; }
 
-    .screen-header::before {
-      content: '';
-      position: absolute;
-      top: -20px;
-      left: -20px;
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.08);
-    }
-    .screen-header::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      right: -10px;
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      background: rgba(196,180,154,0.08);
-    }
-
-    .screen-header-title {
-      font-size: 20px;
-      font-weight: 700;
-      position: relative;
-      z-index: 1;
-    }
-    .screen-header-subtitle {
-      font-size: 12px;
-      opacity: 0.8;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Chat Messages */
-    .chat-area {
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .chat-bubble {
-      max-width: 85%;
-      padding: 10px 14px;
-      border-radius: 18px;
-      font-size: 13px;
-      line-height: 1.5;
-      position: relative;
-    }
-    .chat-bubble.sent {
-      align-self: flex-end;
-      background: #dcf8c6;
-      color: #1e293b;
-      border-bottom-right-radius: 4px;
-    }
-    .chat-bubble.received {
-      align-self: flex-start;
-      background: var(--bg-tertiary);
-      color: #1e293b;
-      border-bottom-left-radius: 4px;
-    }
-
-    .chat-bubble .original {
-      font-size: 11px;
-      color: var(--text-secondary);
-      border-top: 1px solid rgba(0,0,0,0.08);
-      margin-top: 6px;
-      padding-top: 4px;
-    }
-
-    .chat-bubble .time {
-      font-size: 10px;
-      color: var(--life-gray-dark);
-      text-align: right;
-      margin-top: 4px;
-    }
-
-    .translation-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      font-size: 10px;
-      color: var(--life-blue);
-      background: rgba(74,159,217,0.08);
-      padding: 2px 8px;
-      border-radius: 9999px;
-      margin-top: 4px;
-    }
-
-    /* Contact Card in Phone */
-    .contact-card-phone {
-      margin: 8px 12px;
-      padding: 12px;
-      background: white;
-      border: 1px solid var(--life-gray-light);
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .contact-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      font-weight: 700;
-      color: white;
-      flex-shrink: 0;
-    }
+    /* Contact card */
+    .contact-card-phone { margin: 8px 12px; padding: 12px; background: white; border: 1px solid var(--life-gray-light); border-radius: 14px; display: flex; align-items: center; gap: 10px; }
+    .contact-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: white; flex-shrink: 0; }
     .contact-info { flex: 1; min-width: 0; }
     .contact-name { font-size: 14px; font-weight: 600; }
     .contact-detail { font-size: 11px; color: var(--text-secondary); }
-
-    .contact-langs {
-      display: flex;
-      gap: 4px;
-    }
-    .contact-lang-tag {
-      font-size: 10px;
-      padding: 2px 8px;
-      border-radius: 9999px;
-      font-weight: 500;
-    }
+    .contact-langs { display: flex; gap: 4px; }
+    .contact-lang-tag { font-size: 10px; padding: 2px 8px; border-radius: 9999px; font-weight: 500; }
     .contact-lang-tag.in { background: rgba(74,159,217,0.1); color: var(--life-blue); }
     .contact-lang-tag.out { background: rgba(180,196,106,0.15); color: #6b7a2e; }
 
-    /* Bottom Nav */
-    .phone-nav {
-      display: flex;
-      border-top: 1px solid var(--life-gray-light);
-      padding: 8px 0 4px;
-    }
-    .nav-item {
-      flex: 1;
-      text-align: center;
-      font-size: 10px;
-      color: var(--life-gray-dark);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-    }
-    .nav-item.active {
-      color: var(--life-blue);
-      border-top: 2px solid var(--life-blue);
-      margin-top: -9px;
-      padding-top: 7px;
-    }
-    .nav-icon {
-      width: 20px;
-      height: 20px;
-    }
+    /* Bottom nav */
+    .phone-nav { display: flex; border-top: 1px solid var(--life-gray-light); padding: 8px 0 4px; }
+    .nav-item { flex: 1; text-align: center; font-size: 10px; color: var(--life-gray-dark); display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .nav-item.active { color: var(--life-blue); border-top: 2px solid var(--life-blue); margin-top: -9px; padding-top: 7px; }
+    .nav-icon { width: 20px; height: 20px; }
 
-    /* Scheduled Message Card */
-    .sched-card {
-      margin: 8px 12px;
-      padding: 12px;
-      background: white;
-      border: 1px solid var(--life-gray-light);
-      border-radius: 14px;
-    }
-    .sched-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-    }
-    .sched-contact {
-      font-size: 13px;
-      font-weight: 600;
-    }
-    .sched-status {
-      font-size: 10px;
-      padding: 3px 10px;
-      border-radius: 9999px;
-      font-weight: 500;
-    }
-    .sched-status.pending {
-      background: rgba(245,158,11,0.12);
-      color: #b45309;
-    }
-    .sched-status.sent {
-      background: rgba(34,197,94,0.12);
-      color: #15803d;
-    }
-    .sched-msg {
-      font-size: 12px;
-      color: var(--text-secondary);
-      margin-bottom: 6px;
-    }
-    .sched-time {
-      font-size: 11px;
-      color: var(--life-blue);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
+    /* Scheduled */
+    .sched-card { margin: 8px 12px; padding: 12px; background: white; border: 1px solid var(--life-gray-light); border-radius: 14px; }
+    .sched-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .sched-contact { font-size: 13px; font-weight: 600; }
+    .sched-status { font-size: 10px; padding: 3px 10px; border-radius: 9999px; font-weight: 500; }
+    .sched-status.pending { background: rgba(245,158,11,0.12); color: #b45309; }
+    .sched-status.sent { background: rgba(34,197,94,0.12); color: #15803d; }
+    .sched-msg { font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; }
+    .sched-time { font-size: 11px; color: var(--life-blue); display: flex; align-items: center; gap: 4px; }
 
-    /* Knowledge Base Card */
-    .kb-card {
-      margin: 8px 12px;
-      padding: 12px;
-      background: white;
-      border: 1px solid var(--life-gray-light);
-      border-radius: 14px;
-    }
-    .kb-title {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-    .kb-snippet {
-      font-size: 12px;
-      color: var(--text-secondary);
-      margin-bottom: 8px;
-    }
+    /* Knowledge base */
+    .kb-card { margin: 8px 12px; padding: 12px; background: white; border: 1px solid var(--life-gray-light); border-radius: 14px; }
+    .kb-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .kb-snippet { font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
     .kb-tags { display: flex; gap: 6px; flex-wrap: wrap; }
-    .kb-tag {
-      font-size: 10px;
-      padding: 2px 10px;
-      border-radius: 9999px;
-      background: rgba(74,159,217,0.08);
-      color: var(--life-blue);
-      border: 1px solid rgba(74,159,217,0.15);
-    }
-    .kb-tag.sand {
-      background: rgba(196,180,154,0.12);
-      color: #8a7a5e;
-      border-color: rgba(196,180,154,0.25);
-    }
+    .kb-tag { font-size: 10px; padding: 2px 10px; border-radius: 9999px; background: rgba(74,159,217,0.08); color: var(--life-blue); border: 1px solid rgba(74,159,217,0.15); }
+    .kb-tag.sand { background: rgba(196,180,154,0.12); color: #8a7a5e; border-color: rgba(196,180,154,0.25); }
 
-    /* ===== HOW-TO STEPS ===== */
-    .howto-section {
-      padding: 100px 20px;
-      background: var(--bg-primary);
-    }
+    /* Favorites */
+    .fav-strip { display: flex; gap: 10px; padding: 8px 12px; overflow-x: auto; }
+    .fav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; }
+    .fav-avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: white; border: 2px solid var(--life-blue); }
+    .fav-name { font-size: 10px; color: var(--text-secondary); text-align: center; max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-    .steps-container {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .step {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 24px;
-      align-items: start;
-      margin-bottom: 48px;
-      position: relative;
-    }
-
-    .step-number {
-      width: 48px;
-      height: 48px;
-      background: var(--life-blue);
-      color: white;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      font-weight: 800;
-      flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(74,159,217,0.3);
-    }
-
+    /* ===== HOW-TO ===== */
+    .howto-section { padding: 100px 20px; background: var(--bg-primary); }
+    .steps-container { max-width: 900px; margin: 0 auto; }
+    .step { display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: start; margin-bottom: 48px; position: relative; }
+    .step-number { width: 48px; height: 48px; background: var(--life-blue); color: white; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; flex-shrink: 0; box-shadow: 0 4px 12px rgba(74,159,217,0.3); }
     .step-content { flex: 1; }
-    .step-content h4 {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .step-content p {
-      font-size: 15px;
-      color: var(--text-secondary);
-      line-height: 1.8;
-    }
+    .step-content h4 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+    .step-content p { font-size: 15px; color: var(--text-secondary); line-height: 1.8; }
+    .step-visual { width: 200px; flex-shrink: 0; }
+    .step-connector { position: absolute; top: 48px; width: 2px; height: 100%; background: linear-gradient(to bottom, var(--life-blue), var(--life-gray-light)); opacity: 0.3; }
+    html[dir="ltr"] .step-connector { left: 23px; }
+    html[dir="rtl"] .step-connector { right: 23px; }
 
-    .step-visual {
-      width: 200px;
-      flex-shrink: 0;
-    }
-
-    /* Mini screenshot within step */
-    .mini-screen {
-      background: white;
-      border: 1px solid var(--life-gray-light);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: var(--shadow-md);
-    }
-
-    .mini-header {
-      background: var(--life-blue);
-      color: white;
-      padding: 8px 12px;
-      font-size: 11px;
-      font-weight: 600;
-      border-radius: 0 0 12px 12px;
-      position: relative;
-      overflow: hidden;
-    }
-    .mini-header::before {
-      content: '';
-      position: absolute;
-      top: -10px;
-      left: -10px;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.1);
-    }
-
+    /* Mini screen */
+    .mini-screen { background: white; border: 1px solid var(--life-gray-light); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-md); }
+    .mini-header { background: var(--life-blue); color: white; padding: 8px 12px; font-size: 11px; font-weight: 600; border-radius: 0 0 12px 12px; position: relative; overflow: hidden; }
+    .mini-header::before { content: ''; position: absolute; top: -10px; left: -10px; width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); }
     .mini-body { padding: 8px; }
-
-    .mini-input {
-      width: 100%;
-      padding: 8px 10px;
-      border: 1px solid var(--life-gray-light);
-      border-radius: 10px;
-      font-size: 11px;
-      color: var(--text-secondary);
-      margin-bottom: 6px;
-      font-family: 'Heebo', sans-serif;
-    }
-
-    .mini-btn {
-      display: block;
-      width: 100%;
-      padding: 8px;
-      background: var(--life-blue);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 12px;
-      font-weight: 600;
-      font-family: 'Heebo', sans-serif;
-      text-align: center;
-    }
-
-    .mini-toggle-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 6px 0;
-      font-size: 11px;
-    }
-
-    .mini-toggle {
-      width: 36px;
-      height: 20px;
-      background: var(--life-blue);
-      border-radius: 10px;
-      position: relative;
-    }
-    .mini-toggle::after {
-      content: '';
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      width: 16px;
-      height: 16px;
-      background: white;
-      border-radius: 50%;
-    }
+    .mini-input { width: 100%; padding: 8px 10px; border: 1px solid var(--life-gray-light); border-radius: 10px; font-size: 11px; color: var(--text-secondary); margin-bottom: 6px; font-family: 'Heebo', sans-serif; }
+    .mini-btn { display: block; width: 100%; padding: 8px; background: var(--life-blue); color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 600; font-family: 'Heebo', sans-serif; text-align: center; }
+    .mini-toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; font-size: 11px; }
+    .mini-toggle { width: 36px; height: 20px; background: var(--life-blue); border-radius: 10px; position: relative; }
+    .mini-toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; background: white; border-radius: 50%; }
     .mini-toggle.on::after { left: auto; right: 2px; }
+    .mini-select { width: 100%; padding: 6px 10px; border: 1px solid var(--life-gray-light); border-radius: 10px; font-size: 11px; font-family: 'Heebo', sans-serif; color: var(--text-primary); background: white; margin-bottom: 6px; }
+    .settings-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-size: 12px; }
+    .settings-item:last-child { border-bottom: none; }
 
-    .mini-select {
-      width: 100%;
-      padding: 6px 10px;
-      border: 1px solid var(--life-gray-light);
-      border-radius: 10px;
-      font-size: 11px;
-      font-family: 'Heebo', sans-serif;
-      color: var(--text-primary);
-      background: white;
-      margin-bottom: 6px;
-    }
-
-    /* ===== LANGUAGES SUPPORTED ===== */
-    .langs-section {
-      padding: 100px 20px;
-      background: linear-gradient(135deg, #f0f7fd 0%, #faf8f5 100%);
-      text-align: center;
-    }
-
-    .langs-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 16px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .lang-card {
-      background: white;
-      border: 1px solid var(--life-gray-light);
-      border-radius: var(--radius-card);
-      padding: 16px 24px;
-      min-width: 130px;
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .lang-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
-    }
+    /* ===== LANGUAGES ===== */
+    .langs-section { padding: 100px 20px; background: linear-gradient(135deg, #f0f7fd 0%, #faf8f5 100%); text-align: center; }
+    .langs-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; max-width: 900px; margin: 0 auto; }
+    .lang-card { background: white; border: 1px solid var(--life-gray-light); border-radius: var(--radius-card); padding: 16px 24px; min-width: 130px; box-shadow: var(--shadow-sm); transition: transform 0.2s, box-shadow 0.2s; }
+    .lang-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
     .lang-card .flag { font-size: 28px; margin-bottom: 6px; }
     .lang-card .lang-name { font-size: 14px; font-weight: 600; }
     .lang-card .lang-native { font-size: 12px; color: var(--text-secondary); }
 
-    /* ===== PRICING / CTA SECTION ===== */
-    .cta-section {
-      padding: 100px 20px;
-      background: linear-gradient(135deg, #4A9FD9 0%, #3A8BC5 50%, #b4c46a 100%);
-      text-align: center;
-      color: white;
-      position: relative;
-      overflow: hidden;
-    }
-    .cta-section::before {
-      content: '';
-      position: absolute;
-      top: -60px;
-      right: -60px;
-      width: 250px;
-      height: 250px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.06);
-    }
-
-    .cta-section h2 {
-      font-size: 42px;
-      font-weight: 800;
-      margin-bottom: 16px;
-    }
-    .cta-section p {
-      font-size: 18px;
-      opacity: 0.9;
-      max-width: 500px;
-      margin: 0 auto 40px;
-    }
-
-    .cta-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: white;
-      color: var(--life-blue);
-      font-family: 'Heebo', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      padding: 18px 48px;
-      border-radius: 9999px;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
-      transition: transform 0.2s;
-    }
+    /* ===== CTA ===== */
+    .cta-section { padding: 100px 20px; background: linear-gradient(135deg, #4A9FD9 0%, #3A8BC5 50%, #b4c46a 100%); text-align: center; color: white; position: relative; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; top: -60px; right: -60px; width: 250px; height: 250px; border-radius: 50%; background: rgba(255,255,255,0.06); }
+    .cta-section h2 { font-size: 42px; font-weight: 800; margin-bottom: 16px; }
+    .cta-section p { font-size: 18px; opacity: 0.9; max-width: 500px; margin: 0 auto 40px; }
+    .cta-btn { display: inline-flex; align-items: center; gap: 10px; background: white; color: var(--life-blue); font-family: 'Heebo', sans-serif; font-size: 20px; font-weight: 700; padding: 18px 48px; border-radius: 9999px; border: none; cursor: pointer; box-shadow: 0 4px 24px rgba(0,0,0,0.15); transition: transform 0.2s; text-decoration: none; }
     .cta-btn:hover { transform: scale(1.05); }
 
     /* ===== FOOTER ===== */
-    footer {
-      background: #1e293b;
-      color: rgba(255,255,255,0.7);
-      padding: 40px 20px;
-      text-align: center;
+    footer { background: #1e293b; color: rgba(255,255,255,0.7); padding: 40px 20px; text-align: center; }
+    footer .footer-logo { font-size: 24px; font-weight: 800; color: white; margin-bottom: 8px; }
+    footer .footer-by { font-size: 13px; opacity: 0.5; margin-top: 12px; }
+
+    /* ===== RTL LAYOUT OVERRIDES ===== */
+    /* Feature sections 2 & 4: keep phone-left/text-right visual order in RTL */
+    html[dir="rtl"] .features-invert {
+      direction: ltr;
     }
-    footer .footer-logo {
-      font-size: 24px;
-      font-weight: 800;
-      color: white;
-      margin-bottom: 8px;
+    html[dir="rtl"] .features-invert .feature-text {
+      direction: rtl;
+      text-align: start;
     }
-    footer .footer-by {
-      font-size: 13px;
-      opacity: 0.5;
-      margin-top: 12px;
-    }
+    /* Glossary list */
+    html[dir="ltr"] .feat4-list { padding-left: 20px; }
+    html[dir="rtl"] .feat4-list { padding-right: 20px; }
+
+    /* ===== SCROLL ANIMATIONS ===== */
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
 
     /* ===== RESPONSIVE ===== */
-
     @media (max-width: 1024px) {
       .features-grid { gap: 48px; max-width: 900px; }
-      .babel-grid { max-width: 900px; }
       .hero-title { font-size: 48px; }
       .section-title { font-size: 36px; }
       .steps-container { max-width: 700px; }
     }
-
     @media (max-width: 768px) {
       .hero { min-height: auto; padding: 80px 20px 100px; }
       .hero-title { font-size: 36px; }
       .hero-subtitle { font-size: 20px; }
       .hero-tagline { font-size: 16px; }
       .hero-cta { font-size: 16px; padding: 14px 32px; }
-      .hero-languages { gap: 8px; }
-      .lang-pill { font-size: 12px; padding: 6px 14px; }
-      .hero-deco-1 { width: 120px; height: 120px; }
-      .hero-deco-2 { width: 80px; height: 80px; }
       .hero-deco-3 { display: none; }
-
       .babel-section { padding: 60px 20px; }
       .section-title { font-size: 28px; }
       .section-desc { font-size: 16px; margin-bottom: 40px; }
       .babel-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
-      .babel-card { padding: 24px 16px; }
-      .babel-card h3 { font-size: 17px; }
-      .babel-card p { font-size: 14px; }
-
       .features-section { padding: 60px 20px; }
-      .features-grid {
-        grid-template-columns: 1fr !important;
-        gap: 40px;
-      }
-      .feature-text h3 { font-size: 24px; }
-      .feature-text p { font-size: 15px; }
-      .feature-text ul { font-size: 14px !important; }
+      .features-grid { grid-template-columns: 1fr !important; gap: 40px; }
+      html[dir="rtl"] .features-invert { direction: rtl; }
       .phone-mockup { width: 280px; margin: 0 auto; order: -1; }
-
       .howto-section { padding: 60px 20px; }
       .step { grid-template-columns: auto 1fr; gap: 16px; }
       .step-visual { display: none; }
-      .step-content h4 { font-size: 19px; }
-      .step-content p { font-size: 14px; }
-      .step-number { width: 40px; height: 40px; font-size: 18px; border-radius: 12px; }
-
       .langs-section { padding: 60px 20px; }
-      .langs-grid { gap: 10px; }
-      .lang-card { padding: 12px 16px; min-width: 110px; }
-      .lang-card .flag { font-size: 24px; }
-      .lang-card .lang-name { font-size: 13px; }
-      .lang-card .lang-native { font-size: 11px; }
-
       .cta-section { padding: 60px 20px; }
       .cta-section h2 { font-size: 28px; }
-      .cta-section p { font-size: 16px; }
       .cta-btn { font-size: 18px; padding: 16px 36px; }
     }
-
     @media (max-width: 480px) {
       .hero { padding: 60px 16px 80px; }
       .hero-title { font-size: 30px; }
       .hero-subtitle { font-size: 18px; }
-      .hero-tagline { font-size: 14px; }
       .hero-cta { font-size: 15px; padding: 12px 28px; }
-      .hero-languages { gap: 6px; }
-      .lang-pill { font-size: 11px; padding: 5px 12px; }
       .hero-logo { width: 72px; height: 72px; border-radius: 18px; }
-
       .babel-section { padding: 48px 16px; }
-      .section-badge { font-size: 12px; padding: 6px 14px; }
       .section-title { font-size: 24px; }
-      .section-desc { font-size: 14px; margin-bottom: 32px; }
       .babel-grid { grid-template-columns: 1fr; gap: 12px; }
-      .babel-card { padding: 20px 16px; }
-      .babel-card-icon { width: 48px; height: 48px; border-radius: 12px; }
-      .babel-card-icon svg { width: 22px; height: 22px; }
-
       .features-section { padding: 48px 16px; }
-      .features-grid { gap: 32px; }
-      .feature-text h3 { font-size: 22px; }
       .phone-mockup { width: 260px; }
       .phone-screen { min-height: 460px; }
-      .screen-header { padding: 28px 12px 12px; }
-      .screen-header-title { font-size: 17px; }
-      .chat-bubble { font-size: 12px; }
-      .contact-card-phone { padding: 10px; gap: 8px; }
-      .contact-avatar { width: 36px; height: 36px; font-size: 14px; }
-      .contact-name { font-size: 13px; }
-      .fav-avatar { width: 38px; height: 38px; font-size: 14px; }
-
       .howto-section { padding: 48px 16px; }
       .step { gap: 12px; margin-bottom: 36px; }
       .step-number { width: 36px; height: 36px; font-size: 16px; border-radius: 10px; }
-      .step-content h4 { font-size: 17px; }
-      .step-connector { left: 17px; }
-
+      html[dir="ltr"] .step-connector { left: 17px; }
+      html[dir="rtl"] .step-connector { right: 17px; }
       .langs-section { padding: 48px 16px; }
-      .langs-grid { gap: 8px; }
-      .lang-card { padding: 10px 12px; min-width: 95px; }
-      .lang-card .flag { font-size: 20px; margin-bottom: 4px; }
-      .lang-card .lang-name { font-size: 12px; }
-      .lang-card .lang-native { font-size: 10px; }
-
       .cta-section { padding: 48px 16px; }
       .cta-section h2 { font-size: 24px; }
-      .cta-section p { font-size: 15px; }
       .cta-btn { font-size: 16px; padding: 14px 32px; }
-
       footer { padding: 32px 16px; }
-      footer .footer-logo { font-size: 20px; }
     }
-
     @media (max-width: 360px) {
       .hero-title { font-size: 26px; }
-      .hero-subtitle { font-size: 16px; }
-      .hero-cta { font-size: 14px; padding: 10px 24px; }
-      .phone-mockup { width: 240px; }
-      .section-title { font-size: 22px; }
-      .cta-section h2 { font-size: 22px; }
       .cta-btn { font-size: 15px; padding: 12px 28px; width: 100%; justify-content: center; }
-      .lang-card { min-width: 80px; padding: 8px 10px; }
-    }
-
-    /* ===== SCROLL ANIMATIONS ===== */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Connector Line */
-    .step-connector {
-      position: absolute;
-      left: 23px;
-      top: 48px;
-      width: 2px;
-      height: calc(100% + 0px);
-      background: linear-gradient(to bottom, var(--life-blue), var(--life-gray-light));
-      opacity: 0.3;
-    }
-
-    .settings-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 0;
-      border-bottom: 1px solid #f1f5f9;
-      font-size: 12px;
-    }
-    .settings-item:last-child { border-bottom: none; }
-
-    .fav-strip {
-      display: flex;
-      gap: 10px;
-      padding: 8px 12px;
-      overflow-x: auto;
-    }
-    .fav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      flex-shrink: 0;
-    }
-    .fav-avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      font-weight: 700;
-      color: white;
-      border: 2px solid var(--life-blue);
-    }
-    .fav-name {
-      font-size: 10px;
-      color: var(--text-secondary);
-      text-align: center;
-      max-width: 50px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
   </style>
 </head>
 <body>
+
+<!-- Language Switcher -->
+<div id="lang-switcher">
+  <button id="btn-en" class="lang-btn active" onclick="setLang('en')">EN</button>
+  <button id="btn-he" class="lang-btn" onclick="setLang('he')">עב</button>
+</div>
 
 <!-- ===== HERO ===== -->
 <section class="hero">
   <div class="hero-deco-1"></div>
   <div class="hero-deco-2"></div>
   <div class="hero-deco-3"></div>
-
   <div class="hero-content">
     <svg class="hero-logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="logo-bg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#4A9FD9"/>
-          <stop offset="100%" stop-color="#b4c46a"/>
-        </linearGradient>
-      </defs>
+      <defs><linearGradient id="logo-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4A9FD9"/><stop offset="100%" stop-color="#b4c46a"/></linearGradient></defs>
       <rect width="512" height="512" rx="108" ry="108" fill="url(#logo-bg)"/>
       <circle cx="420" cy="92" r="60" fill="#fff" opacity="0.12"/>
       <circle cx="80" cy="430" r="45" fill="#C4B49A" opacity="0.10"/>
-      <text x="148" y="340" font-family="Heebo, Arial, sans-serif" font-weight="700" font-size="240" fill="#fff" opacity="0.95">L</text>
-      <text x="280" y="340" font-family="Heebo, Arial, sans-serif" font-weight="700" font-size="240" fill="#fff" opacity="0.80">S</text>
+      <text x="148" y="340" font-family="Heebo, Arial, sans-serif" font-weight="700" font-size="240" fill="#fff" opacity="0.95" direction="ltr" unicode-bidi="embed">L</text>
+      <text x="280" y="340" font-family="Heebo, Arial, sans-serif" font-weight="700" font-size="240" fill="#fff" opacity="0.80" direction="ltr" unicode-bidi="embed">S</text>
       <path d="M 180 380 Q 256 420 332 380" stroke="#fff" stroke-width="6" fill="none" opacity="0.5" stroke-linecap="round"/>
     </svg>
-
     <h1 class="hero-title">LS Duet</h1>
-    <p class="hero-subtitle">Breaking the Tower of Babel</p>
-    <p class="hero-tagline">
-      Communicate in your natural language. WhatsApp messages translated automatically -
-      write in English, the other side receives it in Chinese. They reply in Chinese, you read it in English.
-      Simple as that.
-    </p>
-
+    <p class="hero-subtitle" data-i18n="hero-sub"></p>
+    <p class="hero-tagline" data-i18n="hero-tag"></p>
     <button class="hero-cta" onclick="document.getElementById('howto').scrollIntoView({behavior:'smooth'})">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-      <span>How does it work?</span>
+      <span data-i18n="hero-cta"></span>
     </button>
-
     <div class="hero-languages">
       <span class="lang-pill">עברית</span>
       <span class="lang-pill">English</span>
@@ -1084,141 +405,108 @@
       <span class="lang-pill">ไทย</span>
     </div>
   </div>
-
   <svg class="hero-wave" viewBox="0 0 1440 80" preserveAspectRatio="none">
     <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="white"/>
   </svg>
 </section>
 
-<!-- ===== BABEL / VISION ===== -->
+<!-- ===== BABEL SECTION ===== -->
 <section class="babel-section fade-up">
   <span class="section-badge">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
-    <span>Our Story</span>
+    <span data-i18n="babel-badge"></span>
   </span>
-  <h2 class="section-title">Tower of Babel? We broke it</h2>
-  <p class="section-desc">
-    In today's business world, we work with clients, suppliers and partners from around the globe.
-    But different languages create friction - unclear messages, embarrassing translations, and deals that get stuck along the way.<br/><br/>
-    <strong>LS Duet</strong> doesn't reinvent the wheel - it simply connects people through WhatsApp, in their natural language.
-    No barriers, no misunderstandings, no embarrassing Google Translate moments.
-  </p>
-
+  <h2 class="section-title" data-i18n="babel-title"></h2>
+  <p class="section-desc" data-i18n-html="babel-desc"></p>
   <div class="babel-grid">
     <div class="babel-card">
-      <div class="babel-card-icon blue">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
-      </div>
-      <h3>Transparent Translation</h3>
-      <p>Write in your language, the other side receives it in theirs. The original message is always preserved.</p>
+      <div class="babel-card-icon blue"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg></div>
+      <h3 data-i18n="card1-title"></h3>
+      <p data-i18n="card1-p"></p>
     </div>
     <div class="babel-card">
-      <div class="babel-card-icon sand">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      </div>
-      <h3>Per-Contact Settings</h3>
-      <p>Set input and output languages for each contact individually. Everyone gets exactly what they need.</p>
+      <div class="babel-card-icon sand"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <h3 data-i18n="card2-title"></h3>
+      <p data-i18n="card2-p"></p>
     </div>
     <div class="babel-card">
-      <div class="babel-card-icon green">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"/></svg>
-      </div>
-      <h3>Natural Tone</h3>
-      <p>Not dry, mechanical translation. LS Duet translates the way you would write - natural, friendly, human.</p>
+      <div class="babel-card-icon green"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"/></svg></div>
+      <h3 data-i18n="card3-title"></h3>
+      <p data-i18n="card3-p"></p>
     </div>
     <div class="babel-card">
-      <div class="babel-card-icon blue">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/><path d="M8 11h8"/><path d="M8 7h6"/></svg>
-      </div>
-      <h3>Professional Glossary</h3>
-      <p>Define a glossary for each contact - brand names, professional terms and jargon that shouldn't be translated, or need to be translated precisely.</p>
+      <div class="babel-card-icon blue"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/><path d="M8 11h8"/><path d="M8 7h6"/></svg></div>
+      <h3 data-i18n="card4-title"></h3>
+      <p data-i18n="card4-p"></p>
     </div>
   </div>
 </section>
 
 <!-- ===== DEMO VIDEO ===== -->
 <section style="padding:80px 24px;max-width:1200px;margin:0 auto;text-align:center;">
-  <h2 style="font-size:32px;font-weight:700;color:#1e293b;margin-bottom:12px;font-family:'Heebo',sans-serif;">See it in action</h2>
-  <p style="font-size:18px;color:#64748b;margin-bottom:40px;font-family:'Heebo',sans-serif;max-width:600px;margin-left:auto;margin-right:auto;">Adding a Chinese contact, sending a message in English that arrives in Chinese, and receiving a reply in Chinese translated to English</p>
+  <h2 style="font-size:32px;font-weight:700;color:#1e293b;margin-bottom:12px;font-family:'Heebo',sans-serif;" data-i18n="vid-title"></h2>
+  <p style="font-size:18px;color:#64748b;margin-bottom:40px;font-family:'Heebo',sans-serif;max-width:600px;margin-left:auto;margin-right:auto;" data-i18n="vid-desc"></p>
   <div style="position:relative;border-radius:24px;overflow:hidden;box-shadow:0 25px 80px rgba(0,0,0,0.18);max-width:420px;margin:0 auto;background:#f0f4f8;">
-    <video autoplay loop muted playsinline style="width:100%;display:block;">
-      <source src="duet-video-en.mp4" type="video/mp4">
+    <video id="demo-video" autoplay loop muted playsinline style="width:100%;display:block;">
+      <source id="demo-source" src="duet-video-en.mp4" type="video/mp4">
     </video>
   </div>
 </section>
 
-<!-- ===== FEATURE 1: CHAT ===== -->
+<!-- ===== FEATURE 1: CHATS ===== -->
 <section class="features-section">
   <div class="features-grid fade-up">
     <div class="feature-text">
       <span class="section-badge">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-        <span>Chats</span>
+        <span data-i18n="nav-chats"></span>
       </span>
-      <h3>Live WhatsApp Translation</h3>
-      <p>
-        Every incoming message is automatically translated to your language.
-        Every outgoing message is translated to the contact's language.
-        The original message is always accessible with a tap - so you can verify accuracy.
-      </p>
-      <p style="margin-top:12px;">
-        Works in groups too - with sender name and automatic source language detection.
-      </p>
+      <h3 data-i18n="f1-title"></h3>
+      <p data-i18n="f1-p1"></p>
+      <p style="margin-top:12px;" data-i18n="f1-p2"></p>
     </div>
     <div>
       <div class="phone-mockup">
         <div class="phone-notch"></div>
         <div class="phone-screen">
           <div class="screen-header">
-            <div class="screen-header-subtitle">Chat with</div>
+            <div class="screen-header-subtitle" data-i18n="chat-sub"></div>
             <div class="screen-header-title">Wei Zhang</div>
           </div>
           <div class="chat-area">
             <div class="chat-bubble received">
-              <div>Hi, how are you today?</div>
+              <div data-i18n="chat-recv1"></div>
               <div class="original" style="direction:ltr;text-align:left">你好，你今天怎么样？</div>
               <div class="translation-badge">
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/></svg>
-                <span>Translated from Chinese</span>
+                <span data-i18n="chat-badge1"></span>
               </div>
               <div class="time">10:32</div>
             </div>
             <div class="chat-bubble sent">
-              <div>Great! I wanted to ask about Tuesday's meeting</div>
+              <div data-i18n="chat-sent2"></div>
               <div class="original" style="direction:ltr;text-align:left">太好了！我想问一下周二的会议</div>
               <div class="translation-badge">
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/></svg>
-                <span>Translated to Chinese</span>
+                <span data-i18n="chat-badge2"></span>
               </div>
               <div class="time">10:33</div>
             </div>
             <div class="chat-bubble received">
-              <div>Sure, let's meet at 3 PM Beijing time</div>
+              <div data-i18n="chat-recv3"></div>
               <div class="original" style="direction:ltr;text-align:left">好的，我们下午3点北京时间见</div>
               <div class="translation-badge">
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/></svg>
-                <span>Translated from Chinese</span>
+                <span data-i18n="chat-badge3"></span>
               </div>
               <div class="time">10:34</div>
             </div>
           </div>
           <div class="phone-nav">
-            <div class="nav-item active">
-              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-              <span>Chats</span>
-            </div>
-            <div class="nav-item">
-              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-              <span>Contacts</span>
-            </div>
-            <div class="nav-item">
-              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              <span>Schedule</span>
-            </div>
-            <div class="nav-item">
-              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-              <span>Knowledge</span>
-            </div>
+            <div class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><span data-i18n="nav-chats"></span></div>
+            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span data-i18n="nav-contacts"></span></div>
+            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span data-i18n="nav-sched"></span></div>
+            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span data-i18n="nav-kb"></span></div>
           </div>
         </div>
       </div>
@@ -1227,101 +515,47 @@
 </section>
 
 <!-- ===== FEATURE 2: CONTACTS ===== -->
-<section class="features-section" style="background: var(--bg-primary);">
+<section class="features-section features-invert" style="background: var(--bg-primary);">
   <div class="features-grid fade-up">
     <div>
       <div class="phone-mockup">
         <div class="phone-notch"></div>
         <div class="phone-screen">
           <div class="screen-header">
-            <div class="screen-header-title">Contacts</div>
-            <div class="screen-header-subtitle">12 contacts</div>
+            <div class="screen-header-title" data-i18n="contacts-title"></div>
+            <div class="screen-header-subtitle" data-i18n="contacts-sub"></div>
           </div>
-
           <div class="fav-strip">
-            <div class="fav-item">
-              <div class="fav-avatar" style="background:var(--life-blue);">W</div>
-              <span class="fav-name">Wei</span>
-            </div>
-            <div class="fav-item">
-              <div class="fav-avatar" style="background:#e67e22;">Y</div>
-              <span class="fav-name">Yuki</span>
-            </div>
-            <div class="fav-item">
-              <div class="fav-avatar" style="background:#9b59b6;">A</div>
-              <span class="fav-name">Ahmed</span>
-            </div>
-            <div class="fav-item">
-              <div class="fav-avatar" style="background:#27ae60;">S</div>
-              <span class="fav-name">Sophie</span>
-            </div>
+            <div class="fav-item"><div class="fav-avatar" style="background:var(--life-blue);">W</div><span class="fav-name">Wei</span></div>
+            <div class="fav-item"><div class="fav-avatar" style="background:#e67e22;">Y</div><span class="fav-name">Yuki</span></div>
+            <div class="fav-item"><div class="fav-avatar" style="background:#9b59b6;">A</div><span class="fav-name">Ahmed</span></div>
+            <div class="fav-item"><div class="fav-avatar" style="background:#27ae60;">S</div><span class="fav-name">Sophie</span></div>
           </div>
-
           <div class="contact-card-phone">
             <div class="contact-avatar" style="background: var(--life-blue);">W</div>
-            <div class="contact-info">
-              <div class="contact-name">Wei Zhang</div>
-              <div class="contact-detail">+86 138 1234 5678 &middot; VIP</div>
-            </div>
-            <div class="contact-langs">
-              <span class="contact-lang-tag in">ZH</span>
-              <span class="contact-lang-tag out">EN</span>
-            </div>
+            <div class="contact-info"><div class="contact-name">Wei Zhang</div><div class="contact-detail">+86 138 1234 5678 &middot; VIP</div></div>
+            <div class="contact-langs"><span class="contact-lang-tag in">ZH</span><span class="contact-lang-tag out" data-i18n="out-lang"></span></div>
           </div>
-
           <div class="contact-card-phone">
             <div class="contact-avatar" style="background: #e67e22;">Y</div>
-            <div class="contact-info">
-              <div class="contact-name">Yuki Tanaka</div>
-              <div class="contact-detail">+81 90 1234 5678 &middot; Client</div>
-            </div>
-            <div class="contact-langs">
-              <span class="contact-lang-tag in">JA</span>
-              <span class="contact-lang-tag out">EN</span>
-            </div>
+            <div class="contact-info"><div class="contact-name">Yuki Tanaka</div><div class="contact-detail">+81 90 1234 5678 &middot; Client</div></div>
+            <div class="contact-langs"><span class="contact-lang-tag in">JA</span><span class="contact-lang-tag out" data-i18n="out-lang"></span></div>
           </div>
-
           <div class="contact-card-phone">
             <div class="contact-avatar" style="background: #9b59b6;">A</div>
-            <div class="contact-info">
-              <div class="contact-name">Ahmed Al-Rashid</div>
-              <div class="contact-detail">+971 50 123 4567 &middot; Partner</div>
-            </div>
-            <div class="contact-langs">
-              <span class="contact-lang-tag in">AR</span>
-              <span class="contact-lang-tag out">EN</span>
-            </div>
+            <div class="contact-info"><div class="contact-name">Ahmed Al-Rashid</div><div class="contact-detail">+971 50 123 4567 &middot; Partner</div></div>
+            <div class="contact-langs"><span class="contact-lang-tag in">AR</span><span class="contact-lang-tag out" data-i18n="out-lang"></span></div>
           </div>
-
           <div class="contact-card-phone">
             <div class="contact-avatar" style="background: #27ae60;">S</div>
-            <div class="contact-info">
-              <div class="contact-name">Sophie Durand</div>
-              <div class="contact-detail">+33 6 12 34 56 78 &middot; Friend</div>
-            </div>
-            <div class="contact-langs">
-              <span class="contact-lang-tag in">FR</span>
-              <span class="contact-lang-tag out">EN</span>
-            </div>
+            <div class="contact-info"><div class="contact-name">Sophie Durand</div><div class="contact-detail">+33 6 12 34 56 78 &middot; Friend</div></div>
+            <div class="contact-langs"><span class="contact-lang-tag in">FR</span><span class="contact-lang-tag out" data-i18n="out-lang"></span></div>
           </div>
-
           <div class="phone-nav">
-            <div class="nav-item">
-              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-              <span>Chats</span>
-            </div>
-            <div class="nav-item active">
-              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-              <span>Contacts</span>
-            </div>
-            <div class="nav-item">
-              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              <span>Schedule</span>
-            </div>
-            <div class="nav-item">
-              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-              <span>Knowledge</span>
-            </div>
+            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><span data-i18n="nav-chats"></span></div>
+            <div class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span data-i18n="nav-contacts"></span></div>
+            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span data-i18n="nav-sched"></span></div>
+            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span data-i18n="nav-kb"></span></div>
           </div>
         </div>
       </div>
@@ -1329,44 +563,32 @@
     <div class="feature-text">
       <span class="section-badge">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-        <span>Contacts</span>
+        <span data-i18n="nav-contacts"></span>
       </span>
-      <h3>Smart Contact Management</h3>
-      <p>
-        Each contact gets a full profile: name, company, timezone, priority level, and communication language.
-        See exactly what time it is for them, when you last spoke, and when it's time to follow up.
-      </p>
-      <p style="margin-top:12px;">
-        The favorites strip at the top provides quick access to your most important contacts.
-      </p>
+      <h3 data-i18n="f2-title"></h3>
+      <p data-i18n="f2-p1"></p>
+      <p style="margin-top:12px;" data-i18n="f2-p2"></p>
     </div>
   </div>
 </section>
 
-<!-- ===== FEATURE 3: SCHEDULED + KB ===== -->
+<!-- ===== FEATURE 3: SCHEDULE + KB ===== -->
 <section class="features-section">
   <div class="features-grid fade-up">
     <div class="feature-text">
       <span class="section-badge">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        <span>Message Scheduling</span>
+        <span data-i18n="f3-badge"></span>
       </span>
-      <h3>Schedule Messages for the Perfect Moment</h3>
-      <p>
-        Write now, send when convenient. Automatically detects timezones - so if Wei is in Beijing and it's 3 AM there,
-        schedule for a reasonable hour. The message is automatically translated before sending.
-      </p>
-
+      <h3 data-i18n="f3-title"></h3>
+      <p data-i18n="f3-p"></p>
       <div style="margin-top: 32px;">
         <span class="section-badge">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-          <span>Knowledge Base</span>
+          <span data-i18n="nav-kb"></span>
         </span>
-        <h3>Personal Knowledge Base</h3>
-        <p>
-          Save important information from conversations - links, meeting summaries, notes.
-          Organized by categories and tags, with quick search and a favorites system.
-        </p>
+        <h3 data-i18n="f3-kb-title"></h3>
+        <p data-i18n="f3-kb-p"></p>
       </div>
     </div>
     <div>
@@ -1374,76 +596,35 @@
         <div class="phone-notch"></div>
         <div class="phone-screen">
           <div class="screen-header">
-            <div class="screen-header-title">Scheduled Messages</div>
-            <div class="screen-header-subtitle">3 messages pending</div>
+            <div class="screen-header-title" data-i18n="sched-title"></div>
+            <div class="screen-header-subtitle" data-i18n="sched-sub"></div>
           </div>
-
           <div class="sched-card">
-            <div class="sched-top">
-              <span class="sched-contact">Wei Zhang</span>
-              <span class="sched-status pending">Pending</span>
-            </div>
-            <div class="sched-msg">Good morning! Just wanted to confirm the meeting is still on...</div>
-            <div class="sched-time">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              <span>Tomorrow, 09:00 (15:00 Beijing time)</span>
-            </div>
+            <div class="sched-top"><span class="sched-contact">Wei Zhang</span><span class="sched-status pending" data-i18n="status-pending"></span></div>
+            <div class="sched-msg" data-i18n="sched1-msg"></div>
+            <div class="sched-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span data-i18n="sched1-time"></span></div>
           </div>
-
           <div class="sched-card">
-            <div class="sched-top">
-              <span class="sched-contact">Yuki Tanaka</span>
-              <span class="sched-status pending">Pending</span>
-            </div>
-            <div class="sched-msg">Thank you so much for the shipment! Arrived on time</div>
-            <div class="sched-time">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              <span>Today, 15:00 (21:00 Tokyo time)</span>
-            </div>
+            <div class="sched-top"><span class="sched-contact">Yuki Tanaka</span><span class="sched-status pending" data-i18n="status-pending"></span></div>
+            <div class="sched-msg" data-i18n="sched2-msg"></div>
+            <div class="sched-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span data-i18n="sched2-time"></span></div>
           </div>
-
           <div class="sched-card">
-            <div class="sched-top">
-              <span class="sched-contact">Sophie Durand</span>
-              <span class="sched-status sent">Sent</span>
-            </div>
-            <div class="sched-msg">Hey! Saw the proposal, sounds great</div>
-            <div class="sched-time">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              <span>Yesterday, 11:30 (12:30 Paris time)</span>
-            </div>
+            <div class="sched-top"><span class="sched-contact">Sophie Durand</span><span class="sched-status sent" data-i18n="status-sent"></span></div>
+            <div class="sched-msg" data-i18n="sched3-msg"></div>
+            <div class="sched-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span data-i18n="sched3-time"></span></div>
           </div>
-
-          <div style="padding: 12px;">
-            <div style="height:1px; background: var(--life-gray-light); margin: 8px 0;"></div>
-          </div>
-
+          <div style="padding: 12px;"><div style="height:1px; background: var(--life-gray-light); margin: 8px 0;"></div></div>
           <div class="kb-card">
-            <div class="kb-title">Meeting Summary - Shanghai Project</div>
-            <div class="kb-snippet">Wei approved a budget of 50K. Deadline: end of Q2. Need to send contract by Sunday.</div>
-            <div class="kb-tags">
-              <span class="kb-tag">Work</span>
-              <span class="kb-tag sand">Wei</span>
-            </div>
+            <div class="kb-title" data-i18n="kb1-title"></div>
+            <div class="kb-snippet" data-i18n="kb1-snippet"></div>
+            <div class="kb-tags"><span class="kb-tag" data-i18n="tag-work"></span><span class="kb-tag sand">Wei</span></div>
           </div>
-
           <div class="phone-nav">
-            <div class="nav-item">
-              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-              <span>Chats</span>
-            </div>
-            <div class="nav-item">
-              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-              <span>Contacts</span>
-            </div>
-            <div class="nav-item active">
-              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              <span>Schedule</span>
-            </div>
-            <div class="nav-item">
-              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-              <span>Knowledge</span>
-            </div>
+            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><span data-i18n="nav-chats"></span></div>
+            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span data-i18n="nav-contacts"></span></div>
+            <div class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span data-i18n="nav-sched"></span></div>
+            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span data-i18n="nav-kb"></span></div>
           </div>
         </div>
       </div>
@@ -1452,7 +633,7 @@
 </section>
 
 <!-- ===== FEATURE 4: GLOSSARY ===== -->
-<section class="features-section" style="background: var(--bg-primary);">
+<section class="features-section features-invert" style="background: var(--bg-primary);">
   <div class="features-grid fade-up">
     <div>
       <div class="phone-mockup">
@@ -1460,95 +641,57 @@
         <div class="phone-screen">
           <div class="screen-header">
             <div class="screen-header-subtitle">Wei Zhang</div>
-            <div class="screen-header-title">Glossary</div>
+            <div class="screen-header-title" data-i18n="f4-screen-title"></div>
           </div>
-
           <div style="padding: 10px 12px 4px;">
-            <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.6;">
-              Terms that will not be translated or will be translated precisely in conversations with this contact.
-            </div>
+            <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.6;" data-i18n="f4-desc-small"></div>
           </div>
-
           <div style="padding: 0 12px;">
             <div style="background: white; border: 1px solid var(--life-gray-light); border-radius: 14px; overflow: hidden; margin-bottom: 8px;">
               <div style="padding: 10px 12px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-size: 13px; font-weight: 600;">LifeSync</div>
-                  <div style="font-size: 11px; color: var(--text-secondary);">Do not translate - brand name</div>
-                </div>
-                <span style="font-size: 10px; padding: 3px 10px; border-radius: 9999px; background: rgba(239,68,68,0.08); color: #dc2626; font-weight: 500;">Do Not Translate</span>
+                <div><div style="font-size: 13px; font-weight: 600;">LifeSync</div><div style="font-size: 11px; color: var(--text-secondary);" data-i18n="g-entry1-sub"></div></div>
+                <span style="font-size: 10px; padding: 3px 10px; border-radius: 9999px; background: rgba(239,68,68,0.08); color: #dc2626; font-weight: 500;" data-i18n="g-no-trans"></span>
               </div>
               <div style="padding: 10px 12px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-size: 13px; font-weight: 600;">Sprint Review</div>
-                  <div style="font-size: 11px; color: var(--text-secondary);">迭代评审</div>
-                </div>
-                <span style="font-size: 10px; padding: 3px 10px; border-radius: 9999px; background: rgba(74,159,217,0.1); color: var(--life-blue); font-weight: 500;">Custom Translation</span>
+                <div><div style="font-size: 13px; font-weight: 600;">Sprint Review</div><div style="font-size: 11px; color: var(--text-secondary);">迭代评审</div></div>
+                <span style="font-size: 10px; padding: 3px 10px; border-radius: 9999px; background: rgba(74,159,217,0.1); color: var(--life-blue); font-weight: 500;" data-i18n="g-custom-trans"></span>
               </div>
               <div style="padding: 10px 12px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-size: 13px; font-weight: 600;">Stakeholder</div>
-                  <div style="font-size: 11px; color: var(--text-secondary);">利益相关者</div>
-                </div>
-                <span style="font-size: 10px; padding: 3px 10px; border-radius: 9999px; background: rgba(74,159,217,0.1); color: var(--life-blue); font-weight: 500;">Custom Translation</span>
+                <div><div style="font-size: 13px; font-weight: 600;">Stakeholder</div><div style="font-size: 11px; color: var(--text-secondary);">利益相关者</div></div>
+                <span style="font-size: 10px; padding: 3px 10px; border-radius: 9999px; background: rgba(74,159,217,0.1); color: var(--life-blue); font-weight: 500;" data-i18n="g-custom-trans"></span>
               </div>
               <div style="padding: 10px 12px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-size: 13px; font-weight: 600;">OKR</div>
-                  <div style="font-size: 11px; color: var(--text-secondary);">Do not translate - acronym</div>
-                </div>
-                <span style="font-size: 10px; padding: 3px 10px; border-radius: 9999px; background: rgba(239,68,68,0.08); color: #dc2626; font-weight: 500;">Do Not Translate</span>
+                <div><div style="font-size: 13px; font-weight: 600;">OKR</div><div style="font-size: 11px; color: var(--text-secondary);" data-i18n="g-entry4-sub"></div></div>
+                <span style="font-size: 10px; padding: 3px 10px; border-radius: 9999px; background: rgba(239,68,68,0.08); color: #dc2626; font-weight: 500;" data-i18n="g-no-trans"></span>
               </div>
               <div style="padding: 10px 12px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-size: 13px; font-weight: 600;">Deployment</div>
-                  <div style="font-size: 11px; color: var(--text-secondary);">部署</div>
-                </div>
-                <span style="font-size: 10px; padding: 3px 10px; border-radius: 9999px; background: rgba(74,159,217,0.1); color: var(--life-blue); font-weight: 500;">Custom Translation</span>
+                <div><div style="font-size: 13px; font-weight: 600;">Deployment</div><div style="font-size: 11px; color: var(--text-secondary);">部署</div></div>
+                <span style="font-size: 10px; padding: 3px 10px; border-radius: 9999px; background: rgba(74,159,217,0.1); color: var(--life-blue); font-weight: 500;" data-i18n="g-custom-trans"></span>
               </div>
             </div>
-
             <div style="text-align: center; padding: 8px 0;">
               <div style="display: inline-flex; align-items: center; gap: 6px; background: var(--life-blue); color: white; padding: 10px 24px; border-radius: 12px; font-size: 13px; font-weight: 600;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
-                <span>Add Term</span>
+                <span data-i18n="g-add-btn"></span>
               </div>
             </div>
           </div>
-
           <div style="padding: 8px 12px 12px;">
             <div style="font-size: 10px; font-weight: 600; color: var(--life-blue); margin-bottom: 6px; display: flex; align-items: center; gap: 4px;">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/></svg>
-              <span>Translation example with glossary:</span>
+              <span data-i18n="g-example-label"></span>
             </div>
-            <div style="background: #dcf8c6; padding: 8px 10px; border-radius: 12px 12px 4px 12px; font-size: 11px; margin-bottom: 4px;">
-              Let's discuss the OKR of LifeSync at the next Sprint Review
-            </div>
+            <div style="background: #dcf8c6; padding: 8px 10px; border-radius: 12px 12px 4px 12px; font-size: 11px; margin-bottom: 4px;" data-i18n="g-example-msg"></div>
             <div style="background: var(--bg-tertiary); padding: 8px 10px; border-radius: 12px 12px 12px 4px; font-size: 11px; direction: ltr; text-align: left;">
               我们在下次<strong>迭代评审</strong>讨论<strong>LifeSync</strong>的<strong>OKR</strong>
             </div>
-            <div style="font-size: 9px; color: var(--text-secondary); margin-top: 4px; text-align: center;">
-              OKR + LifeSync stayed as-is, Sprint Review translated per glossary
-            </div>
+            <div style="font-size: 9px; color: var(--text-secondary); margin-top: 4px; text-align: center;" data-i18n="g-example-note"></div>
           </div>
-
           <div class="phone-nav">
-            <div class="nav-item">
-              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-              <span>Chats</span>
-            </div>
-            <div class="nav-item active">
-              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-              <span>Contacts</span>
-            </div>
-            <div class="nav-item">
-              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              <span>Schedule</span>
-            </div>
-            <div class="nav-item">
-              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-              <span>Knowledge</span>
-            </div>
+            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><span data-i18n="nav-chats"></span></div>
+            <div class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span data-i18n="nav-contacts"></span></div>
+            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span data-i18n="nav-sched"></span></div>
+            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span data-i18n="nav-kb"></span></div>
           </div>
         </div>
       </div>
@@ -1556,58 +699,48 @@
     <div class="feature-text">
       <span class="section-badge">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/><path d="M8 11h8"/><path d="M8 7h6"/></svg>
-        <span>Glossary</span>
+        <span data-i18n="f4-badge"></span>
       </span>
-      <h3>Professional Terms &amp; Glossary</h3>
-      <p>
-        Every professional field has terms that shouldn't be translated - brand names, acronyms,
-        professional jargon. And terms that need to be translated precisely, not the way Google thinks.
-      </p>
-      <p style="margin-top:12px;">
-        With LS Duet's glossary, define a custom term list for each contact:
-      </p>
-      <ul style="margin-top:12px; padding-left:20px; font-size:15px; color: var(--text-secondary); line-height: 2;">
-        <li><strong>Do Not Translate</strong> - the term stays as-is (brand names, acronyms)</li>
-        <li><strong>Custom Translation</strong> - define exactly how to translate each term</li>
-        <li><strong>Per contact</strong> - because "Stakeholder" translates differently in Chinese and French</li>
+      <h3 data-i18n="f4-title"></h3>
+      <p data-i18n="f4-p1"></p>
+      <p style="margin-top:12px;" data-i18n="f4-p2"></p>
+      <ul class="feat4-list" style="margin-top:12px; font-size:15px; color: var(--text-secondary); line-height: 2;">
+        <li data-i18n-html="f4-li1"></li>
+        <li data-i18n-html="f4-li2"></li>
+        <li data-i18n-html="f4-li3"></li>
       </ul>
-      <p style="margin-top:16px;">
-        The AI-powered engine identifies terms in your message and replaces them precisely according to your glossary, before the translation goes out.
-      </p>
+      <p style="margin-top:16px;" data-i18n="f4-p3"></p>
     </div>
   </div>
 </section>
 
-<!-- ===== HOW-TO GUIDE ===== -->
+<!-- ===== HOW-TO ===== -->
 <section class="howto-section" id="howto">
   <div class="steps-container">
     <div style="text-align:center; margin-bottom: 60px;" class="fade-up">
       <span class="section-badge">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-        <span>User Guide</span>
+        <span data-i18n="howto-badge"></span>
       </span>
-      <h2 class="section-title">How to get started?</h2>
-      <p class="section-desc">5 simple steps and you're in. Let's begin.</p>
+      <h2 class="section-title" data-i18n="howto-title"></h2>
+      <p class="section-desc" data-i18n="howto-desc"></p>
     </div>
 
     <div class="step fade-up" style="position:relative;">
       <div class="step-connector"></div>
       <div class="step-number">1</div>
       <div class="step-content">
-        <h4>Connect your WhatsApp account</h4>
-        <p>
-          Open the app and tap "Connect". You'll receive a Pairing Code -
-          enter it in your WhatsApp under "Linked Devices". That's it, the connection is secure and encrypted.
-        </p>
+        <h4 data-i18n="s1-title"></h4>
+        <p data-i18n="s1-p"></p>
       </div>
       <div class="step-visual">
         <div class="mini-screen">
-          <div class="mini-header">Connect to WhatsApp</div>
+          <div class="mini-header" data-i18n="s1-header"></div>
           <div class="mini-body" style="text-align:center; padding:16px 12px;">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--whatsapp)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-            <div style="font-size:11px; color:var(--text-secondary); margin:8px 0;">Your pairing code:</div>
+            <div style="font-size:11px; color:var(--text-secondary); margin:8px 0;" data-i18n="s1-code-label"></div>
             <div style="font-size:22px; font-weight:800; letter-spacing:6px; color:var(--life-blue);">4A9F-D9B4</div>
-            <div style="font-size:10px; color:var(--text-secondary); margin-top:8px;">Enter in WhatsApp > Linked Devices</div>
+            <div style="font-size:10px; color:var(--text-secondary); margin-top:8px;" data-i18n="s1-code-hint"></div>
           </div>
         </div>
       </div>
@@ -1617,24 +750,18 @@
       <div class="step-connector"></div>
       <div class="step-number">2</div>
       <div class="step-content">
-        <h4>Import contacts &amp; set languages</h4>
-        <p>
-          Import contacts directly from WhatsApp with one tap - no manual typing required.
-          For each contact, set the input language (what language they write to you in) and the output language (what language to translate your messages into).
-        </p>
+        <h4 data-i18n="s2-title"></h4>
+        <p data-i18n="s2-p"></p>
       </div>
       <div class="step-visual">
         <div class="mini-screen">
-          <div class="mini-header">Language Settings - Wei</div>
+          <div class="mini-header" data-i18n="s2-header"></div>
           <div class="mini-body">
-            <div style="font-size:11px; font-weight:600; margin-bottom:6px;">Input language (they write in...)</div>
-            <div class="mini-select">Chinese (ZH)</div>
-            <div style="font-size:11px; font-weight:600; margin-bottom:6px;">Output language (I write in...)</div>
-            <div class="mini-select">English (EN)</div>
-            <div class="mini-toggle-row">
-              <span>Auto-translate</span>
-              <div class="mini-toggle on"></div>
-            </div>
+            <div style="font-size:11px; font-weight:600; margin-bottom:6px;" data-i18n="s2-in-label"></div>
+            <div class="mini-select" data-i18n="s2-in-val"></div>
+            <div style="font-size:11px; font-weight:600; margin-bottom:6px;" data-i18n="s2-out-label"></div>
+            <div class="mini-select" data-i18n="s2-out-val"></div>
+            <div class="mini-toggle-row"><span data-i18n="s2-auto"></span><div class="mini-toggle on"></div></div>
           </div>
         </div>
       </div>
@@ -1644,23 +771,19 @@
       <div class="step-connector"></div>
       <div class="step-number">3</div>
       <div class="step-content">
-        <h4>Start chatting!</h4>
-        <p>
-          Now just write in English (or any language you prefer).
-          LS Duet will automatically translate every outgoing message to the contact's language,
-          and every incoming message to yours. You can always view the original message.
-        </p>
+        <h4 data-i18n="s3-title"></h4>
+        <p data-i18n="s3-p"></p>
       </div>
       <div class="step-visual">
         <div class="mini-screen">
-          <div class="mini-header">Chat with Wei</div>
+          <div class="mini-header" data-i18n="s3-header"></div>
           <div class="mini-body" style="padding: 8px;">
             <div style="background:#dcf8c6; padding:8px 10px; border-radius:12px 12px 4px 12px; font-size:11px; margin-bottom:6px;">
-              Hey, what's up?
+              <span data-i18n="s3-msg1"></span>
               <div style="font-size:9px; color:var(--text-secondary); margin-top:3px; direction:ltr; text-align:left;">嗨，最近怎么样？</div>
             </div>
             <div style="background:var(--bg-tertiary); padding:8px 10px; border-radius:12px 12px 12px 4px; font-size:11px;">
-              All good! Waiting for the meeting
+              <span data-i18n="s3-msg2"></span>
               <div style="font-size:9px; color:var(--text-secondary); margin-top:3px;">都好！等着开会呢</div>
             </div>
           </div>
@@ -1672,25 +795,21 @@
       <div class="step-connector"></div>
       <div class="step-number">4</div>
       <div class="step-content">
-        <h4>Schedule messages by timezone</h4>
-        <p>
-          Have an important message but it's 3 AM at the recipient's location?
-          Write the message now, pick a date and time, and LS Duet will send it right on schedule -
-          already translated and ready.
-        </p>
+        <h4 data-i18n="s4-title"></h4>
+        <p data-i18n="s4-p"></p>
       </div>
       <div class="step-visual">
         <div class="mini-screen">
-          <div class="mini-header">New Scheduled Message</div>
+          <div class="mini-header" data-i18n="s4-header"></div>
           <div class="mini-body">
             <div class="mini-select">Wei Zhang</div>
-            <div class="mini-input" style="min-height:40px;">Good morning! I wanted to confirm...</div>
+            <div class="mini-input" style="min-height:40px;" data-i18n="s4-msg"></div>
             <div style="display:flex; gap:6px; margin-bottom:8px;">
               <div class="mini-select" style="flex:1;">16/04/2026</div>
               <div class="mini-select" style="flex:1;">09:00</div>
             </div>
-            <div style="font-size:10px; color:var(--life-blue); margin-bottom:8px; text-align:center;">= 15:00 Beijing time</div>
-            <div class="mini-btn">Schedule Send</div>
+            <div style="font-size:10px; color:var(--life-blue); margin-bottom:8px; text-align:center;" data-i18n="s4-tz"></div>
+            <div class="mini-btn" data-i18n="s4-btn"></div>
           </div>
         </div>
       </div>
@@ -1699,29 +818,22 @@
     <div class="step fade-up">
       <div class="step-number">5</div>
       <div class="step-content">
-        <h4>Save important info to the Knowledge Base</h4>
-        <p>
-          Found important information in a conversation? Long-press the message and choose "Save to Knowledge Base".
-          The information is saved organized by categories and tags, with quick search when you need it again.
-        </p>
+        <h4 data-i18n="s5-title"></h4>
+        <p data-i18n="s5-p"></p>
       </div>
       <div class="step-visual">
         <div class="mini-screen">
-          <div class="mini-header">Knowledge Base</div>
+          <div class="mini-header" data-i18n="s5-header"></div>
           <div class="mini-body">
             <div style="background:rgba(74,159,217,0.06); border:1px solid rgba(74,159,217,0.15); border-radius:10px; padding:8px; margin-bottom:6px;">
-              <div style="font-size:11px; font-weight:600;">Meeting Summary</div>
-              <div style="font-size:10px; color:var(--text-secondary);">Budget 50K, deadline Q2...</div>
-              <div style="display:flex; gap:4px; margin-top:4px;">
-                <span style="font-size:9px; background:rgba(74,159,217,0.1); color:var(--life-blue); padding:1px 6px; border-radius:9999px;">Work</span>
-              </div>
+              <div style="font-size:11px; font-weight:600;" data-i18n="s5-kb1-title"></div>
+              <div style="font-size:10px; color:var(--text-secondary);" data-i18n="s5-kb1-desc"></div>
+              <div style="display:flex; gap:4px; margin-top:4px;"><span style="font-size:9px; background:rgba(74,159,217,0.1); color:var(--life-blue); padding:1px 6px; border-radius:9999px;" data-i18n="s5-kb1-tag"></span></div>
             </div>
             <div style="background:rgba(196,180,154,0.08); border:1px solid rgba(196,180,154,0.2); border-radius:10px; padding:8px;">
-              <div style="font-size:11px; font-weight:600;">New Office Address</div>
-              <div style="font-size:10px; color:var(--text-secondary);">Nanjing Road 42, Shanghai</div>
-              <div style="display:flex; gap:4px; margin-top:4px;">
-                <span style="font-size:9px; background:rgba(196,180,154,0.15); color:#8a7a5e; padding:1px 6px; border-radius:9999px;">Contacts</span>
-              </div>
+              <div style="font-size:11px; font-weight:600;" data-i18n="s5-kb2-title"></div>
+              <div style="font-size:10px; color:var(--text-secondary);" data-i18n="s5-kb2-desc"></div>
+              <div style="display:flex; gap:4px; margin-top:4px;"><span style="font-size:9px; background:rgba(196,180,154,0.15); color:#8a7a5e; padding:1px 6px; border-radius:9999px;" data-i18n="s5-kb2-tag"></span></div>
             </div>
           </div>
         </div>
@@ -1730,63 +842,358 @@
   </div>
 </section>
 
-<!-- ===== SUPPORTED LANGUAGES ===== -->
+<!-- ===== LANGUAGES ===== -->
 <section class="langs-section fade-up">
   <span class="section-badge">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-    <span>17 Languages</span>
+    <span data-i18n="langs-badge"></span>
   </span>
-  <h2 class="section-title">Supported Translation Languages</h2>
-  <p class="section-desc">LS Duet supports 17 languages for automatic translation. The user interface is available in 7 languages.</p>
-
+  <h2 class="section-title" data-i18n="langs-title"></h2>
+  <p class="section-desc" data-i18n="langs-desc"></p>
   <div class="langs-grid">
-    <div class="lang-card"><div class="flag">&#127470;&#127473;</div><div class="lang-name">Hebrew</div><div class="lang-native">עברית</div></div>
-    <div class="lang-card"><div class="flag">&#127468;&#127463;</div><div class="lang-name">English</div><div class="lang-native">English</div></div>
-    <div class="lang-card"><div class="flag">&#127480;&#127462;</div><div class="lang-name">Arabic</div><div class="lang-native">العربية</div></div>
-    <div class="lang-card"><div class="flag">&#127479;&#127482;</div><div class="lang-name">Russian</div><div class="lang-native">Русский</div></div>
-    <div class="lang-card"><div class="flag">&#127466;&#127480;</div><div class="lang-name">Spanish</div><div class="lang-native">Espa&ntilde;ol</div></div>
-    <div class="lang-card"><div class="flag">&#127467;&#127479;</div><div class="lang-name">French</div><div class="lang-native">Fran&ccedil;ais</div></div>
-    <div class="lang-card"><div class="flag">&#127465;&#127466;</div><div class="lang-name">German</div><div class="lang-native">Deutsch</div></div>
-    <div class="lang-card"><div class="flag">&#127464;&#127475;</div><div class="lang-name">Chinese</div><div class="lang-native">中文</div></div>
-    <div class="lang-card"><div class="flag">&#127463;&#127479;</div><div class="lang-name">Portuguese</div><div class="lang-native">Portugu&ecirc;s (Brasil)</div></div>
-    <div class="lang-card"><div class="flag">&#127468;&#127479;</div><div class="lang-name">Greek</div><div class="lang-native">&Epsilon;&lambda;&lambda;&eta;&nu;&iota;&kappa;&#940;</div></div>
-    <div class="lang-card"><div class="flag">&#127470;&#127475;</div><div class="lang-name">Hindi</div><div class="lang-native">हिन्दी</div></div>
-    <div class="lang-card"><div class="flag">&#127481;&#127469;</div><div class="lang-name">Thai</div><div class="lang-native">ไทย</div></div>
-    <div class="lang-card"><div class="flag">&#127466;&#127481;</div><div class="lang-name">Amharic</div><div class="lang-native">&#4768;&#4635;&#4653;&#4763;</div></div>
-    <div class="lang-card"><div class="flag">&#127477;&#127469;</div><div class="lang-name">Filipino</div><div class="lang-native">Filipino</div></div>
-    <div class="lang-card"><div class="flag">&#127479;&#127476;</div><div class="lang-name">Romanian</div><div class="lang-native">Rom&acirc;n&#259;</div></div>
-    <div class="lang-card"><div class="flag">&#127475;&#127477;</div><div class="lang-name">Nepali</div><div class="lang-native">&#2344;&#2375;&#2346;&#2366;&#2354;&#2368;</div></div>
-    <div class="lang-card"><div class="flag">&#127473;&#127472;</div><div class="lang-name">Sinhala</div><div class="lang-native">&#3523;&#3538;&#3458;&#3524;&#3517;</div></div>
+    <div class="lang-card"><div class="flag">&#127470;&#127473;</div><div class="lang-name" data-i18n="lname-he"></div><div class="lang-native">עברית / Hebrew</div></div>
+    <div class="lang-card"><div class="flag">&#127468;&#127463;</div><div class="lang-name" data-i18n="lname-en"></div><div class="lang-native">English</div></div>
+    <div class="lang-card"><div class="flag">&#127480;&#127462;</div><div class="lang-name" data-i18n="lname-ar"></div><div class="lang-native">العربية</div></div>
+    <div class="lang-card"><div class="flag">&#127479;&#127482;</div><div class="lang-name" data-i18n="lname-ru"></div><div class="lang-native">Русский</div></div>
+    <div class="lang-card"><div class="flag">&#127466;&#127480;</div><div class="lang-name" data-i18n="lname-es"></div><div class="lang-native">Espa&ntilde;ol</div></div>
+    <div class="lang-card"><div class="flag">&#127467;&#127479;</div><div class="lang-name" data-i18n="lname-fr"></div><div class="lang-native">Fran&ccedil;ais</div></div>
+    <div class="lang-card"><div class="flag">&#127465;&#127466;</div><div class="lang-name" data-i18n="lname-de"></div><div class="lang-native">Deutsch</div></div>
+    <div class="lang-card"><div class="flag">&#127464;&#127475;</div><div class="lang-name" data-i18n="lname-zh"></div><div class="lang-native">中文</div></div>
+    <div class="lang-card"><div class="flag">&#127463;&#127479;</div><div class="lang-name" data-i18n="lname-pt"></div><div class="lang-native">Portugu&ecirc;s (Brasil)</div></div>
+    <div class="lang-card"><div class="flag">&#127468;&#127479;</div><div class="lang-name" data-i18n="lname-el"></div><div class="lang-native">&Epsilon;&lambda;&lambda;&eta;&nu;&iota;&kappa;&#940;</div></div>
+    <div class="lang-card"><div class="flag">&#127470;&#127475;</div><div class="lang-name" data-i18n="lname-hi"></div><div class="lang-native">हिन्दी</div></div>
+    <div class="lang-card"><div class="flag">&#127481;&#127469;</div><div class="lang-name" data-i18n="lname-th"></div><div class="lang-native">ไทย</div></div>
+    <div class="lang-card"><div class="flag">&#127466;&#127481;</div><div class="lang-name" data-i18n="lname-am"></div><div class="lang-native">&#4768;&#4635;&#4653;&#4763;</div></div>
+    <div class="lang-card"><div class="flag">&#127477;&#127469;</div><div class="lang-name" data-i18n="lname-tl"></div><div class="lang-native">Filipino</div></div>
+    <div class="lang-card"><div class="flag">&#127479;&#127476;</div><div class="lang-name" data-i18n="lname-ro"></div><div class="lang-native">Rom&acirc;n&#259;</div></div>
+    <div class="lang-card"><div class="flag">&#127475;&#127477;</div><div class="lang-name" data-i18n="lname-ne"></div><div class="lang-native">&#2344;&#2375;&#2346;&#2366;&#2354;&#2368;</div></div>
+    <div class="lang-card"><div class="flag">&#127473;&#127472;</div><div class="lang-name" data-i18n="lname-si"></div><div class="lang-native">&#3523;&#3538;&#3458;&#3524;&#3517;</div></div>
   </div>
 </section>
 
 <!-- ===== CTA ===== -->
 <section class="cta-section fade-up">
-  <h2>Ready to break the Tower of Babel?</h2>
-  <p>Start communicating in your natural language. No barriers, no boundaries.</p>
-  <a href="https://wa.me/972526044425?text=I%27d+like+more+information+about+LifeSync+Duet" target="_blank" class="cta-btn" style="text-decoration:none;">
+  <h2 data-i18n="cta-title"></h2>
+  <p data-i18n="cta-desc"></p>
+  <a id="cta-link" href="https://wa.me/972526044425?text=I%27d+like+more+information+about+LifeSync+Duet" target="_blank" class="cta-btn">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-    <span>Contact Us</span>
+    <span data-i18n="cta-btn"></span>
   </a>
 </section>
 
 <!-- ===== FOOTER ===== -->
 <footer>
   <div class="footer-logo">LS Duet</div>
-  <div>Communication without language barriers</div>
-  <div class="footer-by">by BEST-IT &copy; 2026</div>
+  <div data-i18n="footer-tag"></div>
+  <div class="footer-by" data-i18n="footer-by"></div>
 </footer>
 
 <script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+const translations = {
+  en: {
+    'page-title': 'LS Duet - Breaking the Tower of Babel',
+    'hero-sub': 'Breaking the Tower of Babel',
+    'hero-tag': 'Communicate in your natural language. WhatsApp messages translated automatically — write in English, the other side receives it in Chinese. They reply in Chinese, you read it in English. Simple as that.',
+    'hero-cta': 'How does it work?',
+    'babel-badge': 'Our Story',
+    'babel-title': 'Tower of Babel? We broke it',
+    'babel-desc': "In today's business world, we work with clients, suppliers and partners from around the globe. But different languages create friction - unclear messages, embarrassing translations, and deals that get stuck along the way.<br/><br/><strong>LS Duet</strong> doesn't reinvent the wheel - it simply connects people through WhatsApp, in their natural language. No barriers, no misunderstandings, no embarrassing Google Translate moments.",
+    'card1-title': 'Transparent Translation',
+    'card1-p': 'Write in your language, the other side receives it in theirs. The original message is always preserved.',
+    'card2-title': 'Per-Contact Settings',
+    'card2-p': 'Set input and output languages for each contact individually. Everyone gets exactly what they need.',
+    'card3-title': 'Natural Tone',
+    'card3-p': 'Not dry, mechanical translation. LS Duet translates the way you would write - natural, friendly, human.',
+    'card4-title': 'Professional Glossary',
+    'card4-p': "Define a glossary for each contact - brand names, professional terms and jargon that shouldn't be translated, or need to be translated precisely.",
+    'vid-title': 'See it in action',
+    'vid-desc': 'Adding a Chinese contact, sending a message in English that arrives in Chinese, and receiving a reply in Chinese translated to English',
+    'vid-src': 'duet-video-en.mp4',
+    'f1-title': 'Live WhatsApp Translation',
+    'f1-p1': 'Every incoming message is automatically translated to your language. Every outgoing message is translated to the contact\'s language. The original message is always accessible with a tap - so you can verify accuracy.',
+    'f1-p2': 'Works in groups too - with sender name and automatic source language detection.',
+    'chat-sub': 'Chat with',
+    'chat-recv1': 'Hi, how are you today?',
+    'chat-badge1': 'Translated from Chinese',
+    'chat-sent2': "Great! I wanted to ask about Tuesday's meeting",
+    'chat-badge2': 'Translated to Chinese',
+    'chat-recv3': "Sure, let's meet at 3 PM Beijing time",
+    'chat-badge3': 'Translated from Chinese',
+    'nav-chats': 'Chats',
+    'nav-contacts': 'Contacts',
+    'nav-sched': 'Schedule',
+    'nav-kb': 'Knowledge',
+    'contacts-title': 'Contacts',
+    'contacts-sub': '12 contacts',
+    'out-lang': 'EN',
+    'f2-title': 'Smart Contact Management',
+    'f2-p1': 'Each contact gets a full profile: name, company, timezone, priority level, and communication language. See exactly what time it is for them, when you last spoke, and when it\'s time to follow up.',
+    'f2-p2': 'The favorites strip at the top provides quick access to your most important contacts.',
+    'f3-badge': 'Message Scheduling',
+    'f3-title': 'Schedule Messages for the Perfect Moment',
+    'f3-p': "Write now, send when convenient. Automatically detects timezones - so if Wei is in Beijing and it's 3 AM there, schedule for a reasonable hour. The message is automatically translated before sending.",
+    'f3-kb-title': 'Personal Knowledge Base',
+    'f3-kb-p': 'Save important information from conversations - links, meeting summaries, notes. Organized by categories and tags, with quick search and a favorites system.',
+    'sched-title': 'Scheduled Messages',
+    'sched-sub': '3 messages pending',
+    'status-pending': 'Pending',
+    'status-sent': 'Sent',
+    'sched1-msg': 'Good morning! Just wanted to confirm the meeting is still on...',
+    'sched1-time': 'Tomorrow, 09:00 (15:00 Beijing time)',
+    'sched2-msg': 'Thank you so much for the shipment! Arrived on time',
+    'sched2-time': 'Today, 15:00 (21:00 Tokyo time)',
+    'sched3-msg': 'Hey! Saw the proposal, sounds great',
+    'sched3-time': 'Yesterday, 11:30 (12:30 Paris time)',
+    'kb1-title': 'Meeting Summary - Shanghai Project',
+    'kb1-snippet': 'Wei approved a budget of 50K. Deadline: end of Q2. Need to send contract by Sunday.',
+    'tag-work': 'Work',
+    'f4-badge': 'Glossary',
+    'f4-screen-title': 'Glossary',
+    'f4-desc-small': 'Terms that will not be translated or will be translated precisely in conversations with this contact.',
+    'g-entry1-sub': 'Do not translate - brand name',
+    'g-entry4-sub': 'Do not translate - acronym',
+    'g-no-trans': 'Do Not Translate',
+    'g-custom-trans': 'Custom Translation',
+    'g-add-btn': 'Add Term',
+    'g-example-label': 'Translation example with glossary:',
+    'g-example-msg': "Let's discuss the OKR of LifeSync at the next Sprint Review",
+    'g-example-note': 'OKR + LifeSync stayed as-is, Sprint Review translated per glossary',
+    'f4-title': 'Professional Terms & Glossary',
+    'f4-p1': "Every professional field has terms that shouldn't be translated - brand names, acronyms, professional jargon. And terms that need to be translated precisely, not the way Google thinks.",
+    'f4-p2': "With LS Duet's glossary, define a custom term list for each contact:",
+    'f4-li1': '<strong>Do Not Translate</strong> - the term stays as-is (brand names, acronyms)',
+    'f4-li2': '<strong>Custom Translation</strong> - define exactly how to translate each term',
+    'f4-li3': '<strong>Per contact</strong> - because "Stakeholder" translates differently in Chinese and French',
+    'f4-p3': 'The AI-powered engine identifies terms in your message and replaces them precisely according to your glossary, before the translation goes out.',
+    'howto-badge': 'User Guide',
+    'howto-title': 'How to get started?',
+    'howto-desc': "5 simple steps and you're in. Let's begin.",
+    's1-title': 'Connect your WhatsApp account',
+    's1-p': 'Open the app and tap "Connect". You\'ll receive a Pairing Code - enter it in your WhatsApp under "Linked Devices". That\'s it, the connection is secure and encrypted.',
+    's1-header': 'Connect to WhatsApp',
+    's1-code-label': 'Your pairing code:',
+    's1-code-hint': 'Enter in WhatsApp > Linked Devices',
+    's2-title': 'Import contacts & set languages',
+    's2-p': 'Import contacts directly from WhatsApp with one tap - no manual typing required. For each contact, set the input language (what language they write to you in) and the output language (what language to translate your messages into).',
+    's2-header': 'Language Settings - Wei',
+    's2-in-label': 'Input language (they write in...)',
+    's2-in-val': 'Chinese (ZH)',
+    's2-out-label': 'Output language (I write in...)',
+    's2-out-val': 'English (EN)',
+    's2-auto': 'Auto-translate',
+    's3-title': 'Start chatting!',
+    's3-p': 'Now just write in English (or any language you prefer). LS Duet will automatically translate every outgoing message to the contact\'s language, and every incoming message to yours. You can always view the original message.',
+    's3-header': 'Chat with Wei',
+    's3-msg1': "Hey, what's up?",
+    's3-msg2': 'All good! Waiting for the meeting',
+    's4-title': 'Schedule messages by timezone',
+    's4-p': "Have an important message but it's 3 AM at the recipient's location? Write the message now, pick a date and time, and LS Duet will send it right on schedule - already translated and ready.",
+    's4-header': 'New Scheduled Message',
+    's4-msg': 'Good morning! I wanted to confirm...',
+    's4-tz': '= 15:00 Beijing time',
+    's4-btn': 'Schedule Send',
+    's5-title': 'Save important info to the Knowledge Base',
+    's5-p': 'Found important information in a conversation? Long-press the message and choose "Save to Knowledge Base". The information is saved organized by categories and tags, with quick search when you need it again.',
+    's5-header': 'Knowledge Base',
+    's5-kb1-title': 'Meeting Summary',
+    's5-kb1-desc': 'Budget 50K, deadline Q2...',
+    's5-kb1-tag': 'Work',
+    's5-kb2-title': 'New Office Address',
+    's5-kb2-desc': 'Nanjing Road 42, Shanghai',
+    's5-kb2-tag': 'Contacts',
+    'langs-badge': '17 Languages',
+    'langs-title': 'Supported Translation Languages',
+    'langs-desc': 'LS Duet supports 17 languages for automatic translation. The user interface is available in 7 languages.',
+    'lname-he': 'Hebrew', 'lname-en': 'English', 'lname-ar': 'Arabic', 'lname-ru': 'Russian',
+    'lname-es': 'Spanish', 'lname-fr': 'French', 'lname-de': 'German', 'lname-zh': 'Chinese',
+    'lname-pt': 'Portuguese', 'lname-el': 'Greek', 'lname-hi': 'Hindi', 'lname-th': 'Thai',
+    'lname-am': 'Amharic', 'lname-tl': 'Filipino', 'lname-ro': 'Romanian', 'lname-ne': 'Nepali', 'lname-si': 'Sinhala',
+    'cta-title': 'Ready to break the Tower of Babel?',
+    'cta-desc': 'Start communicating in your natural language. No barriers, no boundaries.',
+    'cta-btn': 'Contact Us',
+    'cta-href': 'https://wa.me/972526044425?text=I%27d+like+more+information+about+LifeSync+Duet',
+    'footer-tag': 'Communication without language barriers',
+    'footer-by': 'by BEST-IT © 2026',
+  },
+  he: {
+    'page-title': 'LS Duet - לשבור את מגדל בבל',
+    'hero-sub': 'לשבור את מגדל בבל',
+    'hero-tag': 'תקשורת בשפה הטבעית שלך. הודעות וואטסאפ שמתורגמות אוטומטית - תכתבו בעברית, הצד השני יקבל בסינית. הם יענו בסינית, אתם תקראו בעברית. פשוט ככה.',
+    'hero-cta': 'איך זה עובד?',
+    'babel-badge': 'הסיפור שלנו',
+    'babel-title': 'מגדל בבל? שברנו אותו',
+    'babel-desc': 'בעולם העסקי של היום, אנחנו עובדים עם לקוחות, ספקים ושותפים מכל העולם. אבל שפה שונה יוצרת חיכוך - הודעות לא ברורות, תרגומים מביכים, ועסקאות שנתקעות בדרך.<br/><br/><strong>LS Duet</strong> לא ממציא את הגלגל מחדש - הוא פשוט מחבר בין אנשים דרך וואטסאפ, בשפה הטבעית שלהם. בלי מחסומים, בלי אי-הבנות, בלי תרגומי גוגל מביכים.',
+    'card1-title': 'תרגום שקוף',
+    'card1-p': 'כותבים בעברית, הצד השני מקבל בשפה שלו. ההודעה המקורית נשמרת תמיד.',
+    'card2-title': 'הגדרה לכל איש קשר',
+    'card2-p': 'תגדירו שפת כניסה ויציאה לכל איש קשר בנפרד. כל אחד מקבל את מה שהוא צריך.',
+    'card3-title': 'טון טבעי',
+    'card3-p': 'לא תרגום יבש ומכני. LS Duet מתרגם כמו שאתם היית כותבים - טבעי, חברי, אנושי.',
+    'card4-title': 'מילון מונחים מקצועי',
+    'card4-p': 'הגדירו מילון מושגים לכל איש קשר - שמות מותגים, מונחים מקצועיים וז\'רגון שלא צריך לתרגם או שצריך לתרגם בדיוק.',
+    'vid-title': 'ראו את זה בפעולה',
+    'vid-desc': 'הוספת איש קשר סיני, שליחת הודעה בעברית שמגיעה בסינית, וקבלת תשובה בסינית שמתורגמת לעברית',
+    'vid-src': 'duet-video-he.mp4',
+    'f1-title': 'שיחות וואטסאפ עם תרגום חי',
+    'f1-p1': 'כל הודעה שנכנסת מתורגמת אוטומטית לשפה שלכם. כל הודעה שיוצאת מתורגמת לשפה של איש הקשר. ההודעה המקורית תמיד נגישה בלחיצה - כדי שתוכלו לוודא שהכל מדויק.',
+    'f1-p2': 'עובד גם בקבוצות - עם שם השולח וזיהוי אוטומטי של שפת המקור.',
+    'chat-sub': 'שיחה עם',
+    'chat-recv1': 'שלום, מה שלומך היום?',
+    'chat-badge1': 'תורגם מסינית',
+    'chat-sent2': 'מצוין! רציתי לשאול לגבי הפגישה ביום שלישי',
+    'chat-badge2': 'תורגם לסינית',
+    'chat-recv3': 'כן בטח, נפגשים בשעה 3 אחה"צ שעון בייג\'ינג',
+    'chat-badge3': 'תורגם מסינית',
+    'nav-chats': 'שיחות',
+    'nav-contacts': 'אנשי קשר',
+    'nav-sched': 'תזמון',
+    'nav-kb': 'בסיס ידע',
+    'contacts-title': 'אנשי קשר',
+    'contacts-sub': '12 אנשי קשר',
+    'out-lang': 'HE',
+    'f2-title': 'ניהול אנשי קשר חכם',
+    'f2-p1': 'לכל איש קשר - פרופיל מלא: שם, חברה, אזור זמן, רמת חשיבות, ושפת תקשורת. תראו בדיוק מה השעה אצלהם, מתי דיברתם לאחרונה, ומתי הגיע הזמן לחזור אליהם.',
+    'f2-p2': 'רצועת המועדפים למעלה נותנת גישה מהירה לאנשים הכי חשובים.',
+    'f3-badge': 'תזמון הודעות',
+    'f3-title': 'תזמנו הודעות לרגע המושלם',
+    'f3-p': 'כתבו עכשיו, שלחו מתי שנוח. מזהה אוטומטית אזורי זמן - אז אם Wei בבייג\'ינג ושם 3 בלילה, תתזמנו לשעה נורמלית. ההודעה תתורגם אוטומטית לפני השליחה.',
+    'f3-kb-title': 'בסיס ידע אישי',
+    'f3-kb-p': 'שמרו מידע חשוב מתוך שיחות - קישורים, סיכומי פגישות, הערות. מאורגן לפי קטגוריות ותגיות, עם חיפוש מהיר ומערכת מועדפים.',
+    'sched-title': 'הודעות מתוזמנות',
+    'sched-sub': '3 הודעות ממתינות',
+    'status-pending': 'ממתין',
+    'status-sent': 'נשלח',
+    'sched1-msg': 'בוקר טוב! רק רציתי לוודא שהפגישה בעינה...',
+    'sched1-time': 'מחר, 09:00 (15:00 שעון בייג\'ינג)',
+    'sched2-msg': 'תודה רבה על המשלוח! הגיע בזמן',
+    'sched2-time': 'היום, 15:00 (21:00 שעון טוקיו)',
+    'sched3-msg': 'היי! ראיתי את ההצעה, נשמע מעולה',
+    'sched3-time': 'אתמול, 11:30 (12:30 שעון פריז)',
+    'kb1-title': 'סיכום פגישה - פרויקט שנגחאי',
+    'kb1-snippet': 'Wei אישר תקציב של 50K. דדליין: סוף Q2. צריך לשלוח חוזה עד יום ראשון.',
+    'tag-work': 'עבודה',
+    'f4-badge': 'מילון מונחים',
+    'f4-screen-title': 'מילון מונחים',
+    'f4-desc-small': 'מונחים שלא יתורגמו או שיתורגמו בצורה מדויקת בשיחה עם איש הקשר הזה.',
+    'g-entry1-sub': 'לא לתרגם - שם מותג',
+    'g-entry4-sub': 'לא לתרגם - ראשי תיבות',
+    'g-no-trans': 'לא לתרגם',
+    'g-custom-trans': 'תרגום מותאם',
+    'g-add-btn': 'הוסף מונח',
+    'g-example-label': 'דוגמה לתרגום עם מילון:',
+    'g-example-msg': 'נדבר על ה-OKR של LifeSync ב-Sprint Review הבא',
+    'g-example-note': 'OKR + LifeSync נשארו כמו שהם, Sprint Review תורגם לפי המילון',
+    'f4-title': 'מילון מושגים ומונחים מקצועיים',
+    'f4-p1': 'בכל תחום מקצועי יש מונחים שלא צריך לתרגם - שמות מותגים, ראשי תיבות, ז\'רגון מקצועי. ויש מונחים שצריך לתרגם בצורה מדויקת ולא כמו שגוגל חושב.',
+    'f4-p2': 'עם המילון של LS Duet, תגדירו לכל איש קשר רשימת מונחים מותאמת אישית:',
+    'f4-li1': '<strong>לא לתרגם</strong> - המונח יישאר כמו שהוא (שמות מותגים, ראשי תיבות)',
+    'f4-li2': '<strong>תרגום מותאם</strong> - תגדירו בדיוק איך לתרגם כל מונח',
+    'f4-li3': '<strong>לכל איש קשר בנפרד</strong> - כי "Stakeholder" מתורגם אחרת בסינית ובצרפתית',
+    'f4-p3': 'המנוע המבוסס AI מזהה את המונחים בהודעה ומחליף אותם בדיוק לפי המילון שלכם, לפני שהתרגום יוצא.',
+    'howto-badge': 'מדריך שימוש',
+    'howto-title': 'איך מתחילים?',
+    'howto-desc': '5 צעדים פשוטים ואתם בפנים. בואו נתחיל.',
+    's1-title': 'התחברו עם חשבון הוואטסאפ שלכם',
+    's1-p': 'פתחו את האפליקציה ולחצו על "התחבר". תקבלו קוד זיווג (Pairing Code) - הכניסו אותו בוואטסאפ שלכם תחת "מכשירים מקושרים". זה הכל, החיבור מאובטח ומוצפן.',
+    's1-header': 'התחברות לוואטסאפ',
+    's1-code-label': 'קוד הזיווג שלכם:',
+    's1-code-hint': 'הכניסו בוואטסאפ > מכשירים מקושרים',
+    's2-title': 'ייבאו את אנשי הקשר והגדירו שפות',
+    's2-p': 'ייבאו את אנשי הקשר ישירות מהוואטסאפ בלחיצה אחת - בלי להקליד שום דבר ידנית. לכל איש קשר, הגדירו את שפת הכניסה (באיזו שפה הם כותבים לכם) ואת שפת היציאה (באיזו שפה לתרגם את מה שאתם כותבים להם).',
+    's2-header': 'הגדרות שפה - Wei',
+    's2-in-label': 'שפת כניסה (הוא כותב ב...)',
+    's2-in-val': 'סינית (ZH)',
+    's2-out-label': 'שפת יציאה (אני כותב ב...)',
+    's2-out-val': 'עברית (HE)',
+    's2-auto': 'תרגום אוטומטי',
+    's3-title': 'התחילו לשוחח!',
+    's3-p': 'עכשיו פשוט כתבו בעברית (או בכל שפה שנוחה לכם). LS Duet יתרגם אוטומטית כל הודעה יוצאת לשפה של איש הקשר, וכל הודעה נכנסת לשפה שלכם. תמיד תוכלו לראות את ההודעה המקורית.',
+    's3-header': 'שיחה עם Wei',
+    's3-msg1': 'היי, מה נשמע?',
+    's3-msg2': 'הכל טוב! מחכה לפגישה',
+    's4-title': 'תזמנו הודעות לפי אזור הזמן',
+    's4-p': 'יש לכם הודעה חשובה אבל עכשיו 3 בלילה אצל הנמען? כתבו את ההודעה עכשיו, בחרו תאריך ושעה, וLS Duet ישלח אותה בדיוק בזמן - כבר מתורגמת ומוכנה.',
+    's4-header': 'הודעה מתוזמנת חדשה',
+    's4-msg': 'בוקר טוב! רציתי לאשר...',
+    's4-tz': '= 15:00 שעון בייג\'ינג',
+    's4-btn': 'תזמן שליחה',
+    's5-title': 'שמרו מידע חשוב לבסיס הידע',
+    's5-p': 'מצאתם מידע חשוב בשיחה? לחצו לחיצה ארוכה על ההודעה ובחרו "שמור לבסיס ידע". המידע יישמר מאורגן לפי קטגוריות ותגיות, עם חיפוש מהיר כשתצטרכו אותו שוב.',
+    's5-header': 'בסיס ידע',
+    's5-kb1-title': 'סיכום פגישה',
+    's5-kb1-desc': 'תקציב 50K, דדליין Q2...',
+    's5-kb1-tag': 'עבודה',
+    's5-kb2-title': 'כתובת המשרד החדש',
+    's5-kb2-desc': 'Nanjing Road 42, Shanghai',
+    's5-kb2-tag': 'אנשי קשר',
+    'langs-badge': '17 שפות',
+    'langs-title': 'שפות נתמכות לתרגום',
+    'langs-desc': 'LS Duet תומך ב-17 שפות לתרגום אוטומטי. ממשק המשתמש זמין ב-7 שפות.',
+    'lname-he': 'עברית', 'lname-en': 'אנגלית', 'lname-ar': 'ערבית', 'lname-ru': 'רוסית',
+    'lname-es': 'ספרדית', 'lname-fr': 'צרפתית', 'lname-de': 'גרמנית', 'lname-zh': 'סינית',
+    'lname-pt': 'פורטוגזית', 'lname-el': 'יוונית', 'lname-hi': 'הינדית', 'lname-th': 'תאילנדית',
+    'lname-am': 'אמהרית', 'lname-tl': 'פיליפינית', 'lname-ro': 'רומנית', 'lname-ne': 'נפאלית', 'lname-si': 'סינהלית',
+    'cta-title': 'מוכנים לשבור את מגדל בבל?',
+    'cta-desc': 'התחילו לתקשר בשפה הטבעית שלכם. בלי מחסומים, בלי גבולות.',
+    'cta-btn': 'צרו קשר',
+    'cta-href': 'https://wa.me/972526044425?text=%D7%90%D7%A9%D7%9E%D7%97+%D7%9C%D7%A7%D7%91%D7%9C+%D7%A2%D7%95%D7%93+%D7%A4%D7%A8%D7%98%D7%99%D7%9D+%D7%A2%D7%9C+LifeSync+Duet',
+    'footer-tag': 'תקשורת בלי גבולות שפה',
+    'footer-by': 'by BEST-IT © 2026',
+  }
+};
 
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+function setLang(lang) {
+  const t = translations[lang];
+  if (!t) return;
+
+  // html attributes
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+  document.title = t['page-title'];
+
+  // text nodes
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+
+  // html nodes
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.dataset.i18nHtml;
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+
+  // CTA href
+  const ctaLink = document.getElementById('cta-link');
+  if (ctaLink && t['cta-href']) ctaLink.href = t['cta-href'];
+
+  // video
+  const src = document.getElementById('demo-source');
+  const vid = document.getElementById('demo-video');
+  if (src && vid && t['vid-src']) {
+    src.src = t['vid-src'];
+    vid.load();
+  }
+
+  // toggle buttons
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-he').classList.toggle('active', lang === 'he');
+
+  // persist
+  try { localStorage.setItem('ls-lang', lang); } catch(e) {}
+}
+
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Init
+const saved = (() => { try { return localStorage.getItem('ls-lang'); } catch(e) { return null; } })();
+setLang(saved === 'he' ? 'he' : 'en');
 </script>
 </body>
 </html>
