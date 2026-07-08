@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Delete your LS Duet account</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --life-blue: #4A9FD9;
+      --gray-dark: #808291;
+      --gray-light: #D4D6DF;
+      --text: #1f2937;
+      --bg: #ffffff;
+      --panel: #f7f9fb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Heebo', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      margin: 0;
+      line-height: 1.6;
+    }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 48px 24px 80px; }
+    header { border-bottom: 3px solid var(--life-blue); padding-bottom: 20px; margin-bottom: 32px; }
+    h1 { font-size: 30px; font-weight: 700; margin: 0 0 12px; color: var(--text); }
+    h2 { font-size: 21px; font-weight: 700; margin: 36px 0 12px; color: var(--life-blue); }
+    .meta { color: var(--gray-dark); font-size: 14px; margin: 0; }
+    .meta strong { color: var(--text); font-weight: 500; }
+    p { margin: 12px 0; }
+    ul, ol { margin: 12px 0; padding-inline-start: 24px; }
+    li { margin: 8px 0; }
+    a { color: var(--life-blue); }
+    code { background: var(--panel); padding: 2px 6px; border-radius: 4px; font-size: 0.92em; }
+    .note {
+      background: var(--panel);
+      border-left: 4px solid var(--life-blue);
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin: 20px 0;
+      font-size: 15px;
+    }
+    footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--gray-light); color: var(--gray-dark); font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Delete your LS Duet account</h1>
+      <p class="meta"><strong>App:</strong> LS Duet &nbsp;·&nbsp; <strong>Developer:</strong> Best-IT &nbsp;·&nbsp; <strong>Last updated:</strong> July 8, 2026</p>
+    </header>
+
+    <p>This page explains how to request deletion of your <strong>LS Duet</strong> account and the personal data associated with it, what data is deleted, what (if anything) is retained, and for how long.</p>
+
+    <h2>How to request account deletion</h2>
+    <p>You can request that your LS Duet account and its associated data be deleted in either of these ways:</p>
+    <ol>
+      <li><strong>Email us</strong> — send a request from the email address associated with your LS Duet account to <strong>info@lifesync-connect.com</strong> with the subject line <strong>"Delete my account"</strong>. Sending from your account email lets us verify the request. If you can only write from another address, include the account email in the message.</li>
+      <li><strong>From within the app</strong> — open <strong>Settings</strong> and use the account/logout area to contact us for closure. <em>(A one-tap in-app "Delete account" button is being added; until then, use the email method above, which we action promptly.)</em></li>
+    </ol>
+    <p>We will verify the request and complete the deletion. You will receive a confirmation once it is done.</p>
+
+    <h2>What gets deleted</h2>
+    <p>When your account is deleted, we permanently remove all of the following server-side data:</p>
+    <ul>
+      <li>Your <strong>account / sign-in identity</strong> (Firebase Authentication user — email, display name, and account identifier).</li>
+      <li>Your <strong>WhatsApp session and pairing state</strong>, and your session is unlinked.</li>
+      <li><strong>Message data</strong> associated with your account or session stored on our servers.</li>
+      <li>Your <strong>per-contact translation settings</strong>.</li>
+      <li>Your <strong>scheduled messages</strong>.</li>
+      <li>Your <strong>push-notification tokens</strong> and notification preferences.</li>
+      <li>Your entire <strong>user profile record</strong> on our servers (the <code>users/{account}</code> data tree).</li>
+    </ul>
+    <div class="note">
+      <strong>Data on your device:</strong> Your local content (message history, contacts, tasks, reminders, and knowledge items) is stored only on your device. It is removed when you <strong>uninstall the app</strong> or clear the app's data — deleting your account does not by itself erase the copy held locally on your device.
+    </div>
+
+    <h2>What is retained, and for how long</h2>
+    <ul>
+      <li>For security, audit, and abuse-prevention purposes, we retain a <strong>minimal record that the account was closed</strong> (the account email address and the closure date). This record contains no message content, contacts, or profile data.</li>
+      <li><strong>Transient message documents</strong> that pass through our servers are automatically deleted within a short rolling window (on the order of ~48 hours) as part of normal operation.</li>
+      <li>Deletion requests are actioned <strong>within 30 days</strong> of a verified request; in practice this is usually completed much sooner.</li>
+    </ul>
+
+    <h2>Questions</h2>
+    <p>If you have any questions about account deletion or your data, contact us at <strong>info@lifesync-connect.com</strong>. See also our <a href="https://lifesync-connect.com/privacy-policy">Privacy Policy</a>.</p>
+
+    <footer>© 2026 Best-IT · LS Duet</footer>
+  </div>
+</body>
+</html>
