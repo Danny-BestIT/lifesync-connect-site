@@ -4,510 +4,619 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LS Duet - Breaking the Tower of Babel</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%234A9FD9'/%3E%3Cstop offset='100%25' stop-color='%23b4c46a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='url(%23g)'/%3E%3Ctext x='50' y='67' text-anchor='middle' font-family='Arial,sans-serif' font-weight='700' font-size='50' fill='white'%3ELS%3C/text%3E%3C/svg%3E">
-  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <meta name="description" content="LS Duet translates your WhatsApp conversations automatically - write in your language, the other side reads it in theirs. 31 translation languages." />
+  <meta name="theme-color" content="#F5F6F8" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='33' fill='%231F2A37'/%3E%3Cg transform='translate(19 19) scale(1.192)' fill='none' stroke-linecap='round'%3E%3Cpath d='M8 12a6 6 0 0 1 6-6h16a6 6 0 0 1 6 6v10a6 6 0 0 1-6 6H16l-6 5v-6.2A6 6 0 0 1 8 22z' fill='%232F5D8A'/%3E%3Cpath d='M14 13h14M14 18h10' stroke='%23E4E9F0' stroke-width='2.4'/%3E%3Cpath d='M44 26a6 6 0 0 0-6-6H24a6 6 0 0 0-6 6v8a6 6 0 0 0 6 6h12l6 5v-5.6A6 6 0 0 0 44 34z' fill='%231F2A37' stroke='%23E4E9F0' stroke-width='2.2' stroke-linejoin='round'/%3E%3Cpath d='M24 28h12M24 33h8' stroke='%23D9C6A5' stroke-width='2.4'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
+    /* Brand v2 tokens - LS-Duet DESIGN_SYSTEM.md section 2 (approved 2026-10-09) */
     :root {
-      --life-blue: #4A9FD9;
-      --life-blue-dark: #3A8BC5;
-      --life-sand: #C4B49A;
-      --life-gray-light: #D4D6DF;
-      --life-gray-dark: #808291;
-      --life-green: #b4c46a;
-      --whatsapp: #25D366;
-      --bg-primary: #ffffff;
-      --bg-secondary: #f8fafc;
-      --bg-tertiary: #f1f5f9;
-      --text-primary: #1e293b;
-      --text-secondary: #64748b;
-      --radius-card: 16px;
-      --radius-page: 28px;
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-      --shadow-md: 0 2px 8px rgba(0,0,0,0.08);
-      --shadow-lg: 0 4px 16px rgba(0,0,0,0.10);
-      --shadow-xl: 0 8px 32px rgba(0,0,0,0.12);
+      --canvas: #F5F6F8;
+      --canvas-chat: #ECEFF3;
+      --surface: #FFFFFF;
+      --border: #D8DDE4;
+      --divider: #E3E7EC;
+      --divider-soft: #EDF0F3;
+      --text-primary: #1F2A37;
+      --text-body: #2D3642;
+      --text-secondary: #5B6573;
+      --text-on-ink-muted: #A7B0BC;
+      --ink: #1F2A37;
+      --ink-raised: #2E3A48;
+      --ink-line: #334150;
+      --accent: #2F5D8A;
+      --accent-pressed: #234870;
+      --accent-on-accent: #C9D8E8;
+      --sand: #D9C6A5;
+      --sand-ink: #7A5A2E;
+      --sand-tint: #F3EBDD;
+      --mist: #E4E9F0;
+      --slate: #C9D3DF;
+      --sage: #D5DED8;
+      --success: #19B35A;
+      --success-bg: #E3F7EA;
+      --success-fg: #0F7A3D;
+      --shadow: 0 12px 30px rgba(31,42,55,0.18);
+      --font: 'Rubik', system-ui, -apple-system, 'Segoe UI', sans-serif;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
+    html { scroll-behavior: smooth; }
     body {
-      font-family: 'Heebo', sans-serif;
-      background: var(--bg-secondary);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.5;
+      background: var(--canvas);
       color: var(--text-primary);
-      line-height: 1.7;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
+    a { color: inherit; }
+    svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+    /* Direction-aware glyphs (back arrow, send) */
+    html[dir="rtl"] .flip { transform: scaleX(-1); }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
 
-    /* ===== LANGUAGE SWITCHER ===== */
-    #lang-switcher {
-      position: fixed;
-      top: 16px;
-      right: 16px;
-      z-index: 9999;
-      display: flex;
-      direction: ltr;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-radius: 9999px;
-      padding: 4px;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.18);
-      gap: 2px;
-    }
-    .lang-btn {
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      padding: 7px 14px;
-      border-radius: 9999px;
-      font-family: 'Heebo', sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      transition: all 0.2s;
-      line-height: 1;
-    }
-    .lang-btn.active {
-      background: var(--life-blue);
-      color: white;
-    }
-    .lang-btn:hover:not(.active) {
-      background: var(--bg-tertiary);
-    }
+    /* ===== LOGO (DESIGN_SYSTEM 8.13) ===== */
+    .logo { background: var(--ink); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .logo svg { width: 62%; height: 62%; }
+
+    /* ===== TOP BAR ===== */
+    .topbar { position: sticky; top: 0; z-index: 50; background: rgba(245,246,248,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--divider); }
+    .topbar .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-size: 18px; line-height: 24px; font-weight: 700; }
+    .brand .logo { width: 40px; height: 40px; border-radius: 13px; }
+    /* Segmented control (DESIGN_SYSTEM 8.15) */
+    .segmented { display: flex; background: var(--mist); border-radius: 16px; padding: 4px; gap: 2px; direction: ltr; }
+    .segmented button { border: none; background: transparent; cursor: pointer; font-family: var(--font); font-size: 14px; line-height: 20px; font-weight: 500; color: var(--text-secondary); padding: 8px 14px; border-radius: 12px; min-height: 40px; transition: background 0.2s, color 0.2s; }
+    .segmented button[aria-pressed="true"] { background: var(--surface); color: var(--ink); font-weight: 700; box-shadow: 0 1px 2px rgba(31,42,55,0.10); }
+    .segmented button:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    /* ===== BUTTONS (DESIGN_SYSTEM 8.6) ===== */
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-family: var(--font); font-size: 17px; line-height: 22px; font-weight: 700; min-height: 56px; padding: 0 28px; border-radius: 18px; text-decoration: none; cursor: pointer; border: none; transition: transform 0.15s, background 0.2s; }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: var(--ink); color: var(--mist); }
+    .btn-primary:hover { background: var(--ink-raised); }
+    .btn-outline { background: var(--surface); color: var(--ink); border: 1.5px solid var(--ink); }
+    .btn-outline:hover { background: var(--mist); }
+    .btn-on-ink { background: var(--mist); color: var(--ink); }
+    .btn-on-ink:hover { background: #FFFFFF; }
+
+    /* ===== PILLS / BADGES (DESIGN_SYSTEM 8.12) ===== */
+    .pill { display: inline-flex; align-items: center; gap: 8px; border-radius: 999px; font-size: 13px; line-height: 18px; font-weight: 700; padding: 7px 14px; }
+    .pill-neutral { background: var(--mist); color: var(--ink); }
+    .pill-neutral .dot { width: 7px; height: 7px; border-radius: 999px; background: var(--accent); }
+    .pill-info { background: var(--sand-tint); color: var(--sand-ink); }
+    .pill-success { background: var(--success-bg); color: var(--success-fg); }
+    .pill-success .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--success); }
+    .pill svg.i { width: 16px; height: 16px; }
 
     /* ===== HERO ===== */
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #4A9FD9 0%, #3A8BC5 40%, #b4c46a 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -120px; left: -80px;
-      width: 400px; height: 400px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.08);
-    }
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: -60px; right: -40px;
-      width: 300px; height: 300px;
-      border-radius: 50%;
-      background: rgba(196,180,154,0.12);
-    }
-    .hero-deco-1 { position: absolute; top: 15%; right: 8%; width: 180px; height: 180px; border-radius: 50%; background: rgba(255,255,255,0.06); animation: float 8s ease-in-out infinite; }
-    .hero-deco-2 { position: absolute; bottom: 20%; left: 5%; width: 120px; height: 120px; border-radius: 50%; background: rgba(196,180,154,0.1); animation: float 6s ease-in-out infinite reverse; }
-    .hero-deco-3 { position: absolute; top: 60%; right: 15%; width: 80px; height: 80px; border-radius: 50%; background: rgba(255,255,255,0.05); animation: float 10s ease-in-out infinite 2s; }
+    .hero { padding: 64px 0 88px; }
+    .hero .wrap { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: center; }
+    .hero h1 { font-size: 56px; line-height: 60px; font-weight: 700; letter-spacing: -1px; margin: 20px 0 16px; }
+    .hero .tagline { font-size: 18px; line-height: 28px; color: var(--text-secondary); max-width: 560px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+    .hero-langs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; }
+    .chip { display: inline-flex; align-items: center; height: 36px; padding: 0 14px; border-radius: 999px; background: var(--surface); border: 1.5px solid var(--border); font-size: 14px; line-height: 20px; font-weight: 500; color: var(--ink); }
+    .chip.more { background: var(--ink); border-color: var(--ink); color: var(--mist); font-weight: 700; text-decoration: none; }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-20px) scale(1.05); }
-    }
+    /* ===== SECTIONS ===== */
+    section { padding: 88px 0; }
+    .section-head { text-align: center; max-width: 720px; margin: 0 auto 48px; }
+    .section-head h2 { font-size: 36px; line-height: 44px; font-weight: 700; margin: 16px 0 12px; letter-spacing: -0.5px; }
+    .section-head p { font-size: 17px; line-height: 28px; color: var(--text-secondary); }
+    .on-surface { background: var(--surface); }
 
-    .hero-content {
-      position: relative; z-index: 2;
-      text-align: center; color: white;
-      padding: 40px 20px; max-width: 800px;
-    }
-    .hero-logo { width: 100px; height: 100px; margin: 0 auto 24px; border-radius: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
-    .hero-title { font-size: 56px; font-weight: 900; margin-bottom: 8px; letter-spacing: -1px; text-shadow: 0 2px 20px rgba(0,0,0,0.15); }
-    .hero-subtitle { font-size: 28px; font-weight: 300; opacity: 0.95; margin-bottom: 16px; }
-    .hero-tagline { font-size: 18px; font-weight: 400; opacity: 0.85; max-width: 550px; margin: 0 auto 40px; line-height: 1.8; }
-    .hero-cta {
-      display: inline-flex; align-items: center; gap: 10px;
-      background: white; color: var(--life-blue);
-      font-family: 'Heebo', sans-serif; font-size: 18px; font-weight: 700;
-      padding: 16px 40px; border-radius: 9999px; border: none; cursor: pointer;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.15); transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .hero-cta:hover { transform: scale(1.05); box-shadow: 0 6px 32px rgba(0,0,0,0.2); }
-    .hero-wave { position: absolute; bottom: 0; left: 0; width: 100%; height: 80px; }
-    .hero-languages { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 32px; }
-    .lang-pill {
-      background: rgba(255,255,255,0.18); backdrop-filter: blur(8px);
-      padding: 8px 20px; border-radius: 9999px; font-size: 14px; font-weight: 500;
-      border: 1px solid rgba(255,255,255,0.25); color: white;
-    }
+    /* Cards (DESIGN_SYSTEM 8.10): flat, r24, hierarchy from surface color */
+    .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .card { background: var(--canvas); border-radius: 24px; padding: 24px; }
+    .tile { width: 48px; height: 48px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+    .tile svg.i { width: 24px; height: 24px; }
+    .tile.ink { background: var(--ink); color: var(--mist); }
+    .tile.accent { background: var(--accent); color: #FFFFFF; }
+    .tile.mist { background: var(--mist); color: var(--ink); }
+    .tile.sand { background: var(--sand-tint); color: var(--sand-ink); }
+    .card h3 { font-size: 18px; line-height: 24px; font-weight: 700; margin-bottom: 8px; }
+    .card p { font-size: 15px; line-height: 23px; color: var(--text-secondary); }
 
-    /* ===== BABEL SECTION ===== */
-    .babel-section {
-      padding: 100px 20px; background: var(--bg-primary);
-      text-align: center; position: relative; overflow: hidden;
-    }
-    .babel-section::before {
-      content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-      width: 1px; height: 80px; background: linear-gradient(to bottom, var(--life-blue), transparent);
-    }
-    .section-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: rgba(74,159,217,0.1); color: var(--life-blue);
-      padding: 8px 20px; border-radius: 9999px; font-size: 14px; font-weight: 600;
-      margin-bottom: 20px; border: 1px solid rgba(74,159,217,0.2);
-    }
-    .section-title { font-size: 42px; font-weight: 800; margin-bottom: 16px; color: var(--text-primary); }
-    .section-desc { font-size: 18px; color: var(--text-secondary); max-width: 680px; margin: 0 auto 60px; line-height: 1.8; }
-    .babel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; max-width: 1100px; margin: 0 auto; }
-    .babel-card {
-      background: var(--bg-primary); border: 1px solid var(--life-gray-light);
-      border-radius: var(--radius-card); padding: 32px 24px; text-align: center;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .babel-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-    .babel-card-icon { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
-    .babel-card-icon.blue { background: rgba(74,159,217,0.12); color: var(--life-blue); }
-    .babel-card-icon.sand { background: rgba(196,180,154,0.18); color: var(--life-sand); }
-    .babel-card-icon.green { background: rgba(180,196,106,0.15); color: #8a9a3f; }
-    .babel-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
-    .babel-card p { font-size: 15px; color: var(--text-secondary); line-height: 1.7; }
+    /* Video */
+    .video-frame { max-width: 380px; margin: 0 auto; border-radius: 28px; overflow: hidden; background: var(--surface); }
+    .video-frame video { width: 100%; display: block; }
 
-    /* ===== FEATURES ===== */
-    .features-section { padding: 100px 20px; background: var(--bg-secondary); }
-    .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; max-width: 1100px; margin: 0 auto; align-items: center; }
-    .feature-text h3 { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
-    .feature-text p { font-size: 16px; color: var(--text-secondary); line-height: 1.8; }
+    /* Features */
+    .feature { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+    .feature.reverse .feature-media { order: -1; }
+    .feature-text h3 { font-size: 32px; line-height: 40px; font-weight: 700; margin: 16px 0 14px; letter-spacing: -0.5px; }
+    .feature-text p { font-size: 17px; line-height: 28px; color: var(--text-secondary); }
+    .feature-text p + p { margin-top: 12px; }
+    .feature-text ul { list-style: none; margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .feature-text li { display: flex; gap: 12px; font-size: 16px; line-height: 24px; color: var(--text-secondary); }
+    .feature-text li strong { color: var(--ink); font-weight: 700; }
+    .feature-text li .bullet { width: 24px; height: 24px; border-radius: 8px; background: var(--mist); color: var(--ink); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0; }
+    .feature-text li .bullet svg.i { width: 14px; height: 14px; stroke-width: 2.6; }
+    .feature-sub { margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--divider); }
+    .feature-sub h3 { font-size: 24px; line-height: 30px; }
 
-    /* ===== PHONE MOCKUP ===== */
-    .phone-mockup { width: 280px; margin: 0 auto; background: #1a1a1a; border-radius: 36px; padding: 12px; box-shadow: var(--shadow-xl), 0 0 0 2px #333; position: relative; }
-    .phone-notch { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 100px; height: 24px; background: #1a1a1a; border-radius: 0 0 16px 16px; z-index: 10; }
-    .phone-screen { background: white; border-radius: 28px; overflow: hidden; min-height: 520px; }
-    .screen-header { background: var(--life-blue); color: white; padding: 36px 16px 16px; border-radius: 0 0 var(--radius-page) var(--radius-page); position: relative; overflow: hidden; }
-    .screen-header::before { content: ''; position: absolute; top: -20px; left: -20px; width: 100px; height: 100px; border-radius: 50%; background: rgba(255,255,255,0.08); }
-    .screen-header::after { content: ''; position: absolute; bottom: -10px; right: -10px; width: 70px; height: 70px; border-radius: 50%; background: rgba(196,180,154,0.08); }
-    .screen-header-title { font-size: 20px; font-weight: 700; position: relative; z-index: 1; }
-    .screen-header-subtitle { font-size: 12px; opacity: 0.8; position: relative; z-index: 1; }
+    /* ===== PHONE MOCKUP (app v2 screens, scaled) ===== */
+    .phone { width: 300px; margin: 0 auto; background: var(--ink); border-radius: 46px; padding: 10px; box-shadow: var(--shadow); }
+    .screen { position: relative; height: 610px; border-radius: 36px; overflow: hidden; background: var(--canvas); display: flex; flex-direction: column; font-size: 13px; line-height: 18px; }
+    .statusbar { height: 34px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-size: 12px; font-weight: 700; direction: ltr; }
+    .statusbar .sb-icons { display: flex; gap: 4px; align-items: center; }
+    .statusbar .sb-icons span { display: block; background: currentColor; border-radius: 2px; }
+    .sc-body { flex: 1; overflow: hidden; padding: 0 14px; }
+    .sc-large-title { display: flex; align-items: center; justify-content: space-between; padding: 10px 2px 12px; }
+    .sc-large-title .t { font-size: 25px; line-height: 30px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    .sc-large-title .count { font-size: 12px; line-height: 16px; font-weight: 700; background: var(--mist); border-radius: 999px; padding: 3px 9px; }
+    .hdr-btn { width: 40px; height: 40px; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
+    .hdr-btn.primary { background: var(--ink); color: var(--mist); }
+    .hdr-btn.outline { background: var(--surface); border: 1.5px solid var(--border); color: var(--ink); }
+    .hdr-btn svg.i { width: 19px; height: 19px; stroke-width: 2.2; }
+    .sc-search { height: 42px; border-radius: 14px; background: var(--surface); border: 1.5px solid var(--border); display: flex; align-items: center; gap: 8px; padding: 0 12px; color: var(--text-secondary); font-size: 14px; }
+    .sc-search svg.i { width: 17px; height: 17px; }
+    .sc-chips { display: flex; gap: 6px; margin: 10px 0 4px; overflow: hidden; }
+    .sc-chip { height: 30px; padding: 0 12px; border-radius: 999px; background: var(--surface); border: 1.5px solid var(--border); font-size: 12.5px; font-weight: 500; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+    .sc-chip.on { background: var(--ink); border-color: var(--ink); color: var(--mist); font-weight: 700; }
+    .sc-chip .n { background: var(--sand); color: var(--ink); border-radius: 999px; font-size: 10.5px; font-weight: 700; padding: 0 6px; line-height: 16px; }
 
-    /* Chat */
-    .chat-area { padding: 12px; display: flex; flex-direction: column; gap: 10px; }
-    .chat-bubble { max-width: 85%; padding: 10px 14px; border-radius: 18px; font-size: 13px; line-height: 1.5; position: relative; }
-    .chat-bubble .original { font-size: 11px; color: var(--text-secondary); border-top: 1px solid rgba(0,0,0,0.08); margin-top: 6px; padding-top: 4px; }
-    .chat-bubble .time { font-size: 10px; color: var(--life-gray-dark); margin-top: 4px; }
-    .translation-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; color: var(--life-blue); background: rgba(74,159,217,0.08); padding: 2px 8px; border-radius: 9999px; margin-top: 4px; }
+    /* Avatar squircle: radius ~ size/3 */
+    .av { width: 44px; height: 44px; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; flex-shrink: 0; position: relative; }
+    .av.f1 { background: var(--accent); color: #FFFFFF; }
+    .av.f2 { background: var(--ink); color: var(--mist); }
+    .av.f3 { background: var(--mist); color: var(--ink); }
+    .av.f4 { background: var(--slate); color: var(--ink); }
+    .av.f5 { background: var(--sage); color: var(--ink); }
+    .av.f6 { background: var(--sand); color: var(--ink); }
+    .av .online { position: absolute; bottom: -2px; inset-inline-start: -2px; width: 13px; height: 13px; border-radius: 999px; background: var(--success); border: 3px solid var(--canvas); }
 
-    /* LTR chat alignment */
-    html[dir="ltr"] .chat-bubble.sent { align-self: flex-end; background: #dcf8c6; color: #1e293b; border-bottom-right-radius: 4px; }
-    html[dir="ltr"] .chat-bubble.received { align-self: flex-start; background: var(--bg-tertiary); color: #1e293b; border-bottom-left-radius: 4px; }
-    html[dir="ltr"] .chat-bubble .time { text-align: right; }
+    /* List rows (DESIGN_SYSTEM 8.4) */
+    .row { display: flex; align-items: center; gap: 12px; padding: 10px 2px; border-bottom: 1px solid var(--divider); }
+    .row:last-child { border-bottom: none; }
+    .row-main { flex: 1; min-width: 0; }
+    .row-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+    .row-name { font-size: 14.5px; line-height: 19px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .row.unread .row-name { font-weight: 700; }
+    .row-time { font-size: 11px; line-height: 14px; font-weight: 500; color: var(--text-secondary); flex-shrink: 0; }
+    .row.unread .row-time { color: var(--accent); font-weight: 700; }
+    .row-bottom { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 3px; }
+    .row-prev { font-size: 12.5px; line-height: 17px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 4px; min-width: 0; }
+    .row-prev span { overflow: hidden; text-overflow: ellipsis; }
+    .row-prev svg.i { width: 13px; height: 13px; }
+    .badge { min-width: 20px; height: 20px; border-radius: 999px; background: var(--accent); color: #FFFFFF; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; padding: 0 6px; flex-shrink: 0; }
+    .lang-tag { font-size: 10.5px; line-height: 14px; font-weight: 700; padding: 3px 8px; border-radius: 999px; background: var(--canvas); border: 1px solid var(--divider); color: var(--text-secondary); direction: ltr; white-space: nowrap; }
+    .star { color: var(--sand); }
+    .star svg.i { width: 15px; height: 15px; fill: var(--sand); stroke: var(--sand); }
 
-    /* RTL chat alignment */
-    html[dir="rtl"] .chat-bubble.sent { align-self: flex-start; background: #dcf8c6; color: #1e293b; border-bottom-left-radius: 4px; }
-    html[dir="rtl"] .chat-bubble.received { align-self: flex-end; background: var(--bg-tertiary); color: #1e293b; border-bottom-right-radius: 4px; }
-    html[dir="rtl"] .chat-bubble .time { text-align: left; }
+    /* Floating bottom nav (DESIGN_SYSTEM 8.5) */
+    .sc-nav { position: absolute; left: 10px; right: 10px; bottom: 10px; height: 58px; border-radius: 20px; background: var(--ink); display: flex; padding: 5px; gap: 2px; box-shadow: var(--shadow); }
+    .sc-nav div { flex: 1; border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: var(--text-on-ink-muted); font-size: 9.5px; line-height: 12px; font-weight: 500; }
+    .sc-nav div svg.i { width: 18px; height: 18px; }
+    .sc-nav div.on { background: var(--mist); color: var(--ink); font-weight: 700; }
 
-    /* Contact card */
-    .contact-card-phone { margin: 8px 12px; padding: 12px; background: white; border: 1px solid var(--life-gray-light); border-radius: 14px; display: flex; align-items: center; gap: 10px; }
-    .contact-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: white; flex-shrink: 0; }
-    .contact-info { flex: 1; min-width: 0; }
-    .contact-name { font-size: 14px; font-weight: 600; }
-    .contact-detail { font-size: 11px; color: var(--text-secondary); }
-    .contact-langs { display: flex; gap: 4px; }
-    .contact-lang-tag { font-size: 10px; padding: 2px 8px; border-radius: 9999px; font-weight: 500; }
-    .contact-lang-tag.in { background: rgba(74,159,217,0.1); color: var(--life-blue); }
-    .contact-lang-tag.out { background: rgba(180,196,106,0.15); color: #6b7a2e; }
+    /* Chat (DESIGN_SYSTEM 8.11) */
+    .chat-hdr { background: var(--ink); color: #FFFFFF; border-radius: 0 0 26px 26px; flex-shrink: 0; }
+    .chat-hdr .statusbar { color: var(--mist); }
+    .chat-hdr-row { display: flex; align-items: center; gap: 10px; padding: 4px 14px 16px; }
+    .chat-hdr .hdr-btn { background: var(--ink-raised); color: var(--mist); width: 36px; height: 36px; border-radius: 12px; }
+    .chat-hdr .hdr-btn svg.i { width: 18px; height: 18px; }
+    .chat-hdr .av { width: 38px; height: 38px; border-radius: 13px; font-size: 14px; }
+    .chat-hdr-name { font-size: 15px; line-height: 20px; font-weight: 700; }
+    .chat-hdr-sub { font-size: 11px; line-height: 14px; color: var(--text-on-ink-muted); display: flex; align-items: center; gap: 4px; white-space: nowrap; overflow: hidden; }
+    .chat-hdr-sub svg.i { width: 12px; height: 12px; }
+    .chat-body { flex: 1; background: var(--canvas-chat); padding: 12px 12px 0; display: flex; flex-direction: column; gap: 8px; overflow: hidden; }
+    .date-chip { align-self: center; background: var(--surface); border-radius: 999px; font-size: 10.5px; line-height: 14px; font-weight: 700; color: var(--text-secondary); padding: 4px 12px; }
+    .bubble { max-width: 84%; padding: 8px 12px; font-size: 13px; line-height: 19px; }
+    .bubble.in { align-self: flex-start; background: var(--surface); color: var(--ink); border-radius: 18px 18px 18px 6px; }
+    .bubble.out { align-self: flex-end; background: var(--accent); color: #FFFFFF; border-radius: 18px 18px 6px 18px; }
+    html[dir="rtl"] .bubble.in { border-radius: 18px 18px 6px 18px; }
+    html[dir="rtl"] .bubble.out { border-radius: 18px 18px 18px 6px; }
+    .bubble .orig { margin-top: 6px; padding: 6px 8px; border-radius: 10px; background: var(--canvas); color: var(--text-body); font-size: 12px; line-height: 17px; }
+    .bubble .meta { display: flex; align-items: center; gap: 4px; margin-top: 4px; font-size: 10px; line-height: 13px; font-weight: 500; flex-wrap: wrap; }
+    .bubble.in .meta { color: var(--text-secondary); }
+    .bubble.in .meta .link { color: var(--accent); font-weight: 700; }
+    .bubble.out .meta { color: var(--accent-on-accent); justify-content: flex-end; }
+    .bubble .meta svg.i { width: 12px; height: 12px; }
+    .bubble .meta .read { color: var(--sand); }
+    .bubble .meta .spacer { flex: 1; }
+    .composer { background: var(--canvas-chat); padding: 8px 12px 14px; display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
+    .will-translate { align-self: center; display: flex; align-items: center; gap: 6px; min-height: 28px; padding: 5px 12px; border-radius: 14px; background: var(--mist); color: var(--ink); font-size: 10.5px; line-height: 14px; font-weight: 500; text-align: center; }
+    .will-translate svg.i { width: 13px; height: 13px; }
+    .composer-row { display: flex; gap: 8px; }
+    .composer-field { flex: 1; height: 44px; border-radius: 16px; background: var(--surface); display: flex; align-items: center; gap: 8px; padding: 0 12px; color: var(--text-secondary); font-size: 13.5px; }
+    .composer-field svg.i { width: 17px; height: 17px; }
+    .composer-field .grow { flex: 1; }
+    .send-btn { width: 44px; height: 44px; border-radius: 16px; background: var(--accent); color: #FFFFFF; display: flex; align-items: center; justify-content: center; }
+    .send-btn svg.i { width: 19px; height: 19px; }
 
-    /* Bottom nav */
-    .phone-nav { display: flex; border-top: 1px solid var(--life-gray-light); padding: 8px 0 4px; }
-    .nav-item { flex: 1; text-align: center; font-size: 10px; color: var(--life-gray-dark); display: flex; flex-direction: column; align-items: center; gap: 2px; }
-    .nav-item.active { color: var(--life-blue); border-top: 2px solid var(--life-blue); margin-top: -9px; padding-top: 7px; }
-    .nav-icon { width: 20px; height: 20px; }
+    /* Nav bar header (forms) */
+    .nav-bar { display: flex; align-items: center; gap: 10px; padding: 6px 2px 12px; }
+    .nav-bar .titles { flex: 1; min-width: 0; }
+    .nav-bar .nt { font-size: 16px; line-height: 21px; font-weight: 700; }
+    .nav-bar .ns { font-size: 11.5px; line-height: 15px; color: var(--text-secondary); }
 
-    /* Scheduled */
-    .sched-card { margin: 8px 12px; padding: 12px; background: white; border: 1px solid var(--life-gray-light); border-radius: 14px; }
-    .sched-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-    .sched-contact { font-size: 13px; font-weight: 600; }
-    .sched-status { font-size: 10px; padding: 3px 10px; border-radius: 9999px; font-weight: 500; }
-    .sched-status.pending { background: rgba(245,158,11,0.12); color: #b45309; }
-    .sched-status.sent { background: rgba(34,197,94,0.12); color: #15803d; }
-    .sched-msg { font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; }
-    .sched-time { font-size: 11px; color: var(--life-blue); display: flex; align-items: center; gap: 4px; }
+    /* Status cards (DESIGN_SYSTEM 8.20) */
+    .status-card { background: var(--surface); border-radius: 20px; padding: 12px; margin-bottom: 10px; }
+    .sc-top { display: flex; align-items: center; gap: 10px; }
+    .sc-top .av { width: 36px; height: 36px; border-radius: 12px; font-size: 13px; }
+    .sc-top .who { flex: 1; min-width: 0; }
+    .sc-top .who b { display: block; font-size: 13.5px; line-height: 18px; font-weight: 700; }
+    .sc-top .who small { display: block; font-size: 11px; line-height: 14px; color: var(--text-secondary); }
+    .time-block { background: var(--canvas); border-radius: 11px; padding: 4px 9px; text-align: center; }
+    .time-block b { display: block; font-size: 15px; line-height: 19px; font-weight: 700; direction: ltr; }
+    .time-block small { display: block; font-size: 9.5px; line-height: 12px; color: var(--text-secondary); font-weight: 500; }
+    .status-card .content { font-size: 12.5px; line-height: 18px; color: var(--text-body); margin: 8px 0; }
+    .status-card .pill { font-size: 10.5px; line-height: 14px; padding: 4px 10px; gap: 6px; }
 
-    /* Knowledge base */
-    .kb-card { margin: 8px 12px; padding: 12px; background: white; border: 1px solid var(--life-gray-light); border-radius: 14px; }
-    .kb-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
-    .kb-snippet { font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
-    .kb-tags { display: flex; gap: 6px; flex-wrap: wrap; }
-    .kb-tag { font-size: 10px; padding: 2px 10px; border-radius: 9999px; background: rgba(74,159,217,0.08); color: var(--life-blue); border: 1px solid rgba(74,159,217,0.15); }
-    .kb-tag.sand { background: rgba(196,180,154,0.12); color: #8a7a5e; border-color: rgba(196,180,154,0.25); }
+    /* KB card (DESIGN_SYSTEM 8.10) */
+    .kb-card { background: var(--surface); border-radius: 20px; overflow: hidden; margin-bottom: 10px; }
+    .kb-band { background: var(--mist); padding: 10px 12px; display: flex; align-items: center; gap: 10px; }
+    .kb-band .tile { width: 34px; height: 34px; border-radius: 11px; margin: 0; }
+    .kb-band .tile svg.i { width: 17px; height: 17px; }
+    .kb-band b { display: block; font-size: 13.5px; line-height: 18px; font-weight: 700; }
+    .kb-band small { display: block; font-size: 10.5px; line-height: 14px; font-weight: 700; color: var(--text-secondary); }
+    .kb-content { padding: 10px 12px 12px; font-size: 12.5px; line-height: 18px; color: var(--text-body); }
+    .kb-tags { display: flex; gap: 6px; margin-top: 8px; }
+    .kb-tags span { background: var(--canvas); border-radius: 999px; font-size: 10.5px; font-weight: 500; padding: 2px 9px; color: var(--text-secondary); }
 
-    /* Favorites */
-    .fav-strip { display: flex; gap: 10px; padding: 8px 12px; overflow-x: auto; }
-    .fav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; }
-    .fav-avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: white; border: 2px solid var(--life-blue); }
-    .fav-name { font-size: 10px; color: var(--text-secondary); text-align: center; max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    /* Glossary list in a settings-style group */
+    .group { background: var(--surface); border-radius: 20px; padding: 2px 12px; }
+    .g-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 9px 0; border-bottom: 1px solid var(--divider-soft); }
+    .g-row:last-child { border-bottom: none; }
+    .g-row b { display: block; font-size: 13px; line-height: 17px; font-weight: 700; }
+    .g-row small { display: block; font-size: 11px; line-height: 15px; color: var(--text-secondary); }
+    .g-row .pill { font-size: 10px; line-height: 13px; padding: 3px 8px; white-space: nowrap; }
+    .mini-primary { display: flex; align-items: center; justify-content: center; gap: 6px; height: 40px; border-radius: 14px; background: var(--ink); color: var(--mist); font-size: 13px; font-weight: 700; margin: 10px 0; }
+    .mini-primary svg.i { width: 15px; height: 15px; }
+    .section-label { font-size: 11px; line-height: 15px; font-weight: 700; color: var(--text-secondary); margin: 4px 2px 6px; display: flex; align-items: center; gap: 5px; }
+    .section-label svg.i { width: 13px; height: 13px; }
 
     /* ===== HOW-TO ===== */
-    .howto-section { padding: 100px 20px; background: var(--bg-primary); }
-    .steps-container { max-width: 900px; margin: 0 auto; }
-    .step { display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: start; margin-bottom: 48px; position: relative; }
-    .step-number { width: 48px; height: 48px; background: var(--life-blue); color: white; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; flex-shrink: 0; box-shadow: 0 4px 12px rgba(74,159,217,0.3); }
-    .step-content { flex: 1; }
-    .step-content h4 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-    .step-content p { font-size: 15px; color: var(--text-secondary); line-height: 1.8; }
-    .step-visual { width: 200px; flex-shrink: 0; }
-    .step-connector { position: absolute; top: 48px; width: 2px; height: 100%; background: linear-gradient(to bottom, var(--life-blue), var(--life-gray-light)); opacity: 0.3; }
-    html[dir="ltr"] .step-connector { left: 23px; }
-    html[dir="rtl"] .step-connector { right: 23px; }
-
-    /* Mini screen */
-    .mini-screen { background: white; border: 1px solid var(--life-gray-light); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-md); }
-    .mini-header { background: var(--life-blue); color: white; padding: 8px 12px; font-size: 11px; font-weight: 600; border-radius: 0 0 12px 12px; position: relative; overflow: hidden; }
-    .mini-header::before { content: ''; position: absolute; top: -10px; left: -10px; width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); }
-    .mini-body { padding: 8px; }
-    .mini-input { width: 100%; padding: 8px 10px; border: 1px solid var(--life-gray-light); border-radius: 10px; font-size: 11px; color: var(--text-secondary); margin-bottom: 6px; font-family: 'Heebo', sans-serif; }
-    .mini-btn { display: block; width: 100%; padding: 8px; background: var(--life-blue); color: white; border: none; border-radius: 10px; font-size: 12px; font-weight: 600; font-family: 'Heebo', sans-serif; text-align: center; }
-    .mini-toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; font-size: 11px; }
-    .mini-toggle { width: 36px; height: 20px; background: var(--life-blue); border-radius: 10px; position: relative; }
-    .mini-toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; background: white; border-radius: 50%; }
-    .mini-toggle.on::after { left: auto; right: 2px; }
-    .mini-select { width: 100%; padding: 6px 10px; border: 1px solid var(--life-gray-light); border-radius: 10px; font-size: 11px; font-family: 'Heebo', sans-serif; color: var(--text-primary); background: white; margin-bottom: 6px; }
-    .settings-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-size: 12px; }
-    .settings-item:last-child { border-bottom: none; }
+    .steps { max-width: 920px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+    .step { display: grid; grid-template-columns: auto 1fr 240px; gap: 24px; align-items: start; background: var(--surface); border-radius: 24px; padding: 24px; }
+    .step-num { width: 48px; height: 48px; border-radius: 16px; background: var(--ink); color: var(--mist); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; }
+    .step h4 { font-size: 20px; line-height: 26px; font-weight: 700; margin: 10px 0 8px; }
+    .step p { font-size: 15px; line-height: 24px; color: var(--text-secondary); }
+    .mini { background: var(--canvas); border-radius: 20px; padding: 12px; font-size: 12px; line-height: 17px; }
+    .mini-title { font-size: 12.5px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+    .mini-title svg.i { width: 14px; height: 14px; }
+    .mini-label { font-size: 11px; font-weight: 700; color: var(--text-secondary); margin: 8px 0 5px; }
+    .mini-field { height: 36px; border-radius: 12px; background: var(--surface); border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 10px; font-size: 12px; }
+    .mini-field svg.i { width: 14px; height: 14px; color: var(--text-secondary); }
+    .switch-row { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; font-size: 12px; font-weight: 500; }
+    .switch { width: 40px; height: 24px; border-radius: 999px; background: var(--ink); position: relative; flex-shrink: 0; }
+    .switch::after { content: ''; position: absolute; top: 3px; inset-inline-end: 3px; width: 18px; height: 18px; border-radius: 999px; background: var(--mist); }
+    .code-box { text-align: center; padding: 8px 0 4px; }
+    .code-box .tile { margin: 0 auto 10px; width: 40px; height: 40px; border-radius: 13px; background: var(--success-bg); color: var(--success-fg); }
+    .code-box .tile svg.i { width: 20px; height: 20px; }
+    .code { font-size: 22px; line-height: 28px; font-weight: 700; letter-spacing: 4px; color: var(--ink); direction: ltr; margin: 4px 0; }
+    .mini .bubble { font-size: 11.5px; line-height: 16px; padding: 7px 10px; max-width: 92%; }
+    .mini .bubble .orig { font-size: 10.5px; line-height: 14px; padding: 4px 7px; }
+    .mini-chat { display: flex; flex-direction: column; gap: 6px; background: var(--canvas-chat); border-radius: 14px; padding: 8px; }
 
     /* ===== LANGUAGES ===== */
-    .langs-section { padding: 100px 20px; background: linear-gradient(135deg, #f0f7fd 0%, #faf8f5 100%); text-align: center; }
-    .langs-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; max-width: 900px; margin: 0 auto; }
-    .lang-card { background: white; border: 1px solid var(--life-gray-light); border-radius: var(--radius-card); padding: 16px 24px; min-width: 130px; box-shadow: var(--shadow-sm); transition: transform 0.2s, box-shadow 0.2s; }
-    .lang-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
-    .lang-card .flag { font-size: 28px; margin-bottom: 6px; }
-    .lang-card .lang-name { font-size: 14px; font-weight: 600; }
-    .lang-card .lang-native { font-size: 12px; color: var(--text-secondary); }
+    .lang-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(206px, 1fr)); gap: 10px; }
+    .lang-card { background: var(--surface); border-radius: 18px; padding: 12px; display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .lang-code { width: 44px; height: 44px; border-radius: 15px; background: var(--mist); color: var(--ink); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; flex-shrink: 0; direction: ltr; }
+    .lang-card .names { min-width: 0; }
+    .lang-name { font-size: 16px; line-height: 22px; font-weight: 700; overflow-wrap: anywhere; }
+    .lang-native { font-size: 13px; line-height: 18px; color: var(--text-secondary); font-weight: 500; overflow-wrap: anywhere; text-align: start; }
+    .langs-note { display: flex; justify-content: center; margin-top: 28px; }
 
     /* ===== CTA ===== */
-    .cta-section { padding: 100px 20px; background: linear-gradient(135deg, #4A9FD9 0%, #3A8BC5 50%, #b4c46a 100%); text-align: center; color: white; position: relative; overflow: hidden; }
-    .cta-section::before { content: ''; position: absolute; top: -60px; right: -60px; width: 250px; height: 250px; border-radius: 50%; background: rgba(255,255,255,0.06); }
-    .cta-section h2 { font-size: 42px; font-weight: 800; margin-bottom: 16px; }
-    .cta-section p { font-size: 18px; opacity: 0.9; max-width: 500px; margin: 0 auto 40px; }
-    .cta-btn { display: inline-flex; align-items: center; gap: 10px; background: white; color: var(--life-blue); font-family: 'Heebo', sans-serif; font-size: 20px; font-weight: 700; padding: 18px 48px; border-radius: 9999px; border: none; cursor: pointer; box-shadow: 0 4px 24px rgba(0,0,0,0.15); transition: transform 0.2s; text-decoration: none; }
-    .cta-btn:hover { transform: scale(1.05); }
+    .cta-card { background: var(--ink); color: #FFFFFF; border-radius: 28px; padding: 64px 32px; text-align: center; }
+    .cta-card .logo { width: 72px; height: 72px; border-radius: 24px; background: var(--ink-raised); margin: 0 auto 24px; }
+    .cta-card h2 { font-size: 36px; line-height: 44px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
+    .cta-card p { font-size: 17px; line-height: 27px; color: var(--text-on-ink-muted); max-width: 520px; margin: 0 auto 32px; }
 
     /* ===== FOOTER ===== */
-    footer { background: #1e293b; color: rgba(255,255,255,0.7); padding: 40px 20px; text-align: center; }
-    footer .footer-logo { font-size: 24px; font-weight: 800; color: white; margin-bottom: 8px; }
-    footer .footer-by { font-size: 13px; opacity: 0.5; margin-top: 12px; }
+    footer { padding: 40px 0 48px; border-top: 1px solid var(--divider); }
+    footer .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    footer .f-brand { display: flex; align-items: center; gap: 10px; }
+    footer .f-brand .logo { width: 32px; height: 32px; border-radius: 11px; }
+    footer .f-brand b { font-size: 16px; font-weight: 700; display: block; line-height: 20px; }
+    footer .f-brand small { font-size: 13px; color: var(--text-secondary); display: block; line-height: 18px; }
+    footer nav { display: flex; gap: 20px; flex-wrap: wrap; font-size: 14px; }
+    footer nav a { color: var(--text-secondary); text-decoration: none; font-weight: 500; }
+    footer nav a:hover { color: var(--accent); text-decoration: underline; }
+    footer .by { font-size: 13px; color: var(--text-secondary); }
 
-    /* ===== RTL LAYOUT OVERRIDES ===== */
-    /* Feature sections 2 & 4: keep phone-left/text-right visual order in RTL */
-    html[dir="rtl"] .features-invert {
-      direction: ltr;
+    /* ===== MOTION (BRAND_RULES 8: subtle, functional) ===== */
+    .reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.25s ease, transform 0.25s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
     }
-    html[dir="rtl"] .features-invert .feature-text {
-      direction: rtl;
-      text-align: start;
-    }
-    /* Glossary list */
-    html[dir="ltr"] .feat4-list { padding-left: 20px; }
-    html[dir="rtl"] .feat4-list { padding-right: 20px; }
-
-    /* ===== SCROLL ANIMATIONS ===== */
-    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1024px) {
-      .features-grid { gap: 48px; max-width: 900px; }
-      .hero-title { font-size: 48px; }
-      .section-title { font-size: 36px; }
-      .steps-container { max-width: 700px; }
+      .card-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero h1 { font-size: 46px; line-height: 52px; }
+      .feature { gap: 48px; }
+      .step { grid-template-columns: auto 1fr; }
+      .step .mini { grid-column: 2; }
     }
-    @media (max-width: 768px) {
-      .hero { min-height: auto; padding: 80px 20px 100px; }
-      .hero-title { font-size: 36px; }
-      .hero-subtitle { font-size: 20px; }
-      .hero-tagline { font-size: 16px; }
-      .hero-cta { font-size: 16px; padding: 14px 32px; }
-      .hero-deco-3 { display: none; }
-      .babel-section { padding: 60px 20px; }
-      .section-title { font-size: 28px; }
-      .section-desc { font-size: 16px; margin-bottom: 40px; }
-      .babel-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
-      .features-section { padding: 60px 20px; }
-      .features-grid { grid-template-columns: 1fr !important; gap: 40px; }
-      html[dir="rtl"] .features-invert { direction: rtl; }
-      .phone-mockup { width: 280px; margin: 0 auto; order: -1; }
-      .howto-section { padding: 60px 20px; }
-      .step { grid-template-columns: auto 1fr; gap: 16px; }
-      .step-visual { display: none; }
-      .langs-section { padding: 60px 20px; }
-      .cta-section { padding: 60px 20px; }
-      .cta-section h2 { font-size: 28px; }
-      .cta-btn { font-size: 18px; padding: 16px 36px; }
+    @media (max-width: 820px) {
+      section { padding: 64px 0; }
+      .hero { padding: 40px 0 64px; }
+      .hero .wrap { grid-template-columns: 1fr; gap: 48px; }
+      .feature { grid-template-columns: 1fr; gap: 40px; }
+      .feature .feature-media, .feature.reverse .feature-media { order: 2; }
+      .section-head h2, .cta-card h2 { font-size: 30px; line-height: 38px; }
+      .feature-text h3 { font-size: 26px; line-height: 33px; }
     }
-    @media (max-width: 480px) {
-      .hero { padding: 60px 16px 80px; }
-      .hero-title { font-size: 30px; }
-      .hero-subtitle { font-size: 18px; }
-      .hero-cta { font-size: 15px; padding: 12px 28px; }
-      .hero-logo { width: 72px; height: 72px; border-radius: 18px; }
-      .babel-section { padding: 48px 16px; }
-      .section-title { font-size: 24px; }
-      .babel-grid { grid-template-columns: 1fr; gap: 12px; }
-      .features-section { padding: 48px 16px; }
-      .phone-mockup { width: 260px; }
-      .phone-screen { min-height: 460px; }
-      .howto-section { padding: 48px 16px; }
-      .step { gap: 12px; margin-bottom: 36px; }
-      .step-number { width: 36px; height: 36px; font-size: 16px; border-radius: 10px; }
-      html[dir="ltr"] .step-connector { left: 17px; }
-      html[dir="rtl"] .step-connector { right: 17px; }
-      .langs-section { padding: 48px 16px; }
-      .cta-section { padding: 48px 16px; }
-      .cta-section h2 { font-size: 24px; }
-      .cta-btn { font-size: 16px; padding: 14px 32px; }
-      footer { padding: 32px 16px; }
+    @media (max-width: 560px) {
+      .wrap { padding: 0 16px; }
+      .topbar .wrap { height: 60px; }
+      .brand span { display: none; }
+      .hero h1 { font-size: 38px; line-height: 44px; }
+      .hero .tagline { font-size: 16px; line-height: 26px; }
+      .hero-actions .btn { width: 100%; }
+      .card-grid { grid-template-columns: 1fr; }
+      .step { grid-template-columns: 1fr; padding: 20px; gap: 12px; }
+      .step .mini { grid-column: auto; }
+      .step h4 { margin-top: 0; }
+      .lang-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .lang-card { padding: 10px; gap: 10px; }
+      .lang-code { width: 38px; height: 38px; border-radius: 13px; font-size: 12px; }
+      .lang-name { font-size: 14px; line-height: 19px; }
+      .lang-native { font-size: 12px; line-height: 16px; }
+      .cta-card { padding: 48px 20px; border-radius: 24px; }
+      .cta-card .btn { width: 100%; }
+      .phone { width: 280px; }
+      .screen { height: 580px; }
     }
-    @media (max-width: 360px) {
-      .hero-title { font-size: 26px; }
-      .cta-btn { font-size: 15px; padding: 12px 28px; width: 100%; justify-content: center; }
+    @media (max-width: 340px) {
+      .lang-grid { grid-template-columns: 1fr; }
+      .phone { width: 260px; }
     }
   </style>
 </head>
 <body>
 
-<!-- Language Switcher -->
-<div id="lang-switcher">
-  <button id="btn-en" class="lang-btn active" onclick="setLang('en')">EN</button>
-  <button id="btn-he" class="lang-btn" onclick="setLang('he')">עב</button>
-</div>
+<!-- lucide icon sprite (stroke 2, round caps/joins) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-message" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></symbol>
+  <symbol id="i-book-a" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/><path d="m8 13 4-7 4 7"/><path d="M9.1 11h5.7"/></symbol>
+  <symbol id="i-ellipsis" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></symbol>
+  <symbol id="i-languages" viewBox="0 0 24 24"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627a2 2 0 0 1 0 1.396l-2.842 7.627a.498.498 0 0 0 .682.627l18-8.5a.5.5 0 0 0 0-.904z"/><path d="M6 12h16"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-check-check" viewBox="0 0 24 24"><path d="M18 6 7 17l-5-5"/><path d="m22 10-7.5 7.5L13 16"/></symbol>
+  <symbol id="i-arrow-back" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"/></symbol>
+  <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></symbol>
+  <symbol id="i-smile" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></symbol>
+</svg>
+
+<!-- Logo artwork (DESIGN_SYSTEM 8.13), reused via <use> -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="logo-art" viewBox="0 0 52 52">
+    <path d="M8 12a6 6 0 0 1 6-6h16a6 6 0 0 1 6 6v10a6 6 0 0 1-6 6H16l-6 5v-6.2A6 6 0 0 1 8 22z" fill="#2F5D8A"/>
+    <path d="M14 13h14M14 18h10" fill="none" stroke="#E4E9F0" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M44 26a6 6 0 0 0-6-6H24a6 6 0 0 0-6 6v8a6 6 0 0 0 6 6h12l6 5v-5.6A6 6 0 0 0 44 34z" fill="var(--logo-tile, #1F2A37)" stroke="#E4E9F0" stroke-width="2.2" stroke-linejoin="round"/>
+    <path d="M24 28h12M24 33h8" fill="none" stroke="#D9C6A5" stroke-width="2.4" stroke-linecap="round"/>
+  </symbol>
+</svg>
+
+<!-- ===== TOP BAR ===== -->
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="LS Duet">
+      <div class="logo"><svg><use href="#logo-art"/></svg></div>
+      <span>LS Duet</span>
+    </a>
+    <div class="segmented" role="group" aria-label="Language">
+      <button id="btn-en" type="button" aria-pressed="true" onclick="setLang('en')">English</button>
+      <button id="btn-he" type="button" aria-pressed="false" onclick="setLang('he')">עברית</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
 
 <!-- ===== HERO ===== -->
 <section class="hero">
-  <div class="hero-deco-1"></div>
-  <div class="hero-deco-2"></div>
-  <div class="hero-deco-3"></div>
-  <div class="hero-content">
-    <svg class="hero-logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-      <defs><linearGradient id="logo-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4A9FD9"/><stop offset="100%" stop-color="#b4c46a"/></linearGradient></defs>
-      <rect width="512" height="512" rx="108" ry="108" fill="url(#logo-bg)"/>
-      <circle cx="420" cy="92" r="60" fill="#fff" opacity="0.12"/>
-      <circle cx="80" cy="430" r="45" fill="#C4B49A" opacity="0.10"/>
-      <text x="148" y="340" font-family="Heebo, Arial, sans-serif" font-weight="700" font-size="240" fill="#fff" opacity="0.95" direction="ltr" unicode-bidi="embed">L</text>
-      <text x="280" y="340" font-family="Heebo, Arial, sans-serif" font-weight="700" font-size="240" fill="#fff" opacity="0.80" direction="ltr" unicode-bidi="embed">S</text>
-      <path d="M 180 380 Q 256 420 332 380" stroke="#fff" stroke-width="6" fill="none" opacity="0.5" stroke-linecap="round"/>
-    </svg>
-    <h1 class="hero-title">LS Duet</h1>
-    <p class="hero-subtitle" data-i18n="hero-sub"></p>
-    <p class="hero-tagline" data-i18n="hero-tag"></p>
-    <button class="hero-cta" onclick="document.getElementById('howto').scrollIntoView({behavior:'smooth'})">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-      <span data-i18n="hero-cta"></span>
-    </button>
-    <div class="hero-languages">
-      <span class="lang-pill">עברית</span>
-      <span class="lang-pill">English</span>
-      <span class="lang-pill">العربية</span>
-      <span class="lang-pill">Русский</span>
-      <span class="lang-pill">中文</span>
-      <span class="lang-pill">हिन्दी</span>
-      <span class="lang-pill">ไทย</span>
+  <div class="wrap">
+    <div>
+      <span class="pill pill-neutral"><span class="dot"></span><span data-i18n="hero-eyebrow"></span></span>
+      <h1 data-i18n="hero-sub"></h1>
+      <p class="tagline" data-i18n="hero-tag"></p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#howto">
+          <svg class="i"><use href="#i-play"/></svg>
+          <span data-i18n="hero-cta"></span>
+        </a>
+        <a class="btn btn-outline cta-link" href="https://wa.me/972526044425" target="_blank" rel="noopener">
+          <svg class="i"><use href="#i-message"/></svg>
+          <span data-i18n="cta-btn"></span>
+        </a>
+      </div>
+      <div class="hero-langs" id="hero-langs"></div>
+    </div>
+
+    <!-- Messages screen -->
+    <div class="phone" aria-hidden="true">
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="sb-icons"><span style="width:16px;height:9px"></span><span style="width:20px;height:10px;border-radius:3px"></span></span></div>
+        <div class="sc-body">
+          <div class="sc-large-title">
+            <div class="t"><span data-i18n="nav-chats"></span></div>
+            <div style="display:flex;gap:8px">
+              <div class="hdr-btn outline"><svg class="i"><use href="#i-search"/></svg></div>
+              <div class="hdr-btn primary"><svg class="i"><use href="#i-pencil"/></svg></div>
+            </div>
+          </div>
+          <div class="sc-chips">
+            <div class="sc-chip on" data-i18n="chip-all"></div>
+            <div class="sc-chip"><span data-i18n="chip-unread"></span><span class="n">3</span></div>
+            <div class="sc-chip" data-i18n="chip-translated"></div>
+          </div>
+          <div>
+            <div class="row unread">
+              <div class="av f1">W<span class="online"></span></div>
+              <div class="row-main">
+                <div class="row-top"><span class="row-name">Wei Zhang</span><span class="row-time">10:34</span></div>
+                <div class="row-bottom"><span class="row-prev"><svg class="i"><use href="#i-languages"/></svg><span data-i18n="chat-recv3"></span></span><span class="badge">2</span></div>
+              </div>
+            </div>
+            <div class="row unread">
+              <div class="av f6">Y</div>
+              <div class="row-main">
+                <div class="row-top"><span class="row-name">Yuki Tanaka</span><span class="row-time">09:12</span></div>
+                <div class="row-bottom"><span class="row-prev"><svg class="i"><use href="#i-languages"/></svg><span data-i18n="m2-prev"></span></span><span class="badge">1</span></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="av f2">A</div>
+              <div class="row-main">
+                <div class="row-top"><span class="row-name">Ahmed Al-Rashid</span><span class="row-time" data-i18n="day-yesterday"></span></div>
+                <div class="row-bottom"><span class="row-prev"><svg class="i"><use href="#i-languages"/></svg><span data-i18n="m3-prev"></span></span></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="av f5">S</div>
+              <div class="row-main">
+                <div class="row-top"><span class="row-name">Sophie Durand</span><span class="row-time" data-i18n="day-yesterday"></span></div>
+                <div class="row-bottom"><span class="row-prev"><svg class="i"><use href="#i-check-check"/></svg><span data-i18n="sched3-msg"></span></span></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="av f4">K</div>
+              <div class="row-main">
+                <div class="row-top"><span class="row-name">Kateryna Bondar</span><span class="row-time" data-i18n="day-mon"></span></div>
+                <div class="row-bottom"><span class="row-prev"><svg class="i"><use href="#i-languages"/></svg><span data-i18n="m5-prev"></span></span></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="av f3">M</div>
+              <div class="row-main">
+                <div class="row-top"><span class="row-name">Marco Rossi</span><span class="row-time" data-i18n="day-sun"></span></div>
+                <div class="row-bottom"><span class="row-prev"><svg class="i"><use href="#i-languages"/></svg><span data-i18n="m6-prev"></span></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sc-nav">
+          <div class="on"><svg class="i"><use href="#i-message"/></svg><span data-i18n="nav-chats"></span></div>
+          <div><svg class="i"><use href="#i-users"/></svg><span data-i18n="nav-contacts"></span></div>
+          <div><svg class="i"><use href="#i-book"/></svg><span data-i18n="nav-kb"></span></div>
+          <div><svg class="i"><use href="#i-ellipsis"/></svg><span data-i18n="nav-more"></span></div>
+        </div>
+      </div>
     </div>
   </div>
-  <svg class="hero-wave" viewBox="0 0 1440 80" preserveAspectRatio="none">
-    <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="white"/>
-  </svg>
 </section>
 
 <!-- ===== BABEL SECTION ===== -->
-<section class="babel-section fade-up">
-  <span class="section-badge">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
-    <span data-i18n="babel-badge"></span>
-  </span>
-  <h2 class="section-title" data-i18n="babel-title"></h2>
-  <p class="section-desc" data-i18n-html="babel-desc"></p>
-  <div class="babel-grid">
-    <div class="babel-card">
-      <div class="babel-card-icon blue"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg></div>
-      <h3 data-i18n="card1-title"></h3>
-      <p data-i18n="card1-p"></p>
+<section class="on-surface">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="pill pill-info"><svg class="i"><use href="#i-languages"/></svg><span data-i18n="babel-badge"></span></span>
+      <h2 data-i18n="babel-title"></h2>
+      <p data-i18n-html="babel-desc"></p>
     </div>
-    <div class="babel-card">
-      <div class="babel-card-icon sand"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-      <h3 data-i18n="card2-title"></h3>
-      <p data-i18n="card2-p"></p>
-    </div>
-    <div class="babel-card">
-      <div class="babel-card-icon green"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"/></svg></div>
-      <h3 data-i18n="card3-title"></h3>
-      <p data-i18n="card3-p"></p>
-    </div>
-    <div class="babel-card">
-      <div class="babel-card-icon blue"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/><path d="M8 11h8"/><path d="M8 7h6"/></svg></div>
-      <h3 data-i18n="card4-title"></h3>
-      <p data-i18n="card4-p"></p>
+    <div class="card-grid reveal">
+      <div class="card">
+        <div class="tile ink"><svg class="i"><use href="#i-languages"/></svg></div>
+        <h3 data-i18n="card1-title"></h3>
+        <p data-i18n="card1-p"></p>
+      </div>
+      <div class="card">
+        <div class="tile accent"><svg class="i"><use href="#i-users"/></svg></div>
+        <h3 data-i18n="card2-title"></h3>
+        <p data-i18n="card2-p"></p>
+      </div>
+      <div class="card">
+        <div class="tile sand"><svg class="i"><use href="#i-pen"/></svg></div>
+        <h3 data-i18n="card3-title"></h3>
+        <p data-i18n="card3-p"></p>
+      </div>
+      <div class="card">
+        <div class="tile mist"><svg class="i"><use href="#i-book-a"/></svg></div>
+        <h3 data-i18n="card4-title"></h3>
+        <p data-i18n="card4-p"></p>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ===== DEMO VIDEO ===== -->
-<section style="padding:80px 24px;max-width:1200px;margin:0 auto;text-align:center;">
-  <h2 style="font-size:32px;font-weight:700;color:#1e293b;margin-bottom:12px;font-family:'Heebo',sans-serif;" data-i18n="vid-title"></h2>
-  <p style="font-size:18px;color:#64748b;margin-bottom:40px;font-family:'Heebo',sans-serif;max-width:600px;margin-left:auto;margin-right:auto;" data-i18n="vid-desc"></p>
-  <div style="position:relative;border-radius:24px;overflow:hidden;box-shadow:0 25px 80px rgba(0,0,0,0.18);max-width:420px;margin:0 auto;background:#f0f4f8;">
-    <video id="demo-video" autoplay loop muted playsinline style="width:100%;display:block;">
-      <source id="demo-source" src="duet-video-en.mp4" type="video/mp4">
-    </video>
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="pill pill-neutral"><span class="dot"></span><span data-i18n="vid-badge"></span></span>
+      <h2 data-i18n="vid-title"></h2>
+      <p data-i18n="vid-desc"></p>
+    </div>
+    <div class="video-frame reveal">
+      <video id="demo-video" autoplay loop muted playsinline>
+        <source id="demo-source" src="duet-video-en.mp4" type="video/mp4">
+      </video>
+    </div>
   </div>
 </section>
 
-<!-- ===== FEATURE 1: CHATS ===== -->
-<section class="features-section">
-  <div class="features-grid fade-up">
+<!-- ===== FEATURE 1: CHAT ===== -->
+<section class="on-surface">
+  <div class="wrap feature reveal">
     <div class="feature-text">
-      <span class="section-badge">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-        <span data-i18n="nav-chats"></span>
-      </span>
+      <span class="pill pill-neutral"><svg class="i"><use href="#i-message"/></svg><span data-i18n="nav-chats"></span></span>
       <h3 data-i18n="f1-title"></h3>
       <p data-i18n="f1-p1"></p>
-      <p style="margin-top:12px;" data-i18n="f1-p2"></p>
+      <p data-i18n="f1-p2"></p>
     </div>
-    <div>
-      <div class="phone-mockup">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="screen-header">
-            <div class="screen-header-subtitle" data-i18n="chat-sub"></div>
-            <div class="screen-header-title">Wei Zhang</div>
+    <div class="feature-media">
+      <div class="phone" aria-hidden="true">
+        <div class="screen">
+          <div class="chat-hdr">
+            <div class="statusbar"><span>9:41</span><span class="sb-icons"><span style="width:16px;height:9px"></span><span style="width:20px;height:10px;border-radius:3px"></span></span></div>
+            <div class="chat-hdr-row">
+              <div class="hdr-btn"><svg class="i flip"><use href="#i-arrow-back"/></svg></div>
+              <div class="av f1">W</div>
+              <div style="flex:1;min-width:0">
+                <div class="chat-hdr-name">Wei Zhang</div>
+                <div class="chat-hdr-sub"><svg class="i"><use href="#i-languages"/></svg><span data-i18n="chat-hdr-sub"></span></div>
+              </div>
+              <div class="hdr-btn"><svg class="i"><use href="#i-clock"/></svg></div>
+            </div>
           </div>
-          <div class="chat-area">
-            <div class="chat-bubble received">
+          <div class="chat-body">
+            <div class="date-chip" data-i18n="day-today"></div>
+            <div class="bubble in">
               <div data-i18n="chat-recv1"></div>
-              <div class="original" style="direction:ltr;text-align:left">你好，你今天怎么样？</div>
-              <div class="translation-badge">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/></svg>
-                <span data-i18n="chat-badge1"></span>
-              </div>
-              <div class="time">10:32</div>
+              <div class="orig" dir="auto">你好，你今天怎么样？</div>
+              <div class="meta"><svg class="i"><use href="#i-languages"/></svg><span data-i18n="chat-badge1"></span><span>·</span><span class="link" data-i18n="chat-hide-orig"></span><span class="spacer"></span><span>10:32</span></div>
             </div>
-            <div class="chat-bubble sent">
+            <div class="bubble out">
               <div data-i18n="chat-sent2"></div>
-              <div class="original" style="direction:ltr;text-align:left">太好了！我想问一下周二的会议</div>
-              <div class="translation-badge">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/></svg>
-                <span data-i18n="chat-badge2"></span>
-              </div>
-              <div class="time">10:33</div>
+              <div class="meta"><svg class="i"><use href="#i-languages"/></svg><span data-i18n="chat-badge2"></span><span>·</span><span>10:33</span><svg class="i read"><use href="#i-check-check"/></svg></div>
             </div>
-            <div class="chat-bubble received">
+            <div class="bubble in">
               <div data-i18n="chat-recv3"></div>
-              <div class="original" style="direction:ltr;text-align:left">好的，我们下午3点北京时间见</div>
-              <div class="translation-badge">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/></svg>
-                <span data-i18n="chat-badge3"></span>
-              </div>
-              <div class="time">10:34</div>
+              <div class="meta"><svg class="i"><use href="#i-languages"/></svg><span data-i18n="chat-badge3"></span><span>·</span><span class="link" data-i18n="chat-show-orig"></span><span class="spacer"></span><span>10:34</span></div>
             </div>
           </div>
-          <div class="phone-nav">
-            <div class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><span data-i18n="nav-chats"></span></div>
-            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span data-i18n="nav-contacts"></span></div>
-            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span data-i18n="nav-sched"></span></div>
-            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span data-i18n="nav-kb"></span></div>
+          <div class="composer">
+            <div class="will-translate"><svg class="i"><use href="#i-languages"/></svg><span data-i18n="chat-will-translate"></span></div>
+            <div class="composer-row">
+              <div class="composer-field"><svg class="i"><use href="#i-smile"/></svg><span class="grow" data-i18n="chat-placeholder"></span><svg class="i"><use href="#i-clock"/></svg></div>
+              <div class="send-btn"><svg class="i flip"><use href="#i-send"/></svg></div>
+            </div>
           </div>
         </div>
       </div>
@@ -516,116 +625,133 @@
 </section>
 
 <!-- ===== FEATURE 2: CONTACTS ===== -->
-<section class="features-section features-invert" style="background: var(--bg-primary);">
-  <div class="features-grid fade-up">
-    <div>
-      <div class="phone-mockup">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="screen-header">
-            <div class="screen-header-title" data-i18n="contacts-title"></div>
-            <div class="screen-header-subtitle" data-i18n="contacts-sub"></div>
+<section>
+  <div class="wrap feature reverse reveal">
+    <div class="feature-text">
+      <span class="pill pill-neutral"><svg class="i"><use href="#i-users"/></svg><span data-i18n="nav-contacts"></span></span>
+      <h3 data-i18n="f2-title"></h3>
+      <p data-i18n="f2-p1"></p>
+      <p data-i18n="f2-p2"></p>
+    </div>
+    <div class="feature-media">
+      <div class="phone" aria-hidden="true">
+        <div class="screen">
+          <div class="statusbar"><span>9:41</span><span class="sb-icons"><span style="width:16px;height:9px"></span><span style="width:20px;height:10px;border-radius:3px"></span></span></div>
+          <div class="sc-body">
+            <div class="sc-large-title">
+              <div class="t"><span data-i18n="contacts-title"></span><span class="count">12</span></div>
+              <div style="display:flex;gap:8px">
+                <div class="hdr-btn outline"><svg class="i"><use href="#i-download"/></svg></div>
+                <div class="hdr-btn primary"><svg class="i"><use href="#i-plus"/></svg></div>
+              </div>
+            </div>
+            <div class="sc-search"><svg class="i"><use href="#i-search"/></svg><span data-i18n="contacts-search"></span></div>
+            <div class="sc-chips">
+              <div class="sc-chip on" data-i18n="chip-all"></div>
+              <div class="sc-chip" data-i18n="chip-fav"></div>
+              <div class="sc-chip" data-i18n="chip-translated"></div>
+            </div>
+            <div>
+              <div class="row">
+                <div class="av f1">W</div>
+                <div class="row-main">
+                  <div class="row-top"><span class="row-name">Wei Zhang</span><span class="star"><svg class="i"><use href="#i-star"/></svg></span></div>
+                  <div class="row-bottom"><span class="row-prev"><span><bdi>Shanghai</bdi> · <span data-i18n="role-vip"></span></span></span><span class="lang-tag">ZH → <span data-i18n="out-lang"></span></span></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="av f6">Y</div>
+                <div class="row-main">
+                  <div class="row-top"><span class="row-name">Yuki Tanaka</span></div>
+                  <div class="row-bottom"><span class="row-prev"><span><bdi>Tokyo</bdi> · <span data-i18n="role-client"></span></span></span><span class="lang-tag">JA → <span data-i18n="out-lang"></span></span></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="av f2">A</div>
+                <div class="row-main">
+                  <div class="row-top"><span class="row-name">Ahmed Al-Rashid</span><span class="star"><svg class="i"><use href="#i-star"/></svg></span></div>
+                  <div class="row-bottom"><span class="row-prev"><span><bdi>Dubai</bdi> · <span data-i18n="role-partner"></span></span></span><span class="lang-tag">AR → <span data-i18n="out-lang"></span></span></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="av f5">S</div>
+                <div class="row-main">
+                  <div class="row-top"><span class="row-name">Sophie Durand</span></div>
+                  <div class="row-bottom"><span class="row-prev"><span><bdi>Paris</bdi> · <span data-i18n="role-friend"></span></span></span><span class="lang-tag">FR → <span data-i18n="out-lang"></span></span></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="av f4">K</div>
+                <div class="row-main">
+                  <div class="row-top"><span class="row-name">Kateryna Bondar</span></div>
+                  <div class="row-bottom"><span class="row-prev"><span><bdi>Kyiv</bdi> · <span data-i18n="role-client"></span></span></span><span class="lang-tag">UK → <span data-i18n="out-lang"></span></span></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="fav-strip">
-            <div class="fav-item"><div class="fav-avatar" style="background:var(--life-blue);">W</div><span class="fav-name">Wei</span></div>
-            <div class="fav-item"><div class="fav-avatar" style="background:#e67e22;">Y</div><span class="fav-name">Yuki</span></div>
-            <div class="fav-item"><div class="fav-avatar" style="background:#9b59b6;">A</div><span class="fav-name">Ahmed</span></div>
-            <div class="fav-item"><div class="fav-avatar" style="background:#27ae60;">S</div><span class="fav-name">Sophie</span></div>
-          </div>
-          <div class="contact-card-phone">
-            <div class="contact-avatar" style="background: var(--life-blue);">W</div>
-            <div class="contact-info"><div class="contact-name">Wei Zhang</div><div class="contact-detail">+86 138 1234 5678 &middot; VIP</div></div>
-            <div class="contact-langs"><span class="contact-lang-tag in">ZH</span><span class="contact-lang-tag out" data-i18n="out-lang"></span></div>
-          </div>
-          <div class="contact-card-phone">
-            <div class="contact-avatar" style="background: #e67e22;">Y</div>
-            <div class="contact-info"><div class="contact-name">Yuki Tanaka</div><div class="contact-detail">+81 90 1234 5678 &middot; Client</div></div>
-            <div class="contact-langs"><span class="contact-lang-tag in">JA</span><span class="contact-lang-tag out" data-i18n="out-lang"></span></div>
-          </div>
-          <div class="contact-card-phone">
-            <div class="contact-avatar" style="background: #9b59b6;">A</div>
-            <div class="contact-info"><div class="contact-name">Ahmed Al-Rashid</div><div class="contact-detail">+971 50 123 4567 &middot; Partner</div></div>
-            <div class="contact-langs"><span class="contact-lang-tag in">AR</span><span class="contact-lang-tag out" data-i18n="out-lang"></span></div>
-          </div>
-          <div class="contact-card-phone">
-            <div class="contact-avatar" style="background: #27ae60;">S</div>
-            <div class="contact-info"><div class="contact-name">Sophie Durand</div><div class="contact-detail">+33 6 12 34 56 78 &middot; Friend</div></div>
-            <div class="contact-langs"><span class="contact-lang-tag in">FR</span><span class="contact-lang-tag out" data-i18n="out-lang"></span></div>
-          </div>
-          <div class="phone-nav">
-            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><span data-i18n="nav-chats"></span></div>
-            <div class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span data-i18n="nav-contacts"></span></div>
-            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span data-i18n="nav-sched"></span></div>
-            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span data-i18n="nav-kb"></span></div>
+          <div class="sc-nav">
+            <div><svg class="i"><use href="#i-message"/></svg><span data-i18n="nav-chats"></span></div>
+            <div class="on"><svg class="i"><use href="#i-users"/></svg><span data-i18n="nav-contacts"></span></div>
+            <div><svg class="i"><use href="#i-book"/></svg><span data-i18n="nav-kb"></span></div>
+            <div><svg class="i"><use href="#i-ellipsis"/></svg><span data-i18n="nav-more"></span></div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="feature-text">
-      <span class="section-badge">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-        <span data-i18n="nav-contacts"></span>
-      </span>
-      <h3 data-i18n="f2-title"></h3>
-      <p data-i18n="f2-p1"></p>
-      <p style="margin-top:12px;" data-i18n="f2-p2"></p>
     </div>
   </div>
 </section>
 
 <!-- ===== FEATURE 3: SCHEDULE + KB ===== -->
-<section class="features-section">
-  <div class="features-grid fade-up">
+<section class="on-surface">
+  <div class="wrap feature reveal">
     <div class="feature-text">
-      <span class="section-badge">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        <span data-i18n="f3-badge"></span>
-      </span>
+      <span class="pill pill-neutral"><svg class="i"><use href="#i-clock"/></svg><span data-i18n="f3-badge"></span></span>
       <h3 data-i18n="f3-title"></h3>
       <p data-i18n="f3-p"></p>
-      <div style="margin-top: 32px;">
-        <span class="section-badge">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-          <span data-i18n="nav-kb"></span>
-        </span>
+      <div class="feature-sub">
+        <span class="pill pill-neutral"><svg class="i"><use href="#i-book"/></svg><span data-i18n="nav-kb"></span></span>
         <h3 data-i18n="f3-kb-title"></h3>
         <p data-i18n="f3-kb-p"></p>
       </div>
     </div>
-    <div>
-      <div class="phone-mockup">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="screen-header">
-            <div class="screen-header-title" data-i18n="sched-title"></div>
-            <div class="screen-header-subtitle" data-i18n="sched-sub"></div>
-          </div>
-          <div class="sched-card">
-            <div class="sched-top"><span class="sched-contact">Wei Zhang</span><span class="sched-status pending" data-i18n="status-pending"></span></div>
-            <div class="sched-msg" data-i18n="sched1-msg"></div>
-            <div class="sched-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span data-i18n="sched1-time"></span></div>
-          </div>
-          <div class="sched-card">
-            <div class="sched-top"><span class="sched-contact">Yuki Tanaka</span><span class="sched-status pending" data-i18n="status-pending"></span></div>
-            <div class="sched-msg" data-i18n="sched2-msg"></div>
-            <div class="sched-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span data-i18n="sched2-time"></span></div>
-          </div>
-          <div class="sched-card">
-            <div class="sched-top"><span class="sched-contact">Sophie Durand</span><span class="sched-status sent" data-i18n="status-sent"></span></div>
-            <div class="sched-msg" data-i18n="sched3-msg"></div>
-            <div class="sched-time"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span data-i18n="sched3-time"></span></div>
-          </div>
-          <div style="padding: 12px;"><div style="height:1px; background: var(--life-gray-light); margin: 8px 0;"></div></div>
-          <div class="kb-card">
-            <div class="kb-title" data-i18n="kb1-title"></div>
-            <div class="kb-snippet" data-i18n="kb1-snippet"></div>
-            <div class="kb-tags"><span class="kb-tag" data-i18n="tag-work"></span><span class="kb-tag sand">Wei</span></div>
-          </div>
-          <div class="phone-nav">
-            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><span data-i18n="nav-chats"></span></div>
-            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span data-i18n="nav-contacts"></span></div>
-            <div class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span data-i18n="nav-sched"></span></div>
-            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span data-i18n="nav-kb"></span></div>
+    <div class="feature-media">
+      <div class="phone" aria-hidden="true">
+        <div class="screen">
+          <div class="statusbar"><span>9:41</span><span class="sb-icons"><span style="width:16px;height:9px"></span><span style="width:20px;height:10px;border-radius:3px"></span></span></div>
+          <div class="sc-body">
+            <div class="nav-bar">
+              <div class="hdr-btn outline"><svg class="i flip"><use href="#i-arrow-back"/></svg></div>
+              <div class="titles"><div class="nt" data-i18n="sched-title"></div><div class="ns" data-i18n="sched-sub"></div></div>
+            </div>
+            <div class="status-card">
+              <div class="sc-top">
+                <div class="av f1">W</div>
+                <div class="who"><b>Wei Zhang</b><small data-i18n="sched1-tz"></small></div>
+                <div class="time-block"><b>09:00</b><small data-i18n="day-tomorrow"></small></div>
+              </div>
+              <div class="content" data-i18n="sched1-msg"></div>
+              <span class="pill pill-neutral"><span class="dot"></span><span data-i18n="status-pending"></span></span>
+            </div>
+            <div class="status-card">
+              <div class="sc-top">
+                <div class="av f6">Y</div>
+                <div class="who"><b>Yuki Tanaka</b><small data-i18n="sched2-tz"></small></div>
+                <div class="time-block"><b>15:00</b><small data-i18n="day-today"></small></div>
+              </div>
+              <div class="content" data-i18n="sched2-msg"></div>
+              <span class="pill pill-neutral"><span class="dot"></span><span data-i18n="status-pending"></span></span>
+            </div>
+            <div class="section-label"><svg class="i"><use href="#i-book"/></svg><span data-i18n="nav-kb"></span></div>
+            <div class="kb-card">
+              <div class="kb-band">
+                <div class="tile ink"><svg class="i"><use href="#i-book"/></svg></div>
+                <div><b data-i18n="kb1-title"></b><small data-i18n="kb1-meta"></small></div>
+              </div>
+              <div class="kb-content">
+                <div data-i18n="kb1-snippet"></div>
+                <div class="kb-tags"><span data-i18n="tag-work"></span><span>Wei</span></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -634,208 +760,122 @@
 </section>
 
 <!-- ===== FEATURE 4: GLOSSARY ===== -->
-<section class="features-section features-invert" style="background: var(--bg-primary);">
-  <div class="features-grid fade-up">
-    <div>
-      <div class="phone-mockup">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="screen-header">
-            <div class="screen-header-subtitle">Wei Zhang</div>
-            <div class="screen-header-title" data-i18n="f4-screen-title"></div>
-          </div>
-          <div style="padding: 10px 12px 4px;">
-            <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.6;" data-i18n="f4-desc-small"></div>
-          </div>
-          <div style="padding: 0 12px;">
-            <div style="background: white; border: 1px solid var(--life-gray-light); border-radius: 14px; overflow: hidden; margin-bottom: 8px;">
-              <div style="padding: 10px 12px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
-                <div><div style="font-size: 13px; font-weight: 600;">LifeSync</div><div style="font-size: 11px; color: var(--text-secondary);" data-i18n="g-entry1-sub"></div></div>
-                <span style="font-size: 10px; padding: 3px 10px; border-radius: 9999px; background: rgba(239,68,68,0.08); color: #dc2626; font-weight: 500;" data-i18n="g-no-trans"></span>
-              </div>
-              <div style="padding: 10px 12px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
-                <div><div style="font-size: 13px; font-weight: 600;">Sprint Review</div><div style="font-size: 11px; color: var(--text-secondary);">迭代评审</div></div>
-                <span style="font-size: 10px; padding: 3px 10px; border-radius: 9999px; background: rgba(74,159,217,0.1); color: var(--life-blue); font-weight: 500;" data-i18n="g-custom-trans"></span>
-              </div>
-              <div style="padding: 10px 12px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
-                <div><div style="font-size: 13px; font-weight: 600;">Stakeholder</div><div style="font-size: 11px; color: var(--text-secondary);">利益相关者</div></div>
-                <span style="font-size: 10px; padding: 3px 10px; border-radius: 9999px; background: rgba(74,159,217,0.1); color: var(--life-blue); font-weight: 500;" data-i18n="g-custom-trans"></span>
-              </div>
-              <div style="padding: 10px 12px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
-                <div><div style="font-size: 13px; font-weight: 600;">OKR</div><div style="font-size: 11px; color: var(--text-secondary);" data-i18n="g-entry4-sub"></div></div>
-                <span style="font-size: 10px; padding: 3px 10px; border-radius: 9999px; background: rgba(239,68,68,0.08); color: #dc2626; font-weight: 500;" data-i18n="g-no-trans"></span>
-              </div>
-              <div style="padding: 10px 12px; display: flex; justify-content: space-between; align-items: center;">
-                <div><div style="font-size: 13px; font-weight: 600;">Deployment</div><div style="font-size: 11px; color: var(--text-secondary);">部署</div></div>
-                <span style="font-size: 10px; padding: 3px 10px; border-radius: 9999px; background: rgba(74,159,217,0.1); color: var(--life-blue); font-weight: 500;" data-i18n="g-custom-trans"></span>
-              </div>
+<section>
+  <div class="wrap feature reverse reveal">
+    <div class="feature-text">
+      <span class="pill pill-neutral"><svg class="i"><use href="#i-book-a"/></svg><span data-i18n="f4-badge"></span></span>
+      <h3 data-i18n="f4-title"></h3>
+      <p data-i18n="f4-p1"></p>
+      <p data-i18n="f4-p2"></p>
+      <ul>
+        <li><span class="bullet"><svg class="i"><use href="#i-check"/></svg></span><span data-i18n-html="f4-li1"></span></li>
+        <li><span class="bullet"><svg class="i"><use href="#i-check"/></svg></span><span data-i18n-html="f4-li2"></span></li>
+        <li><span class="bullet"><svg class="i"><use href="#i-check"/></svg></span><span data-i18n-html="f4-li3"></span></li>
+      </ul>
+      <p style="margin-top:16px" data-i18n="f4-p3"></p>
+    </div>
+    <div class="feature-media">
+      <div class="phone" aria-hidden="true">
+        <div class="screen">
+          <div class="statusbar"><span>9:41</span><span class="sb-icons"><span style="width:16px;height:9px"></span><span style="width:20px;height:10px;border-radius:3px"></span></span></div>
+          <div class="sc-body">
+            <div class="nav-bar">
+              <div class="hdr-btn outline"><svg class="i flip"><use href="#i-arrow-back"/></svg></div>
+              <div class="titles"><div class="nt" data-i18n="f4-screen-title"></div><div class="ns">Wei Zhang</div></div>
             </div>
-            <div style="text-align: center; padding: 8px 0;">
-              <div style="display: inline-flex; align-items: center; gap: 6px; background: var(--life-blue); color: white; padding: 10px 24px; border-radius: 12px; font-size: 13px; font-weight: 600;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
-                <span data-i18n="g-add-btn"></span>
-              </div>
+            <div class="group">
+              <div class="g-row"><div><b>LifeSync</b><small data-i18n="g-entry1-sub"></small></div><span class="pill pill-info" data-i18n="g-no-trans"></span></div>
+              <div class="g-row"><div><b>Sprint Review</b><small>迭代评审</small></div><span class="pill pill-neutral" data-i18n="g-custom-trans"></span></div>
+              <div class="g-row"><div><b>Stakeholder</b><small>利益相关者</small></div><span class="pill pill-neutral" data-i18n="g-custom-trans"></span></div>
+              <div class="g-row"><div><b>OKR</b><small data-i18n="g-entry4-sub"></small></div><span class="pill pill-info" data-i18n="g-no-trans"></span></div>
             </div>
-          </div>
-          <div style="padding: 8px 12px 12px;">
-            <div style="font-size: 10px; font-weight: 600; color: var(--life-blue); margin-bottom: 6px; display: flex; align-items: center; gap: 4px;">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/></svg>
-              <span data-i18n="g-example-label"></span>
+            <div class="mini-primary"><svg class="i"><use href="#i-plus"/></svg><span data-i18n="g-add-btn"></span></div>
+            <div class="section-label"><svg class="i"><use href="#i-languages"/></svg><span data-i18n="g-example-label"></span></div>
+            <div class="mini-chat">
+              <div class="bubble out" style="font-size:12px;line-height:17px" data-i18n="g-example-msg"></div>
+              <div class="bubble in" style="font-size:12px;line-height:17px" dir="ltr">我们在下次<strong>迭代评审</strong>讨论<strong>LifeSync</strong>的<strong>OKR</strong></div>
             </div>
-            <div style="background: #dcf8c6; padding: 8px 10px; border-radius: 12px 12px 4px 12px; font-size: 11px; margin-bottom: 4px;" data-i18n="g-example-msg"></div>
-            <div style="background: var(--bg-tertiary); padding: 8px 10px; border-radius: 12px 12px 12px 4px; font-size: 11px; direction: ltr; text-align: left;">
-              我们在下次<strong>迭代评审</strong>讨论<strong>LifeSync</strong>的<strong>OKR</strong>
-            </div>
-            <div style="font-size: 9px; color: var(--text-secondary); margin-top: 4px; text-align: center;" data-i18n="g-example-note"></div>
-          </div>
-          <div class="phone-nav">
-            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><span data-i18n="nav-chats"></span></div>
-            <div class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span data-i18n="nav-contacts"></span></div>
-            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span data-i18n="nav-sched"></span></div>
-            <div class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span data-i18n="nav-kb"></span></div>
+            <div style="font-size:10.5px;line-height:14px;color:var(--text-secondary);text-align:center;margin-top:6px" data-i18n="g-example-note"></div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="feature-text">
-      <span class="section-badge">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/><path d="M8 11h8"/><path d="M8 7h6"/></svg>
-        <span data-i18n="f4-badge"></span>
-      </span>
-      <h3 data-i18n="f4-title"></h3>
-      <p data-i18n="f4-p1"></p>
-      <p style="margin-top:12px;" data-i18n="f4-p2"></p>
-      <ul class="feat4-list" style="margin-top:12px; font-size:15px; color: var(--text-secondary); line-height: 2;">
-        <li data-i18n-html="f4-li1"></li>
-        <li data-i18n-html="f4-li2"></li>
-        <li data-i18n-html="f4-li3"></li>
-      </ul>
-      <p style="margin-top:16px;" data-i18n="f4-p3"></p>
     </div>
   </div>
 </section>
 
 <!-- ===== HOW-TO ===== -->
-<section class="howto-section" id="howto">
-  <div class="steps-container">
-    <div style="text-align:center; margin-bottom: 60px;" class="fade-up">
-      <span class="section-badge">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-        <span data-i18n="howto-badge"></span>
-      </span>
-      <h2 class="section-title" data-i18n="howto-title"></h2>
-      <p class="section-desc" data-i18n="howto-desc"></p>
+<section class="on-surface" id="howto">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="pill pill-neutral"><svg class="i"><use href="#i-play"/></svg><span data-i18n="howto-badge"></span></span>
+      <h2 data-i18n="howto-title"></h2>
+      <p data-i18n="howto-desc"></p>
     </div>
-
-    <div class="step fade-up" style="position:relative;">
-      <div class="step-connector"></div>
-      <div class="step-number">1</div>
-      <div class="step-content">
-        <h4 data-i18n="s1-title"></h4>
-        <p data-i18n="s1-p"></p>
-      </div>
-      <div class="step-visual">
-        <div class="mini-screen">
-          <div class="mini-header" data-i18n="s1-header"></div>
-          <div class="mini-body" style="text-align:center; padding:16px 12px;">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--whatsapp)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-            <div style="font-size:11px; color:var(--text-secondary); margin:8px 0;" data-i18n="s1-code-label"></div>
-            <div style="font-size:22px; font-weight:800; letter-spacing:6px; color:var(--life-blue);">4A9F-D9B4</div>
-            <div style="font-size:10px; color:var(--text-secondary); margin-top:8px;" data-i18n="s1-code-hint"></div>
+    <div class="steps">
+      <div class="step reveal" style="background:var(--canvas)">
+        <div class="step-num">1</div>
+        <div><h4 data-i18n="s1-title"></h4><p data-i18n="s1-p"></p></div>
+        <div class="mini" style="background:var(--surface)">
+          <div class="mini-title" data-i18n="s1-header"></div>
+          <div class="code-box">
+            <div class="tile"><svg class="i"><use href="#i-message"/></svg></div>
+            <div style="font-size:11px;color:var(--text-secondary)" data-i18n="s1-code-label"></div>
+            <div class="code">4A9F-D9B4</div>
+            <div style="font-size:10.5px;color:var(--text-secondary)" data-i18n="s1-code-hint"></div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="step fade-up" style="position:relative;">
-      <div class="step-connector"></div>
-      <div class="step-number">2</div>
-      <div class="step-content">
-        <h4 data-i18n="s2-title"></h4>
-        <p data-i18n="s2-p"></p>
+      <div class="step reveal" style="background:var(--canvas)">
+        <div class="step-num">2</div>
+        <div><h4 data-i18n="s2-title"></h4><p data-i18n="s2-p"></p></div>
+        <div class="mini" style="background:var(--surface)">
+          <div class="mini-title"><svg class="i"><use href="#i-languages"/></svg><span data-i18n="s2-header"></span></div>
+          <div class="mini-label" data-i18n="s2-in-label"></div>
+          <div class="mini-field"><span data-i18n="s2-in-val"></span><svg class="i"><use href="#i-chevron-down"/></svg></div>
+          <div class="mini-label" data-i18n="s2-out-label"></div>
+          <div class="mini-field"><span data-i18n="s2-out-val"></span><svg class="i"><use href="#i-chevron-down"/></svg></div>
+          <div class="switch-row"><span data-i18n="s2-auto"></span><span class="switch" role="presentation"></span></div>
+        </div>
       </div>
-      <div class="step-visual">
-        <div class="mini-screen">
-          <div class="mini-header" data-i18n="s2-header"></div>
-          <div class="mini-body">
-            <div style="font-size:11px; font-weight:600; margin-bottom:6px;" data-i18n="s2-in-label"></div>
-            <div class="mini-select" data-i18n="s2-in-val"></div>
-            <div style="font-size:11px; font-weight:600; margin-bottom:6px;" data-i18n="s2-out-label"></div>
-            <div class="mini-select" data-i18n="s2-out-val"></div>
-            <div class="mini-toggle-row"><span data-i18n="s2-auto"></span><div class="mini-toggle on"></div></div>
+
+      <div class="step reveal" style="background:var(--canvas)">
+        <div class="step-num">3</div>
+        <div><h4 data-i18n="s3-title"></h4><p data-i18n="s3-p"></p></div>
+        <div class="mini" style="background:var(--surface)">
+          <div class="mini-title" data-i18n="s3-header"></div>
+          <div class="mini-chat">
+            <div class="bubble out"><span data-i18n="s3-msg1"></span><div class="meta"><span data-i18n="chat-badge2"></span><svg class="i read"><use href="#i-check-check"/></svg></div></div>
+            <div class="bubble in"><span data-i18n="s3-msg2"></span><div class="orig" dir="auto">都好！等着开会呢</div></div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="step fade-up" style="position:relative;">
-      <div class="step-connector"></div>
-      <div class="step-number">3</div>
-      <div class="step-content">
-        <h4 data-i18n="s3-title"></h4>
-        <p data-i18n="s3-p"></p>
-      </div>
-      <div class="step-visual">
-        <div class="mini-screen">
-          <div class="mini-header" data-i18n="s3-header"></div>
-          <div class="mini-body" style="padding: 8px;">
-            <div style="background:#dcf8c6; padding:8px 10px; border-radius:12px 12px 4px 12px; font-size:11px; margin-bottom:6px;">
-              <span data-i18n="s3-msg1"></span>
-              <div style="font-size:9px; color:var(--text-secondary); margin-top:3px; direction:ltr; text-align:left;">嗨，最近怎么样？</div>
-            </div>
-            <div style="background:var(--bg-tertiary); padding:8px 10px; border-radius:12px 12px 12px 4px; font-size:11px;">
-              <span data-i18n="s3-msg2"></span>
-              <div style="font-size:9px; color:var(--text-secondary); margin-top:3px;">都好！等着开会呢</div>
-            </div>
+      <div class="step reveal" style="background:var(--canvas)">
+        <div class="step-num">4</div>
+        <div><h4 data-i18n="s4-title"></h4><p data-i18n="s4-p"></p></div>
+        <div class="mini" style="background:var(--surface)">
+          <div class="mini-title"><svg class="i"><use href="#i-clock"/></svg><span data-i18n="s4-header"></span></div>
+          <div class="mini-field" style="height:auto;min-height:44px;padding:8px 10px;align-items:flex-start" data-i18n="s4-msg"></div>
+          <div style="display:flex;gap:6px;margin-top:6px">
+            <div class="mini-field" style="flex:1;direction:ltr"><span>16/04</span><svg class="i"><use href="#i-calendar"/></svg></div>
+            <div class="mini-field" style="flex:1;direction:ltr"><span>09:00</span><svg class="i"><use href="#i-clock"/></svg></div>
           </div>
+          <div style="margin:8px 0;text-align:center"><span class="pill pill-info" style="font-size:10.5px;padding:3px 10px" data-i18n="s4-tz"></span></div>
+          <div class="mini-primary" style="margin:0" data-i18n="s4-btn"></div>
         </div>
       </div>
-    </div>
 
-    <div class="step fade-up" style="position:relative;">
-      <div class="step-connector"></div>
-      <div class="step-number">4</div>
-      <div class="step-content">
-        <h4 data-i18n="s4-title"></h4>
-        <p data-i18n="s4-p"></p>
-      </div>
-      <div class="step-visual">
-        <div class="mini-screen">
-          <div class="mini-header" data-i18n="s4-header"></div>
-          <div class="mini-body">
-            <div class="mini-select">Wei Zhang</div>
-            <div class="mini-input" style="min-height:40px;" data-i18n="s4-msg"></div>
-            <div style="display:flex; gap:6px; margin-bottom:8px;">
-              <div class="mini-select" style="flex:1;">16/04/2026</div>
-              <div class="mini-select" style="flex:1;">09:00</div>
-            </div>
-            <div style="font-size:10px; color:var(--life-blue); margin-bottom:8px; text-align:center;" data-i18n="s4-tz"></div>
-            <div class="mini-btn" data-i18n="s4-btn"></div>
+      <div class="step reveal" style="background:var(--canvas)">
+        <div class="step-num">5</div>
+        <div><h4 data-i18n="s5-title"></h4><p data-i18n="s5-p"></p></div>
+        <div class="mini" style="background:var(--surface)">
+          <div class="mini-title"><svg class="i"><use href="#i-book"/></svg><span data-i18n="s5-header"></span></div>
+          <div class="kb-card" style="background:var(--canvas);margin-bottom:6px">
+            <div class="kb-content" style="padding:8px 10px"><b style="font-size:12px" data-i18n="s5-kb1-title"></b><div style="color:var(--text-secondary);font-size:11px" data-i18n="s5-kb1-desc"></div><div class="kb-tags" style="margin-top:5px"><span style="background:var(--surface)" data-i18n="s5-kb1-tag"></span></div></div>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="step fade-up">
-      <div class="step-number">5</div>
-      <div class="step-content">
-        <h4 data-i18n="s5-title"></h4>
-        <p data-i18n="s5-p"></p>
-      </div>
-      <div class="step-visual">
-        <div class="mini-screen">
-          <div class="mini-header" data-i18n="s5-header"></div>
-          <div class="mini-body">
-            <div style="background:rgba(74,159,217,0.06); border:1px solid rgba(74,159,217,0.15); border-radius:10px; padding:8px; margin-bottom:6px;">
-              <div style="font-size:11px; font-weight:600;" data-i18n="s5-kb1-title"></div>
-              <div style="font-size:10px; color:var(--text-secondary);" data-i18n="s5-kb1-desc"></div>
-              <div style="display:flex; gap:4px; margin-top:4px;"><span style="font-size:9px; background:rgba(74,159,217,0.1); color:var(--life-blue); padding:1px 6px; border-radius:9999px;" data-i18n="s5-kb1-tag"></span></div>
-            </div>
-            <div style="background:rgba(196,180,154,0.08); border:1px solid rgba(196,180,154,0.2); border-radius:10px; padding:8px;">
-              <div style="font-size:11px; font-weight:600;" data-i18n="s5-kb2-title"></div>
-              <div style="font-size:10px; color:var(--text-secondary);" data-i18n="s5-kb2-desc"></div>
-              <div style="display:flex; gap:4px; margin-top:4px;"><span style="font-size:9px; background:rgba(196,180,154,0.15); color:#8a7a5e; padding:1px 6px; border-radius:9999px;" data-i18n="s5-kb2-tag"></span></div>
-            </div>
+          <div class="kb-card" style="background:var(--canvas);margin-bottom:0">
+            <div class="kb-content" style="padding:8px 10px"><b style="font-size:12px" data-i18n="s5-kb2-title"></b><div style="color:var(--text-secondary);font-size:11px" dir="ltr" data-i18n="s5-kb2-desc"></div><div class="kb-tags" style="margin-top:5px"><span style="background:var(--surface)" data-i18n="s5-kb2-tag"></span></div></div>
           </div>
         </div>
       </div>
@@ -844,58 +884,98 @@
 </section>
 
 <!-- ===== LANGUAGES ===== -->
-<section class="langs-section fade-up">
-  <span class="section-badge">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-    <span data-i18n="langs-badge"></span>
-  </span>
-  <h2 class="section-title" data-i18n="langs-title"></h2>
-  <p class="section-desc" data-i18n="langs-desc"></p>
-  <div class="langs-grid">
-    <div class="lang-card"><div class="flag">&#127470;&#127473;</div><div class="lang-name" data-i18n="lname-he"></div><div class="lang-native">עברית / Hebrew</div></div>
-    <div class="lang-card"><div class="flag">&#127468;&#127463;</div><div class="lang-name" data-i18n="lname-en"></div><div class="lang-native">English</div></div>
-    <div class="lang-card"><div class="flag">&#127480;&#127462;</div><div class="lang-name" data-i18n="lname-ar"></div><div class="lang-native">العربية</div></div>
-    <div class="lang-card"><div class="flag">&#127479;&#127482;</div><div class="lang-name" data-i18n="lname-ru"></div><div class="lang-native">Русский</div></div>
-    <div class="lang-card"><div class="flag">&#127466;&#127480;</div><div class="lang-name" data-i18n="lname-es"></div><div class="lang-native">Espa&ntilde;ol</div></div>
-    <div class="lang-card"><div class="flag">&#127467;&#127479;</div><div class="lang-name" data-i18n="lname-fr"></div><div class="lang-native">Fran&ccedil;ais</div></div>
-    <div class="lang-card"><div class="flag">&#127465;&#127466;</div><div class="lang-name" data-i18n="lname-de"></div><div class="lang-native">Deutsch</div></div>
-    <div class="lang-card"><div class="flag">&#127464;&#127475;</div><div class="lang-name" data-i18n="lname-zh"></div><div class="lang-native">中文</div></div>
-    <div class="lang-card"><div class="flag">&#127463;&#127479;</div><div class="lang-name" data-i18n="lname-pt"></div><div class="lang-native">Portugu&ecirc;s (Brasil)</div></div>
-    <div class="lang-card"><div class="flag">&#127468;&#127479;</div><div class="lang-name" data-i18n="lname-el"></div><div class="lang-native">&Epsilon;&lambda;&lambda;&eta;&nu;&iota;&kappa;&#940;</div></div>
-    <div class="lang-card"><div class="flag">&#127470;&#127475;</div><div class="lang-name" data-i18n="lname-hi"></div><div class="lang-native">हिन्दी</div></div>
-    <div class="lang-card"><div class="flag">&#127481;&#127469;</div><div class="lang-name" data-i18n="lname-th"></div><div class="lang-native">ไทย</div></div>
-    <div class="lang-card"><div class="flag">&#127466;&#127481;</div><div class="lang-name" data-i18n="lname-am"></div><div class="lang-native">&#4768;&#4635;&#4653;&#4763;</div></div>
-    <div class="lang-card"><div class="flag">&#127477;&#127469;</div><div class="lang-name" data-i18n="lname-tl"></div><div class="lang-native">Filipino</div></div>
-    <div class="lang-card"><div class="flag">&#127479;&#127476;</div><div class="lang-name" data-i18n="lname-ro"></div><div class="lang-native">Rom&acirc;n&#259;</div></div>
-    <div class="lang-card"><div class="flag">&#127475;&#127477;</div><div class="lang-name" data-i18n="lname-ne"></div><div class="lang-native">&#2344;&#2375;&#2346;&#2366;&#2354;&#2368;</div></div>
-    <div class="lang-card"><div class="flag">&#127473;&#127472;</div><div class="lang-name" data-i18n="lname-si"></div><div class="lang-native">&#3523;&#3538;&#3458;&#3524;&#3517;</div></div>
+<section id="languages">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="pill pill-neutral"><svg class="i"><use href="#i-globe"/></svg><span data-i18n="langs-badge"></span></span>
+      <h2 data-i18n="langs-title"></h2>
+      <p data-i18n="langs-desc"></p>
+    </div>
+    <div class="lang-grid reveal" id="lang-grid"></div>
+    <div class="langs-note reveal"><span class="pill pill-info"><svg class="i"><use href="#i-monitor"/></svg><span data-i18n="langs-ui"></span></span></div>
   </div>
 </section>
 
 <!-- ===== CTA ===== -->
-<section class="cta-section fade-up">
-  <h2 data-i18n="cta-title"></h2>
-  <p data-i18n="cta-desc"></p>
-  <a id="cta-link" href="https://wa.me/972526044425?text=I%27d+like+more+information+about+LifeSync+Duet" target="_blank" class="cta-btn">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-    <span data-i18n="cta-btn"></span>
-  </a>
+<section style="padding-top:0;padding-bottom:64px">
+  <div class="wrap">
+    <div class="cta-card reveal">
+      <div class="logo" style="--logo-tile:#2E3A48"><svg><use href="#logo-art"/></svg></div>
+      <h2 data-i18n="cta-title"></h2>
+      <p data-i18n="cta-desc"></p>
+      <a class="btn btn-on-ink cta-link" href="https://wa.me/972526044425" target="_blank" rel="noopener">
+        <svg class="i"><use href="#i-message"/></svg>
+        <span data-i18n="cta-btn"></span>
+      </a>
+    </div>
+  </div>
 </section>
+
+</main>
 
 <!-- ===== FOOTER ===== -->
 <footer>
-  <div class="footer-logo">LS Duet</div>
-  <div data-i18n="footer-tag"></div>
-  <div class="footer-by" data-i18n="footer-by"></div>
+  <div class="wrap">
+    <div class="f-brand">
+      <div class="logo"><svg><use href="#logo-art"/></svg></div>
+      <div><b>LS Duet</b><small data-i18n="footer-tag"></small></div>
+    </div>
+    <nav>
+      <a href="privacy-policy.html" data-i18n="footer-privacy"></a>
+      <a href="delete-account.html" data-i18n="footer-delete"></a>
+    </nav>
+    <div class="by" data-i18n="footer-by"></div>
+  </div>
 </footer>
 
 <script>
+// Translation languages offered in the app - mirrors SUPPORTED_LANGUAGES in
+// LS-Duet apps/mobile/src/services/translationSettingsService.ts.
+// [code, native name, English name, Hebrew name]
+const LANGUAGES = [
+  ['he', 'עברית', 'Hebrew', 'עברית'],
+  ['en', 'English', 'English', 'אנגלית'],
+  ['ar', 'العربية', 'Arabic', 'ערבית'],
+  ['ru', 'Русский', 'Russian', 'רוסית'],
+  ['es', 'Español', 'Spanish', 'ספרדית'],
+  ['es-419', 'Español (Latinoamérica)', 'Spanish (Latin America)', 'ספרדית (אמריקה הלטינית)'],
+  ['es-MX', 'Español (México)', 'Spanish (Mexico)', 'ספרדית (מקסיקו)'],
+  ['fr', 'Français', 'French', 'צרפתית'],
+  ['de', 'Deutsch', 'German', 'גרמנית'],
+  ['it', 'Italiano', 'Italian', 'איטלקית'],
+  ['nl', 'Nederlands', 'Dutch', 'הולנדית'],
+  ['pl', 'Polski', 'Polish', 'פולנית'],
+  ['uk', 'Українська', 'Ukrainian', 'אוקראינית'],
+  ['sv', 'Svenska', 'Swedish', 'שוודית'],
+  ['zh', '中文', 'Chinese', 'סינית'],
+  ['am', 'አማርኛ', 'Amharic', 'אמהרית'],
+  ['pt', 'Português (Brasil)', 'Portuguese (Brazil)', 'פורטוגזית (ברזיל)'],
+  ['pt-PT', 'Português (Portugal)', 'Portuguese (Portugal)', 'פורטוגזית (פורטוגל)'],
+  ['tl', 'Filipino', 'Filipino', 'פיליפינית'],
+  ['th', 'ไทย', 'Thai', 'תאילנדית'],
+  ['el', 'Ελληνικά', 'Greek', 'יוונית'],
+  ['ka', 'ქართული', 'Georgian', 'גאורגית'],
+  ['hi', 'हिन्दी', 'Hindi', 'הינדית'],
+  ['ro', 'Română', 'Romanian', 'רומנית'],
+  ['ne', 'नेपाली', 'Nepali', 'נפאלית'],
+  ['si', 'සිංහල', 'Sinhala', 'סינהלית'],
+  ['tr', 'Türkçe', 'Turkish', 'טורקית'],
+  ['af', 'Afrikaans', 'Afrikaans', 'אפריקאנס'],
+  ['zu', 'isiZulu', 'Zulu', 'זולו'],
+  ['st', 'Sesotho', 'Sotho (Southern)', 'סותו (דרומית)'],
+  ['nso', 'Sepedi', 'Sotho (Northern)', 'סותו (צפונית)'],
+];
+// Sample shown in the hero, by code
+const HERO_LANGS = ['he', 'en', 'ar', 'ru', 'zh', 'es', 'fr', 'hi'];
+
 const translations = {
   en: {
     'page-title': 'LS Duet - Breaking the Tower of Babel',
+    'hero-eyebrow': 'WhatsApp, in your language',
     'hero-sub': 'Breaking the Tower of Babel',
     'hero-tag': 'Communicate in your natural language. WhatsApp messages translated automatically — write in English, the other side receives it in Chinese. They reply in Chinese, you read it in English. Simple as that.',
     'hero-cta': 'How does it work?',
+    'hero-more': '+{n} more',
     'babel-badge': 'Our Story',
     'babel-title': 'Tower of Babel? We broke it',
     'babel-desc': "In today's business world, we work with clients, suppliers and partners from around the globe. But different languages create friction - unclear messages, embarrassing translations, and deals that get stuck along the way.<br/><br/><strong>LS Duet</strong> doesn't reinvent the wheel - it simply connects people through WhatsApp, in their natural language. No barriers, no misunderstandings, no embarrassing Google Translate moments.",
@@ -907,50 +987,70 @@ const translations = {
     'card3-p': 'Not dry, mechanical translation. LS Duet translates the way you would write - natural, friendly, human.',
     'card4-title': 'Professional Glossary',
     'card4-p': "Define a glossary for each contact - brand names, professional terms and jargon that shouldn't be translated, or need to be translated precisely.",
+    'vid-badge': 'Demo',
     'vid-title': 'See it in action',
     'vid-desc': 'Adding a Chinese contact, sending a message in English that arrives in Chinese, and receiving a reply in Chinese translated to English',
     'vid-src': 'duet-video-en.mp4',
     'f1-title': 'Live WhatsApp Translation',
     'f1-p1': 'Every incoming message is automatically translated to your language. Every outgoing message is translated to the contact\'s language. The original message is always accessible with a tap - so you can verify accuracy.',
     'f1-p2': 'Works in groups too - with sender name and automatic source language detection.',
-    'chat-sub': 'Chat with',
+    'chat-hdr-sub': 'Auto-translate · Chinese',
     'chat-recv1': 'Hi, how are you today?',
     'chat-badge1': 'Translated from Chinese',
     'chat-sent2': "Great! I wanted to ask about Tuesday's meeting",
-    'chat-badge2': 'Translated to Chinese',
+    'chat-badge2': 'Sent in Chinese',
     'chat-recv3': "Sure, let's meet at 3 PM Beijing time",
     'chat-badge3': 'Translated from Chinese',
-    'nav-chats': 'Chats',
+    'chat-show-orig': 'Show original',
+    'chat-hide-orig': 'Hide original',
+    'chat-will-translate': 'Will be translated to Chinese before sending',
+    'chat-placeholder': 'Message',
+    'm2-prev': 'Thank you so much for the shipment!',
+    'm3-prev': 'See you in Dubai next week',
+    'm5-prev': 'The documents are signed',
+    'm6-prev': 'Can we move the call to Friday?',
+    'day-today': 'Today',
+    'day-tomorrow': 'Tomorrow',
+    'day-yesterday': 'Yesterday',
+    'day-mon': 'Mon',
+    'day-sun': 'Sun',
+    'chip-all': 'All',
+    'chip-unread': 'Unread',
+    'chip-fav': 'Favorites',
+    'chip-translated': 'Translated',
+    'nav-chats': 'Messages',
     'nav-contacts': 'Contacts',
-    'nav-sched': 'Schedule',
     'nav-kb': 'Knowledge',
+    'nav-more': 'More',
     'contacts-title': 'Contacts',
-    'contacts-sub': '12 contacts',
+    'contacts-search': 'Search contacts',
+    'role-vip': 'VIP',
+    'role-client': 'Client',
+    'role-partner': 'Partner',
+    'role-friend': 'Friend',
     'out-lang': 'EN',
     'f2-title': 'Smart Contact Management',
     'f2-p1': 'Each contact gets a full profile: name, company, timezone, priority level, and communication language. See exactly what time it is for them, when you last spoke, and when it\'s time to follow up.',
-    'f2-p2': 'The favorites strip at the top provides quick access to your most important contacts.',
+    'f2-p2': 'Mark your most important contacts as favorites and filter to them with a single tap.',
     'f3-badge': 'Message Scheduling',
     'f3-title': 'Schedule Messages for the Perfect Moment',
     'f3-p': "Write now, send when convenient. Automatically detects timezones - so if Wei is in Beijing and it's 3 AM there, schedule for a reasonable hour. The message is automatically translated before sending.",
     'f3-kb-title': 'Personal Knowledge Base',
     'f3-kb-p': 'Save important information from conversations - links, meeting summaries, notes. Organized by categories and tags, with quick search and a favorites system.',
     'sched-title': 'Scheduled Messages',
-    'sched-sub': '3 messages pending',
+    'sched-sub': '2 messages pending',
     'status-pending': 'Pending',
-    'status-sent': 'Sent',
     'sched1-msg': 'Good morning! Just wanted to confirm the meeting is still on...',
-    'sched1-time': 'Tomorrow, 09:00 (15:00 Beijing time)',
+    'sched1-tz': '15:00 Beijing time',
     'sched2-msg': 'Thank you so much for the shipment! Arrived on time',
-    'sched2-time': 'Today, 15:00 (21:00 Tokyo time)',
+    'sched2-tz': '21:00 Tokyo time',
     'sched3-msg': 'Hey! Saw the proposal, sounds great',
-    'sched3-time': 'Yesterday, 11:30 (12:30 Paris time)',
     'kb1-title': 'Meeting Summary - Shanghai Project',
+    'kb1-meta': 'Work · Note',
     'kb1-snippet': 'Wei approved a budget of 50K. Deadline: end of Q2. Need to send contract by Sunday.',
     'tag-work': 'Work',
     'f4-badge': 'Glossary',
     'f4-screen-title': 'Glossary',
-    'f4-desc-small': 'Terms that will not be translated or will be translated precisely in conversations with this contact.',
     'g-entry1-sub': 'Do not translate - brand name',
     'g-entry4-sub': 'Do not translate - acronym',
     'g-no-trans': 'Do Not Translate',
@@ -1002,25 +1102,26 @@ const translations = {
     's5-kb2-title': 'New Office Address',
     's5-kb2-desc': 'Nanjing Road 42, Shanghai',
     's5-kb2-tag': 'Contacts',
-    'langs-badge': '17 Languages',
+    'langs-badge': '{n} Languages',
     'langs-title': 'Supported Translation Languages',
-    'langs-desc': 'LS Duet supports 17 languages for automatic translation. The user interface is available in 7 languages.',
-    'lname-he': 'Hebrew', 'lname-en': 'English', 'lname-ar': 'Arabic', 'lname-ru': 'Russian',
-    'lname-es': 'Spanish', 'lname-fr': 'French', 'lname-de': 'German', 'lname-zh': 'Chinese',
-    'lname-pt': 'Portuguese', 'lname-el': 'Greek', 'lname-hi': 'Hindi', 'lname-th': 'Thai',
-    'lname-am': 'Amharic', 'lname-tl': 'Filipino', 'lname-ro': 'Romanian', 'lname-ne': 'Nepali', 'lname-si': 'Sinhala',
+    'langs-desc': 'LS Duet translates between {n} languages and regional variants - pick any of them separately for each contact, in both directions.',
+    'langs-ui': 'The app itself is available in 7 languages',
     'cta-title': 'Ready to break the Tower of Babel?',
     'cta-desc': 'Start communicating in your natural language. No barriers, no boundaries.',
     'cta-btn': 'Contact Us',
     'cta-href': 'https://wa.me/972526044425?text=I%27d+like+more+information+about+LifeSync+Duet',
     'footer-tag': 'Communication without language barriers',
+    'footer-privacy': 'Privacy Policy',
+    'footer-delete': 'Delete Account',
     'footer-by': 'by BEST-IT © 2026',
   },
   he: {
     'page-title': 'LS Duet - לשבור את מגדל בבל',
+    'hero-eyebrow': 'וואטסאפ, בשפה שלך',
     'hero-sub': 'לשבור את מגדל בבל',
     'hero-tag': 'תקשורת בשפה הטבעית שלך. הודעות וואטסאפ שמתורגמות אוטומטית - תכתבו בעברית, הצד השני יקבל בסינית. הם יענו בסינית, אתם תקראו בעברית. פשוט ככה.',
     'hero-cta': 'איך זה עובד?',
+    'hero-more': '+{n} נוספות',
     'babel-badge': 'הסיפור שלנו',
     'babel-title': 'מגדל בבל? שברנו אותו',
     'babel-desc': 'בעולם העסקי של היום, אנחנו עובדים עם לקוחות, ספקים ושותפים מכל העולם. אבל שפה שונה יוצרת חיכוך - הודעות לא ברורות, תרגומים מביכים, ועסקאות שנתקעות בדרך.<br/><br/><strong>LS Duet</strong> לא ממציא את הגלגל מחדש - הוא פשוט מחבר בין אנשים דרך וואטסאפ, בשפה הטבעית שלהם. בלי מחסומים, בלי אי-הבנות, בלי תרגומי גוגל מביכים.',
@@ -1029,53 +1130,73 @@ const translations = {
     'card2-title': 'הגדרה לכל איש קשר',
     'card2-p': 'תגדירו שפת כניסה ויציאה לכל איש קשר בנפרד. כל אחד מקבל את מה שהוא צריך.',
     'card3-title': 'טון טבעי',
-    'card3-p': 'לא תרגום יבש ומכני. LS Duet מתרגם כמו שאתם היית כותבים - טבעי, חברי, אנושי.',
+    'card3-p': 'לא תרגום יבש ומכני. LS Duet מתרגם כמו שאתם הייתם כותבים - טבעי, חברי, אנושי.',
     'card4-title': 'מילון מונחים מקצועי',
     'card4-p': 'הגדירו מילון מושגים לכל איש קשר - שמות מותגים, מונחים מקצועיים וז\'רגון שלא צריך לתרגם או שצריך לתרגם בדיוק.',
+    'vid-badge': 'הדגמה',
     'vid-title': 'ראו את זה בפעולה',
     'vid-desc': 'הוספת איש קשר סיני, שליחת הודעה בעברית שמגיעה בסינית, וקבלת תשובה בסינית שמתורגמת לעברית',
     'vid-src': 'duet-video-he.mp4',
     'f1-title': 'שיחות וואטסאפ עם תרגום חי',
     'f1-p1': 'כל הודעה שנכנסת מתורגמת אוטומטית לשפה שלכם. כל הודעה שיוצאת מתורגמת לשפה של איש הקשר. ההודעה המקורית תמיד נגישה בלחיצה - כדי שתוכלו לוודא שהכל מדויק.',
     'f1-p2': 'עובד גם בקבוצות - עם שם השולח וזיהוי אוטומטי של שפת המקור.',
-    'chat-sub': 'שיחה עם',
+    'chat-hdr-sub': 'תרגום אוטומטי · סינית',
     'chat-recv1': 'שלום, מה שלומך היום?',
     'chat-badge1': 'תורגם מסינית',
     'chat-sent2': 'מצוין! רציתי לשאול לגבי הפגישה ביום שלישי',
-    'chat-badge2': 'תורגם לסינית',
+    'chat-badge2': 'נשלח בסינית',
     'chat-recv3': 'כן בטח, נפגשים בשעה 3 אחה"צ שעון בייג\'ינג',
     'chat-badge3': 'תורגם מסינית',
-    'nav-chats': 'שיחות',
+    'chat-show-orig': 'הצג מקור',
+    'chat-hide-orig': 'הסתר מקור',
+    'chat-will-translate': 'יתורגם לסינית לפני השליחה',
+    'chat-placeholder': 'הודעה',
+    'm2-prev': 'תודה רבה על המשלוח!',
+    'm3-prev': 'נתראה בדובאי בשבוע הבא',
+    'm5-prev': 'המסמכים חתומים',
+    'm6-prev': 'אפשר להזיז את השיחה ליום שישי?',
+    'day-today': 'היום',
+    'day-tomorrow': 'מחר',
+    'day-yesterday': 'אתמול',
+    'day-mon': 'יום ב׳',
+    'day-sun': 'יום א׳',
+    'chip-all': 'הכל',
+    'chip-unread': 'לא נקראו',
+    'chip-fav': 'מועדפים',
+    'chip-translated': 'מתורגמים',
+    'nav-chats': 'הודעות',
     'nav-contacts': 'אנשי קשר',
-    'nav-sched': 'תזמון',
     'nav-kb': 'בסיס ידע',
+    'nav-more': 'עוד',
     'contacts-title': 'אנשי קשר',
-    'contacts-sub': '12 אנשי קשר',
+    'contacts-search': 'חיפוש אנשי קשר',
+    'role-vip': 'VIP',
+    'role-client': 'לקוח',
+    'role-partner': 'שותף',
+    'role-friend': 'חבר',
     'out-lang': 'HE',
     'f2-title': 'ניהול אנשי קשר חכם',
-    'f2-p1': 'לכל איש קשר - פרופיל מלא: שם, חברה, אזור זמן, רמת חשיבות, ושפת תקשורת. תראו בדיוק מה השעה אצלהם, מתי דיברתם לאחרונה, ומתי הגיע הזמן לחזור אליהם.',
-    'f2-p2': 'רצועת המועדפים למעלה נותנת גישה מהירה לאנשים הכי חשובים.',
+    'f2-p1': 'לכל איש קשר - פרופיל מלא: שם, חברה, אזור זמן, רמת חשיבות, ושפת תקשורת. תראו בדיוק מה השעה אצלם, מתי דיברתם לאחרונה, ומתי הגיע הזמן לחזור אליהם.',
+    'f2-p2': 'סמנו את האנשים הכי חשובים כמועדפים וסננו אליהם בלחיצה אחת.',
     'f3-badge': 'תזמון הודעות',
     'f3-title': 'תזמנו הודעות לרגע המושלם',
     'f3-p': 'כתבו עכשיו, שלחו מתי שנוח. מזהה אוטומטית אזורי זמן - אז אם Wei בבייג\'ינג ושם 3 בלילה, תתזמנו לשעה נורמלית. ההודעה תתורגם אוטומטית לפני השליחה.',
     'f3-kb-title': 'בסיס ידע אישי',
     'f3-kb-p': 'שמרו מידע חשוב מתוך שיחות - קישורים, סיכומי פגישות, הערות. מאורגן לפי קטגוריות ותגיות, עם חיפוש מהיר ומערכת מועדפים.',
     'sched-title': 'הודעות מתוזמנות',
-    'sched-sub': '3 הודעות ממתינות',
-    'status-pending': 'ממתין',
-    'status-sent': 'נשלח',
+    'sched-sub': '2 הודעות ממתינות',
+    'status-pending': 'ממתינה',
     'sched1-msg': 'בוקר טוב! רק רציתי לוודא שהפגישה בעינה...',
-    'sched1-time': 'מחר, 09:00 (15:00 שעון בייג\'ינג)',
+    'sched1-tz': '15:00 שעון בייג\'ינג',
     'sched2-msg': 'תודה רבה על המשלוח! הגיע בזמן',
-    'sched2-time': 'היום, 15:00 (21:00 שעון טוקיו)',
+    'sched2-tz': '21:00 שעון טוקיו',
     'sched3-msg': 'היי! ראיתי את ההצעה, נשמע מעולה',
-    'sched3-time': 'אתמול, 11:30 (12:30 שעון פריז)',
     'kb1-title': 'סיכום פגישה - פרויקט שנגחאי',
+    'kb1-meta': 'עבודה · הערה',
     'kb1-snippet': 'Wei אישר תקציב של 50K. דדליין: סוף Q2. צריך לשלוח חוזה עד יום ראשון.',
     'tag-work': 'עבודה',
     'f4-badge': 'מילון מונחים',
     'f4-screen-title': 'מילון מונחים',
-    'f4-desc-small': 'מונחים שלא יתורגמו או שיתורגמו בצורה מדויקת בשיחה עם איש הקשר הזה.',
     'g-entry1-sub': 'לא לתרגם - שם מותג',
     'g-entry4-sub': 'לא לתרגם - ראשי תיבות',
     'g-no-trans': 'לא לתרגם',
@@ -1127,74 +1248,116 @@ const translations = {
     's5-kb2-title': 'כתובת המשרד החדש',
     's5-kb2-desc': 'Nanjing Road 42, Shanghai',
     's5-kb2-tag': 'אנשי קשר',
-    'langs-badge': '17 שפות',
+    'langs-badge': '{n} שפות',
     'langs-title': 'שפות נתמכות לתרגום',
-    'langs-desc': 'LS Duet תומך ב-17 שפות לתרגום אוטומטי. ממשק המשתמש זמין ב-7 שפות.',
-    'lname-he': 'עברית', 'lname-en': 'אנגלית', 'lname-ar': 'ערבית', 'lname-ru': 'רוסית',
-    'lname-es': 'ספרדית', 'lname-fr': 'צרפתית', 'lname-de': 'גרמנית', 'lname-zh': 'סינית',
-    'lname-pt': 'פורטוגזית', 'lname-el': 'יוונית', 'lname-hi': 'הינדית', 'lname-th': 'תאילנדית',
-    'lname-am': 'אמהרית', 'lname-tl': 'פיליפינית', 'lname-ro': 'רומנית', 'lname-ne': 'נפאלית', 'lname-si': 'סינהלית',
+    'langs-desc': 'LS Duet מתרגם בין {n} שפות וניבים אזוריים - בוחרים לכל איש קשר בנפרד, בשני הכיוונים.',
+    'langs-ui': 'האפליקציה עצמה זמינה ב-7 שפות',
     'cta-title': 'מוכנים לשבור את מגדל בבל?',
     'cta-desc': 'התחילו לתקשר בשפה הטבעית שלכם. בלי מחסומים, בלי גבולות.',
     'cta-btn': 'צרו קשר',
     'cta-href': 'https://wa.me/972526044425?text=%D7%90%D7%A9%D7%9E%D7%97+%D7%9C%D7%A7%D7%91%D7%9C+%D7%A2%D7%95%D7%93+%D7%A4%D7%A8%D7%98%D7%99%D7%9D+%D7%A2%D7%9C+LifeSync+Duet',
     'footer-tag': 'תקשורת בלי גבולות שפה',
+    'footer-privacy': 'מדיניות פרטיות',
+    'footer-delete': 'מחיקת חשבון',
     'footer-by': 'by BEST-IT © 2026',
   }
 };
+
+function fill(str) {
+  return String(str).replace(/\{n\}/g, LANGUAGES.length);
+}
+
+function el(tag, cls, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+
+function renderLanguages(lang) {
+  const t = translations[lang];
+  const local = lang === 'he' ? 3 : 2;
+  const collator = new Intl.Collator(lang);
+
+  // Full grid, sorted by the name in the page language
+  const grid = document.getElementById('lang-grid');
+  grid.replaceChildren();
+  [...LANGUAGES].sort((a, b) => collator.compare(a[local], b[local])).forEach(l => {
+    const card = el('div', 'lang-card');
+    const code = l[0].split('-')[0].toUpperCase();
+    card.appendChild(el('div', 'lang-code', code));
+    const names = el('div', 'names');
+    names.appendChild(el('div', 'lang-name', l[local]));
+    if (l[local] !== l[1]) {
+      const nat = el('div', 'lang-native', l[1]);
+      nat.dir = 'auto';
+      names.appendChild(nat);
+    }
+    card.appendChild(names);
+    grid.appendChild(card);
+  });
+
+  // Hero sample
+  const hero = document.getElementById('hero-langs');
+  hero.replaceChildren();
+  HERO_LANGS.forEach(c => {
+    const l = LANGUAGES.find(x => x[0] === c);
+    const chip = el('span', 'chip', l[1]);
+    chip.dir = 'auto';
+    hero.appendChild(chip);
+  });
+  const more = el('a', 'chip more', t['hero-more'].replace('{n}', LANGUAGES.length - HERO_LANGS.length));
+  more.href = '#languages';
+  hero.appendChild(more);
+}
 
 function setLang(lang) {
   const t = translations[lang];
   if (!t) return;
 
-  // html attributes
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
   document.title = t['page-title'];
 
-  // text nodes
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.dataset.i18n;
-    if (t[key] !== undefined) el.textContent = t[key];
+  document.querySelectorAll('[data-i18n]').forEach(e => {
+    const key = e.dataset.i18n;
+    if (t[key] !== undefined) e.textContent = fill(t[key]);
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(e => {
+    const key = e.dataset.i18nHtml;
+    if (t[key] !== undefined) e.innerHTML = t[key];
   });
 
-  // html nodes
-  document.querySelectorAll('[data-i18n-html]').forEach(el => {
-    const key = el.dataset.i18nHtml;
-    if (t[key] !== undefined) el.innerHTML = t[key];
-  });
+  document.querySelectorAll('.cta-link').forEach(a => { if (t['cta-href']) a.href = t['cta-href']; });
 
-  // CTA href
-  const ctaLink = document.getElementById('cta-link');
-  if (ctaLink && t['cta-href']) ctaLink.href = t['cta-href'];
-
-  // video
   const src = document.getElementById('demo-source');
   const vid = document.getElementById('demo-video');
-  if (src && vid && t['vid-src']) {
+  if (src && vid && t['vid-src'] && !src.src.endsWith(t['vid-src'])) {
     src.src = t['vid-src'];
     vid.load();
   }
 
-  // toggle buttons
-  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-  document.getElementById('btn-he').classList.toggle('active', lang === 'he');
+  renderLanguages(lang);
 
-  // persist
-  try { localStorage.setItem('ls-lang', lang); } catch(e) {}
+  document.getElementById('btn-en').setAttribute('aria-pressed', String(lang === 'en'));
+  document.getElementById('btn-he').setAttribute('aria-pressed', String(lang === 'he'));
+
+  try { localStorage.setItem('ls-lang', lang); } catch (e) {}
 }
 
-// Scroll animations
+// Reveal on scroll
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add('visible');
+    if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
   });
-}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(e => observer.observe(e));
 
 // Init
-const saved = (() => { try { return localStorage.getItem('ls-lang'); } catch(e) { return null; } })();
-setLang(saved === 'he' ? 'he' : 'en');
+// ?lang=he|en wins over the remembered choice (shareable links)
+const fromUrl = new URLSearchParams(location.search).get('lang');
+const saved = (() => { try { return localStorage.getItem('ls-lang'); } catch (e) { return null; } })();
+setLang((fromUrl || saved) === 'he' ? 'he' : 'en');
 </script>
 </body>
 </html>
