@@ -322,19 +322,109 @@
     footer nav a:hover { color: var(--accent); text-decoration: underline; }
     footer .by { font-size: 13px; color: var(--text-secondary); }
 
-    /* ===== MOTION (BRAND_RULES 8: subtle, functional) ===== */
-    .reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.25s ease, transform 0.25s ease; }
+    /* ===== FEATURES: sticky phone story ===== */
+    .story { padding: 40px 0; }
+    .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; }
+    .story-step { min-height: 88vh; display: flex; flex-direction: column; justify-content: center; padding: 48px 0; transition: opacity 0.5s var(--ease-out); }
+    .story-step:not(.active) { opacity: 0.28; }
+    .step-phone { display: none; }
+    .story-sticky { position: sticky; top: max(84px, calc(50vh - 281px)); display: flex; align-items: center; justify-content: center; gap: 28px; }
+    .screens { position: relative; height: 610px; border-radius: 36px; overflow: hidden; background: var(--canvas); }
+    .screens .screen { position: absolute; inset: 0; opacity: 0; transform: scale(0.97); filter: blur(4px); transition: opacity 0.5s var(--ease-out), transform 0.6s var(--ease-out), filter 0.5s var(--ease-out); }
+    .screens .screen.current { opacity: 1; transform: none; filter: none; }
+    .story-dots { display: flex; flex-direction: column; gap: 10px; }
+    .story-dots span { width: 8px; height: 8px; border-radius: 999px; background: var(--border); transition: height 0.4s var(--ease-out), background 0.3s ease; }
+    .story-dots span.on { height: 28px; background: var(--ink); }
+
+    /* Screen content plays in when the screen goes live */
+    .screen [data-seq] { opacity: 0; transform: translateY(10px) scale(0.98); transition: opacity 0.45s var(--ease-out), transform 0.55s var(--ease-out); transition-delay: calc(var(--seq, 0) * var(--seq-step, 70ms) + 120ms); }
+    .screen.live [data-seq] { opacity: 1; transform: none; }
+    .screen:not(.live) [data-seq] { transition-duration: 0.15s; transition-delay: 0s; }
+
+    /* ===== MOTION =====
+       Marketing-page motion: scroll-linked or one-time reveals, no bounce, no parallax
+       (BRAND_RULES 8). Everything collapses to plain fades under reduced motion. */
+    :root { --ease-out: cubic-bezier(0.23, 1, 0.32, 1); --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1); }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s var(--ease-out), transform 0.8s var(--ease-out); }
     .reveal.visible { opacity: 1; transform: none; }
+    .stagger > * { opacity: 0; transform: translateY(18px); transition: opacity 0.6s var(--ease-out), transform 0.7s var(--ease-out); transition-delay: calc(var(--k, 0) * 70ms); }
+    .stagger.visible > * { opacity: 1; transform: none; }
+
+    /* Scroll progress + top bar state */
+    .progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; }
+    html[dir="rtl"] .progress { transform-origin: right; }
+    .topbar { transition: box-shadow 0.3s ease, background 0.3s ease; }
+    .topbar.scrolled { box-shadow: 0 6px 20px rgba(31,42,55,0.06); }
+
+    /* Hero entrance */
+    .intro { opacity: 0; transform: translateY(16px); filter: blur(6px); transition: opacity 0.8s var(--ease-out), transform 0.9s var(--ease-out), filter 0.8s var(--ease-out); transition-delay: calc(var(--i, 0) * 90ms + 80ms); }
+    body.loaded .intro { opacity: 1; transform: none; filter: none; }
+    .hero .phone { transform: perspective(1400px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); will-change: transform; }
+    .hero .tilt { opacity: 0; transform: translateY(40px) scale(0.96); transition: opacity 0.9s var(--ease-out) 0.35s, transform 1.1s var(--ease-out) 0.35s; }
+    body.loaded .hero .tilt { opacity: 1; transform: none; }
+
+    /* Cards and buttons: hover only where hover exists */
+    @media (hover: hover) and (pointer: fine) {
+      .card { transition: transform 0.35s var(--ease-out), background 0.3s ease; }
+      .card:hover { transform: translateY(-6px); background: var(--mist); }
+      .card .tile { transition: transform 0.35s var(--ease-out); }
+      .card:hover .tile { transform: scale(1.06) rotate(-4deg); }
+      .btn:hover { transform: translateY(-2px); }
+      .btn:active { transform: scale(0.97); }
+      .lang-card { transition: transform 0.3s var(--ease-out), box-shadow 0.3s ease; }
+      .lang-card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(31,42,55,0.08); }
+      .lang-card:hover .lang-code { background: var(--ink); color: var(--mist); }
+      .lang-code { transition: background 0.25s ease, color 0.25s ease; }
+    }
+
+    /* Video grows into place as it scrolls in */
+    .video-frame { transform: scale(var(--vs, 0.86)); opacity: var(--vo, 0.4); will-change: transform; }
+
+    /* How-to: progress rail + steps light up when reached */
+    .steps { position: relative; }
+    .rail { position: absolute; top: 24px; bottom: 24px; inset-inline-start: -32px; width: 3px; border-radius: 999px; background: var(--divider); overflow: hidden; }
+    .rail i { position: absolute; inset: 0; background: var(--accent); transform: scaleY(0); transform-origin: top; display: block; }
+    .step-num { background: var(--mist); color: var(--text-secondary); transition: background 0.4s ease, color 0.4s ease, transform 0.5s var(--ease-out); }
+    .step.reached .step-num { background: var(--ink); color: var(--mist); transform: scale(1.06); }
+    .step.reveal { transform: translateX(calc(var(--dir, 1) * -28px)); }
+    .step.reveal.visible { transform: none; }
+    html[dir="rtl"] .step.reveal { --dir: -1; }
+
+    /* Greetings marquee */
+    .marquee { direction: ltr; overflow: hidden; display: flex; flex-direction: column; gap: 10px; margin: 0 0 40px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+    .marquee-row { display: flex; gap: 10px; width: max-content; animation: marquee 60s linear infinite; }
+    .marquee-row.rev { animation-direction: reverse; animation-duration: 70s; }
+    .marquee:hover .marquee-row { animation-play-state: paused; }
+    .greet { height: 48px; padding: 0 20px; border-radius: 999px; background: var(--surface); border: 1.5px solid var(--border); display: inline-flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 500; white-space: nowrap; }
+    .greet small { font-size: 11px; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.5px; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* Language cards cascade in */
+    .lang-grid .lang-card { opacity: 0; transform: translateY(14px) scale(0.98); }
+    .lang-grid.visible .lang-card { opacity: 1; transform: none; transition: opacity 0.5s var(--ease-out), transform 0.6s var(--ease-out), box-shadow 0.3s ease; transition-delay: calc(var(--k, 0) * 22ms); }
+    .lang-grid.visible .lang-card:hover { transition-delay: 0s; }
+
+    /* CTA opens up as it scrolls in */
+    .cta-card { clip-path: inset(0 var(--ci, 0%) round 28px); }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      .reveal { opacity: 1; transform: none; transition: none; }
+      .reveal, .stagger > *, .intro, .hero .tilt, .lang-grid .lang-card, .screen [data-seq], .story-step { transform: none !important; filter: none !important; transition: opacity 0.2s ease !important; transition-delay: 0s !important; }
+      .reveal, .stagger > *, .intro, .hero .tilt, .lang-grid .lang-card, .screen [data-seq] { opacity: 1 !important; }
+      .screens .screen { transform: none; filter: none; transition: opacity 0.2s ease; }
+      .hero .phone { transform: none; }
+      .video-frame { transform: none; opacity: 1; }
+      .cta-card { clip-path: none; }
+      .marquee-row { animation: none; flex-wrap: wrap; width: auto; justify-content: center; }
+      .marquee-row.rev { display: none; }
+      .marquee { -webkit-mask-image: none; mask-image: none; }
     }
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1024px) {
       .card-grid { grid-template-columns: repeat(2, 1fr); }
       .hero h1 { font-size: 46px; line-height: 52px; }
-      .feature { gap: 48px; }
+      .story-grid { gap: 40px; }
       .step { grid-template-columns: auto 1fr; }
       .step .mini { grid-column: 2; }
     }
@@ -342,8 +432,12 @@
       section { padding: 64px 0; }
       .hero { padding: 40px 0 64px; }
       .hero .wrap { grid-template-columns: 1fr; gap: 48px; }
-      .feature { grid-template-columns: 1fr; gap: 40px; }
-      .feature .feature-media, .feature.reverse .feature-media { order: 2; }
+      .story-grid { grid-template-columns: 1fr; gap: 0; }
+      .story-stage { display: none; }
+      .story-step { min-height: 0; padding: 32px 0 40px; }
+      .story-step:not(.active) { opacity: 1; }
+      .step-phone { display: block; margin-top: 36px; }
+      .rail { display: none; }
       .section-head h2, .cta-card h2 { font-size: 30px; line-height: 38px; }
       .feature-text h3 { font-size: 26px; line-height: 33px; }
     }
@@ -367,6 +461,7 @@
       .cta-card .btn { width: 100%; }
       .phone { width: 280px; }
       .screen { height: 580px; }
+      .sc-large-title .t { font-size: 22px; line-height: 28px; white-space: nowrap; }
     }
     @media (max-width: 340px) {
       .lang-grid { grid-template-columns: 1fr; }
@@ -415,6 +510,7 @@
 
 <!-- ===== TOP BAR ===== -->
 <header class="topbar">
+  <div class="progress" id="progress"></div>
   <div class="wrap">
     <a class="brand" href="#top" aria-label="LS Duet">
       <div class="logo"><svg><use href="#logo-art"/></svg></div>
@@ -433,10 +529,10 @@
 <section class="hero">
   <div class="wrap">
     <div>
-      <span class="pill pill-neutral"><span class="dot"></span><span data-i18n="hero-eyebrow"></span></span>
-      <h1 data-i18n="hero-sub"></h1>
-      <p class="tagline" data-i18n="hero-tag"></p>
-      <div class="hero-actions">
+      <span class="pill pill-neutral intro" style="--i:0"><span class="dot"></span><span data-i18n="hero-eyebrow"></span></span>
+      <h1 data-i18n="hero-sub" data-split></h1>
+      <p class="tagline intro" style="--i:5" data-i18n="hero-tag"></p>
+      <div class="hero-actions intro" style="--i:6">
         <a class="btn btn-primary" href="#howto">
           <svg class="i"><use href="#i-play"/></svg>
           <span data-i18n="hero-cta"></span>
@@ -446,12 +542,12 @@
           <span data-i18n="cta-btn"></span>
         </a>
       </div>
-      <div class="hero-langs" id="hero-langs"></div>
+      <div class="hero-langs intro" style="--i:7" id="hero-langs"></div>
     </div>
 
     <!-- Messages screen -->
-    <div class="phone" aria-hidden="true">
-      <div class="screen">
+    <div class="tilt"><div class="phone" aria-hidden="true" id="hero-phone">
+      <div class="screen" id="hero-screen">
         <div class="statusbar"><span>9:41</span><span class="sb-icons"><span style="width:16px;height:9px"></span><span style="width:20px;height:10px;border-radius:3px"></span></span></div>
         <div class="sc-body">
           <div class="sc-large-title">
@@ -518,7 +614,7 @@
           <div><svg class="i"><use href="#i-ellipsis"/></svg><span data-i18n="nav-more"></span></div>
         </div>
       </div>
-    </div>
+    </div></div>
   </div>
 </section>
 
@@ -530,7 +626,7 @@
       <h2 data-i18n="babel-title"></h2>
       <p data-i18n-html="babel-desc"></p>
     </div>
-    <div class="card-grid reveal">
+    <div class="card-grid stagger">
       <div class="card">
         <div class="tile ink"><svg class="i"><use href="#i-languages"/></svg></div>
         <h3 data-i18n="card1-title"></h3>
@@ -563,7 +659,7 @@
       <h2 data-i18n="vid-title"></h2>
       <p data-i18n="vid-desc"></p>
     </div>
-    <div class="video-frame reveal">
+    <div class="video-frame" id="video-frame">
       <video id="demo-video" autoplay loop muted playsinline>
         <source id="demo-source" src="duet-video-en.mp4" type="video/mp4">
       </video>
@@ -571,18 +667,61 @@
   </div>
 </section>
 
-<!-- ===== FEATURE 1: CHAT ===== -->
-<section class="on-surface">
-  <div class="wrap feature reveal">
-    <div class="feature-text">
+<!-- ===== FEATURES: sticky phone, screens follow the text ===== -->
+<section class="story on-surface" id="features">
+  <div class="wrap story-grid">
+    <div class="story-steps">
+      <article class="story-step" data-step="0">
+        <div class="feature-text">
       <span class="pill pill-neutral"><svg class="i"><use href="#i-message"/></svg><span data-i18n="nav-chats"></span></span>
       <h3 data-i18n="f1-title"></h3>
       <p data-i18n="f1-p1"></p>
       <p data-i18n="f1-p2"></p>
     </div>
-    <div class="feature-media">
-      <div class="phone" aria-hidden="true">
-        <div class="screen">
+        <div class="step-phone" aria-hidden="true"></div>
+      </article>
+      <article class="story-step" data-step="1">
+        <div class="feature-text">
+      <span class="pill pill-neutral"><svg class="i"><use href="#i-users"/></svg><span data-i18n="nav-contacts"></span></span>
+      <h3 data-i18n="f2-title"></h3>
+      <p data-i18n="f2-p1"></p>
+      <p data-i18n="f2-p2"></p>
+    </div>
+        <div class="step-phone" aria-hidden="true"></div>
+      </article>
+      <article class="story-step" data-step="2">
+        <div class="feature-text">
+      <span class="pill pill-neutral"><svg class="i"><use href="#i-clock"/></svg><span data-i18n="f3-badge"></span></span>
+      <h3 data-i18n="f3-title"></h3>
+      <p data-i18n="f3-p"></p>
+      <div class="feature-sub">
+        <span class="pill pill-neutral"><svg class="i"><use href="#i-book"/></svg><span data-i18n="nav-kb"></span></span>
+        <h3 data-i18n="f3-kb-title"></h3>
+        <p data-i18n="f3-kb-p"></p>
+      </div>
+    </div>
+        <div class="step-phone" aria-hidden="true"></div>
+      </article>
+      <article class="story-step" data-step="3">
+        <div class="feature-text">
+      <span class="pill pill-neutral"><svg class="i"><use href="#i-book-a"/></svg><span data-i18n="f4-badge"></span></span>
+      <h3 data-i18n="f4-title"></h3>
+      <p data-i18n="f4-p1"></p>
+      <p data-i18n="f4-p2"></p>
+      <ul>
+        <li><span class="bullet"><svg class="i"><use href="#i-check"/></svg></span><span data-i18n-html="f4-li1"></span></li>
+        <li><span class="bullet"><svg class="i"><use href="#i-check"/></svg></span><span data-i18n-html="f4-li2"></span></li>
+        <li><span class="bullet"><svg class="i"><use href="#i-check"/></svg></span><span data-i18n-html="f4-li3"></span></li>
+      </ul>
+      <p style="margin-top:16px" data-i18n="f4-p3"></p>
+    </div>
+        <div class="step-phone" aria-hidden="true"></div>
+      </article>
+    </div>
+    <div class="story-stage" aria-hidden="true">
+      <div class="story-sticky">
+        <div class="phone"><div class="screens">
+<div class="screen" data-screen="0">
           <div class="chat-hdr">
             <div class="statusbar"><span>9:41</span><span class="sb-icons"><span style="width:16px;height:9px"></span><span style="width:20px;height:10px;border-radius:3px"></span></span></div>
             <div class="chat-hdr-row">
@@ -619,23 +758,7 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== FEATURE 2: CONTACTS ===== -->
-<section>
-  <div class="wrap feature reverse reveal">
-    <div class="feature-text">
-      <span class="pill pill-neutral"><svg class="i"><use href="#i-users"/></svg><span data-i18n="nav-contacts"></span></span>
-      <h3 data-i18n="f2-title"></h3>
-      <p data-i18n="f2-p1"></p>
-      <p data-i18n="f2-p2"></p>
-    </div>
-    <div class="feature-media">
-      <div class="phone" aria-hidden="true">
-        <div class="screen">
+<div class="screen" data-screen="1">
           <div class="statusbar"><span>9:41</span><span class="sb-icons"><span style="width:16px;height:9px"></span><span style="width:20px;height:10px;border-radius:3px"></span></span></div>
           <div class="sc-body">
             <div class="sc-large-title">
@@ -696,27 +819,7 @@
             <div><svg class="i"><use href="#i-ellipsis"/></svg><span data-i18n="nav-more"></span></div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== FEATURE 3: SCHEDULE + KB ===== -->
-<section class="on-surface">
-  <div class="wrap feature reveal">
-    <div class="feature-text">
-      <span class="pill pill-neutral"><svg class="i"><use href="#i-clock"/></svg><span data-i18n="f3-badge"></span></span>
-      <h3 data-i18n="f3-title"></h3>
-      <p data-i18n="f3-p"></p>
-      <div class="feature-sub">
-        <span class="pill pill-neutral"><svg class="i"><use href="#i-book"/></svg><span data-i18n="nav-kb"></span></span>
-        <h3 data-i18n="f3-kb-title"></h3>
-        <p data-i18n="f3-kb-p"></p>
-      </div>
-    </div>
-    <div class="feature-media">
-      <div class="phone" aria-hidden="true">
-        <div class="screen">
+<div class="screen" data-screen="2">
           <div class="statusbar"><span>9:41</span><span class="sb-icons"><span style="width:16px;height:9px"></span><span style="width:20px;height:10px;border-radius:3px"></span></span></div>
           <div class="sc-body">
             <div class="nav-bar">
@@ -754,29 +857,7 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== FEATURE 4: GLOSSARY ===== -->
-<section>
-  <div class="wrap feature reverse reveal">
-    <div class="feature-text">
-      <span class="pill pill-neutral"><svg class="i"><use href="#i-book-a"/></svg><span data-i18n="f4-badge"></span></span>
-      <h3 data-i18n="f4-title"></h3>
-      <p data-i18n="f4-p1"></p>
-      <p data-i18n="f4-p2"></p>
-      <ul>
-        <li><span class="bullet"><svg class="i"><use href="#i-check"/></svg></span><span data-i18n-html="f4-li1"></span></li>
-        <li><span class="bullet"><svg class="i"><use href="#i-check"/></svg></span><span data-i18n-html="f4-li2"></span></li>
-        <li><span class="bullet"><svg class="i"><use href="#i-check"/></svg></span><span data-i18n-html="f4-li3"></span></li>
-      </ul>
-      <p style="margin-top:16px" data-i18n="f4-p3"></p>
-    </div>
-    <div class="feature-media">
-      <div class="phone" aria-hidden="true">
-        <div class="screen">
+<div class="screen" data-screen="3">
           <div class="statusbar"><span>9:41</span><span class="sb-icons"><span style="width:16px;height:9px"></span><span style="width:20px;height:10px;border-radius:3px"></span></span></div>
           <div class="sc-body">
             <div class="nav-bar">
@@ -798,6 +879,8 @@
             <div style="font-size:10.5px;line-height:14px;color:var(--text-secondary);text-align:center;margin-top:6px" data-i18n="g-example-note"></div>
           </div>
         </div>
+        </div></div>
+        <div class="story-dots"><span></span><span></span><span></span><span></span></div>
       </div>
     </div>
   </div>
@@ -811,7 +894,8 @@
       <h2 data-i18n="howto-title"></h2>
       <p data-i18n="howto-desc"></p>
     </div>
-    <div class="steps">
+    <div class="steps" id="steps">
+      <div class="rail" aria-hidden="true"><i id="rail-fill"></i></div>
       <div class="step reveal" style="background:var(--canvas)">
         <div class="step-num">1</div>
         <div><h4 data-i18n="s1-title"></h4><p data-i18n="s1-p"></p></div>
@@ -891,7 +975,8 @@
       <h2 data-i18n="langs-title"></h2>
       <p data-i18n="langs-desc"></p>
     </div>
-    <div class="lang-grid reveal" id="lang-grid"></div>
+    <div class="marquee" aria-hidden="true"><div class="marquee-row" id="mq1"></div><div class="marquee-row rev" id="mq2"></div></div>
+    <div class="lang-grid" id="lang-grid"></div>
     <div class="langs-note reveal"><span class="pill pill-info"><svg class="i"><use href="#i-monitor"/></svg><span data-i18n="langs-ui"></span></span></div>
   </div>
 </section>
@@ -899,7 +984,7 @@
 <!-- ===== CTA ===== -->
 <section style="padding-top:0;padding-bottom:64px">
   <div class="wrap">
-    <div class="cta-card reveal">
+    <div class="cta-card" id="cta-card">
       <div class="logo" style="--logo-tile:#2E3A48"><svg><use href="#logo-art"/></svg></div>
       <h2 data-i18n="cta-title"></h2>
       <p data-i18n="cta-desc"></p>
@@ -1282,8 +1367,9 @@ function renderLanguages(lang) {
   // Full grid, sorted by the name in the page language
   const grid = document.getElementById('lang-grid');
   grid.replaceChildren();
-  [...LANGUAGES].sort((a, b) => collator.compare(a[local], b[local])).forEach(l => {
+  [...LANGUAGES].sort((a, b) => collator.compare(a[local], b[local])).forEach((l, i) => {
     const card = el('div', 'lang-card');
+    card.style.setProperty('--k', i);
     const code = l[0].split('-')[0].toUpperCase();
     card.appendChild(el('div', 'lang-code', code));
     const names = el('div', 'names');
@@ -1328,6 +1414,19 @@ function setLang(lang) {
     if (t[key] !== undefined) e.innerHTML = t[key];
   });
 
+  // Headline enters word by word
+  document.querySelectorAll('[data-split]').forEach(h => {
+    h.replaceChildren();
+    t[h.dataset.i18n].split(' ').forEach((word, i) => {
+      const w = el('span', 'intro', word);
+      w.style.display = 'inline-block';
+      w.style.setProperty('--i', i + 1);
+      h.append(w, ' ');
+    });
+  });
+  currentT = t;
+  if (counting) document.querySelectorAll('[data-i18n="langs-badge"]').forEach(e => { e.textContent = t['langs-badge'].replace('{n}', counting.value); });
+
   document.querySelectorAll('.cta-link').forEach(a => { if (t['cta-href']) a.href = t['cta-href']; });
 
   const src = document.getElementById('demo-source');
@@ -1345,19 +1444,163 @@ function setLang(lang) {
   try { localStorage.setItem('ls-lang', lang); } catch (e) {}
 }
 
-// Reveal on scroll
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+// ===== Motion =====
+let currentT = null, counting = null;
+const $ = id => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const easeOut = p => 1 - Math.pow(1 - p, 3);
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
+const desktopStory = matchMedia('(min-width: 821px)');
+
+// Greetings marquee (two rows, content doubled for a seamless loop)
+const GREETINGS = [
+  [['Hello', 'EN'], ['שלום', 'HE'], ['مرحبا', 'AR'], ['你好', 'ZH'], ['Привет', 'RU'], ['Hola', 'ES'], ['Bonjour', 'FR'], ['Hallo', 'DE'], ['Ciao', 'IT'], ['Olá', 'PT'], ['Γειά σου', 'EL'], ['नमस्ते', 'HI'], ['สวัสดี', 'TH'], ['Merhaba', 'TR'], ['Cześć', 'PL']],
+  [['Привіт', 'UK'], ['Hej', 'SV'], ['გამარჯობა', 'KA'], ['Hoi', 'NL'], ['Sawubona', 'ZU'], ['Dumela', 'ST'], ['Thobela', 'NSO'], ['ሰላም', 'AM'], ['Kumusta', 'TL'], ['नमस्कार', 'NE'], ['ආයුබෝවන්', 'SI'], ['Bună', 'RO'], ['Goeie dag', 'AF'], ['¡Qué onda!', 'ES-MX'], ['Bom dia', 'PT-PT']],
+];
+['mq1', 'mq2'].forEach((id, r) => {
+  const row = $(id);
+  [0, 1].forEach(() => GREETINGS[r].forEach(([word, code]) => {
+    const g = el('span', 'greet');
+    const w = el('span', '', word); w.dir = 'auto';
+    g.append(w, el('small', '', code));
+    row.appendChild(g);
+  }));
+});
+
+// Story: on narrow screens every step carries its own phone (a copy of its screen)
+const stageScreens = [...document.querySelectorAll('.screens .screen')];
+const storySteps = [...document.querySelectorAll('.story-step')];
+storySteps.forEach((step, i) => {
+  const phone = el('div', 'phone');
+  const copy = stageScreens[i].cloneNode(true);
+  copy.removeAttribute('data-screen');
+  phone.appendChild(copy);
+  step.querySelector('.step-phone').appendChild(phone);
+});
+
+// Sequenced content inside every phone screen
+document.querySelectorAll('.screen').forEach(screen => {
+  const items = screen.querySelectorAll('.date-chip, .bubble, .will-translate, .sc-chip, .row, .status-card, .section-label, .kb-card, .g-row, .mini-primary');
+  const chat = !!screen.querySelector('.chat-body');
+  screen.style.setProperty('--seq-step', chat ? '320ms' : '70ms');
+  items.forEach((e, i) => {
+    e.setAttribute('data-seq', '');
+    e.style.setProperty('--seq', i);
   });
-}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.reveal').forEach(e => observer.observe(e));
+});
+
+// Stagger index for grids
+document.querySelectorAll('.stagger').forEach(g => [...g.children].forEach((c, i) => c.style.setProperty('--k', i)));
+
+// One-time reveals
+const revealer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add('visible');
+    revealer.unobserve(entry.target);
+    if (entry.target.id === 'lang-grid') startCounter();
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal, .stagger, #lang-grid').forEach(e => revealer.observe(e));
+
+// Phones in the mobile story replay their content each time they come into view
+const liveWatcher = new IntersectionObserver(entries => {
+  entries.forEach(entry => entry.target.classList.toggle('live', entry.isIntersecting));
+}, { threshold: 0.35 });
+document.querySelectorAll('.step-phone .screen').forEach(s => liveWatcher.observe(s));
+
+// "31 languages" counts up the first time the grid shows
+function startCounter() {
+  const total = LANGUAGES.length;
+  if (reduceMotion) return;
+  const t0 = performance.now();
+  counting = { value: 0 };
+  const tick = now => {
+    const p = clamp((now - t0) / 1200);
+    counting.value = Math.round(easeOut(p) * total);
+    document.querySelectorAll('[data-i18n="langs-badge"]').forEach(e => { e.textContent = currentT['langs-badge'].replace('{n}', counting.value); });
+    if (p < 1) requestAnimationFrame(tick); else counting = null;
+  };
+  requestAnimationFrame(tick);
+}
+
+// Scroll-linked effects, one rAF per frame
+let activeStep = -1, stageLive = null, ticking = false;
+function setActiveStep(i, live) {
+  if (i === activeStep && live === stageLive) return;
+  activeStep = i; stageLive = live;
+  storySteps.forEach((s, k) => s.classList.toggle('active', k === i));
+  stageScreens.forEach((s, k) => { s.classList.toggle('current', k === i); s.classList.toggle('live', live && k === i); });
+  document.querySelectorAll('.story-dots span').forEach((d, k) => d.classList.toggle('on', k === i));
+}
+function onScroll() {
+  ticking = false;
+  const vh = innerHeight, y = scrollY;
+  const max = document.documentElement.scrollHeight - vh;
+  $('progress').style.transform = `scaleX(${max > 0 ? clamp(y / max) : 0})`;
+  document.querySelector('.topbar').classList.toggle('scrolled', y > 8);
+
+  if (!reduceMotion) {
+    const v = $('video-frame').getBoundingClientRect();
+    const pv = clamp((vh - v.top) / (vh * 0.7));
+    $('video-frame').style.setProperty('--vs', (0.86 + 0.14 * easeOut(pv)).toFixed(4));
+    $('video-frame').style.setProperty('--vo', (0.4 + 0.6 * pv).toFixed(3));
+
+    const c = $('cta-card').getBoundingClientRect();
+    const pc = clamp((vh - c.top) / (vh * 0.65));
+    $('cta-card').style.setProperty('--ci', ((1 - easeOut(pc)) * 7).toFixed(2) + '%');
+  }
+
+  const st = $('steps').getBoundingClientRect();
+  $('rail-fill').style.transform = `scaleY(${clamp((vh * 0.6 - st.top) / st.height)})`;
+  document.querySelectorAll('.step').forEach(s => s.classList.toggle('reached', s.getBoundingClientRect().top < vh * 0.6));
+
+  if (desktopStory.matches) {
+    let best = 0, bestD = Infinity;
+    storySteps.forEach((s, i) => {
+      const r = s.getBoundingClientRect();
+      const d = Math.abs(r.top + r.height / 2 - vh / 2);
+      if (d < bestD) { bestD = d; best = i; }
+    });
+    const sr = document.querySelector('.story').getBoundingClientRect();
+    setActiveStep(best, sr.top < vh * 0.55 && sr.bottom > vh * 0.45);
+  }
+}
+const requestScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } };
+addEventListener('scroll', requestScroll, { passive: true });
+addEventListener('resize', requestScroll);
+
+// Hero phone follows the pointer a little (eased, desktop only)
+if (finePointer && !reduceMotion) {
+  const phone = $('hero-phone'), hero = document.querySelector('.hero');
+  let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+  const step = () => {
+    cx += (tx - cx) * 0.08; cy += (ty - cy) * 0.08;
+    phone.style.setProperty('--ry', cx.toFixed(3) + 'deg');
+    phone.style.setProperty('--rx', cy.toFixed(3) + 'deg');
+    raf = Math.abs(tx - cx) + Math.abs(ty - cy) > 0.01 ? requestAnimationFrame(step) : 0;
+  };
+  const kick = () => { if (!raf) raf = requestAnimationFrame(step); };
+  hero.addEventListener('pointermove', e => {
+    const r = hero.getBoundingClientRect();
+    tx = ((e.clientX - r.left) / r.width - 0.5) * 14;
+    ty = -((e.clientY - r.top) / r.height - 0.5) * 10;
+    kick();
+  });
+  hero.addEventListener('pointerleave', () => { tx = 0; ty = 0; kick(); });
+}
 
 // Init
 // ?lang=he|en wins over the remembered choice (shareable links)
 const fromUrl = new URLSearchParams(location.search).get('lang');
 const saved = (() => { try { return localStorage.getItem('ls-lang'); } catch (e) { return null; } })();
 setLang((fromUrl || saved) === 'he' ? 'he' : 'en');
+onScroll();
+requestAnimationFrame(() => requestAnimationFrame(() => {
+  document.body.classList.add('loaded');
+  setTimeout(() => $('hero-screen').classList.add('live'), 650);
+}));
 </script>
 </body>
 </html>
