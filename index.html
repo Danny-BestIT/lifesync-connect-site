@@ -71,6 +71,7 @@
     /* Segmented control (DESIGN_SYSTEM 8.15) */
     .segmented { display: flex; background: var(--mist); border-radius: 16px; padding: 4px; gap: 2px; direction: ltr; }
     .segmented button { border: none; background: transparent; cursor: pointer; font-family: var(--font); font-size: 14px; line-height: 20px; font-weight: 500; color: var(--text-secondary); padding: 8px 14px; border-radius: 12px; min-height: 40px; transition: background 0.2s, color 0.2s; }
+    .segmented .short { display: none; }
     .segmented button[aria-pressed="true"] { background: var(--surface); color: var(--ink); font-weight: 700; box-shadow: 0 1px 2px rgba(31,42,55,0.10); }
     .segmented button:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
@@ -203,7 +204,7 @@
     .chat-hdr .hdr-btn svg.i { width: 18px; height: 18px; }
     .chat-hdr .av { width: 38px; height: 38px; border-radius: 13px; font-size: 14px; }
     .chat-hdr-name { font-size: 15px; line-height: 20px; font-weight: 700; }
-    .chat-hdr-sub { font-size: 11px; line-height: 14px; color: var(--text-on-ink-muted); display: flex; align-items: center; gap: 4px; white-space: nowrap; overflow: hidden; }
+    .chat-hdr-sub { font-size: 11px; line-height: 14px; color: var(--text-on-ink-muted); display: flex; align-items: center; gap: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .chat-hdr-sub svg.i { width: 12px; height: 12px; }
     .chat-body { flex: 1; background: var(--canvas-chat); padding: 12px 12px 0; display: flex; flex-direction: column; gap: 8px; overflow: hidden; }
     .date-chip { align-self: center; background: var(--surface); border-radius: 999px; font-size: 10.5px; line-height: 14px; font-weight: 700; color: var(--text-secondary); padding: 4px 12px; }
@@ -300,8 +301,8 @@
     .lang-card { background: var(--surface); border-radius: 18px; padding: 12px; display: flex; align-items: center; gap: 12px; min-width: 0; }
     .lang-code { width: 44px; height: 44px; border-radius: 15px; background: var(--mist); color: var(--ink); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; flex-shrink: 0; direction: ltr; }
     .lang-card .names { min-width: 0; }
-    .lang-name { font-size: 16px; line-height: 22px; font-weight: 700; overflow-wrap: anywhere; }
-    .lang-native { font-size: 13px; line-height: 18px; color: var(--text-secondary); font-weight: 500; overflow-wrap: anywhere; text-align: start; }
+    .lang-name { font-size: 16px; line-height: 22px; font-weight: 700; overflow-wrap: break-word; hyphens: auto; }
+    .lang-native { font-size: 13px; line-height: 18px; color: var(--text-secondary); font-weight: 500; overflow-wrap: break-word; text-align: start; }
     .langs-note { display: flex; justify-content: center; margin-top: 28px; }
 
     /* ===== CTA ===== */
@@ -428,6 +429,11 @@
       .step { grid-template-columns: auto 1fr; }
       .step .mini { grid-column: 2; }
     }
+    @media (max-width: 760px) {
+      .segmented .full { display: none; }
+      .segmented .short { display: inline; }
+      .segmented button { padding: 8px 11px; }
+    }
     @media (max-width: 820px) {
       section { padding: 64px 0; }
       .hero { padding: 40px 0 64px; }
@@ -454,8 +460,8 @@
       .step h4 { margin-top: 0; }
       .lang-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
       .lang-card { padding: 10px; gap: 10px; }
-      .lang-code { width: 38px; height: 38px; border-radius: 13px; font-size: 12px; }
-      .lang-name { font-size: 14px; line-height: 19px; }
+      .lang-code { width: 32px; height: 32px; border-radius: 11px; font-size: 11px; }
+      .lang-name { font-size: 13px; line-height: 18px; }
       .lang-native { font-size: 12px; line-height: 16px; }
       .cta-card { padding: 48px 20px; border-radius: 24px; }
       .cta-card .btn { width: 100%; }
@@ -517,8 +523,11 @@
       <span>LS Duet</span>
     </a>
     <div class="segmented" role="group" aria-label="Language">
-      <button id="btn-en" type="button" aria-pressed="true" onclick="setLang('en')">English</button>
-      <button id="btn-he" type="button" aria-pressed="false" onclick="setLang('he')">עברית</button>
+      <button type="button" data-lang="en" aria-pressed="true" onclick="setLang('en')"><span class="full">English</span><span class="short">EN</span></button>
+      <button type="button" data-lang="he" aria-pressed="false" onclick="setLang('he')"><span class="full">עברית</span><span class="short">עב</span></button>
+      <button type="button" data-lang="fr" aria-pressed="false" onclick="setLang('fr')" lang="fr"><span class="full">Français</span><span class="short">FR</span></button>
+      <button type="button" data-lang="de" aria-pressed="false" onclick="setLang('de')" lang="de"><span class="full">Deutsch</span><span class="short">DE</span></button>
+      <button type="button" data-lang="ru" aria-pressed="false" onclick="setLang('ru')" lang="ru"><span class="full">Русский</span><span class="short">RU</span></button>
     </div>
   </div>
 </header>
@@ -1016,42 +1025,44 @@
 <script>
 // Translation languages offered in the app - mirrors SUPPORTED_LANGUAGES in
 // LS-Duet apps/mobile/src/services/translationSettingsService.ts.
-// [code, native name, English name, Hebrew name]
+// [code, native name, then the name in each page language: en, he, fr, de, ru]
 const LANGUAGES = [
-  ['he', 'עברית', 'Hebrew', 'עברית'],
-  ['en', 'English', 'English', 'אנגלית'],
-  ['ar', 'العربية', 'Arabic', 'ערבית'],
-  ['ru', 'Русский', 'Russian', 'רוסית'],
-  ['es', 'Español', 'Spanish', 'ספרדית'],
-  ['es-419', 'Español (Latinoamérica)', 'Spanish (Latin America)', 'ספרדית (אמריקה הלטינית)'],
-  ['es-MX', 'Español (México)', 'Spanish (Mexico)', 'ספרדית (מקסיקו)'],
-  ['fr', 'Français', 'French', 'צרפתית'],
-  ['de', 'Deutsch', 'German', 'גרמנית'],
-  ['it', 'Italiano', 'Italian', 'איטלקית'],
-  ['nl', 'Nederlands', 'Dutch', 'הולנדית'],
-  ['pl', 'Polski', 'Polish', 'פולנית'],
-  ['uk', 'Українська', 'Ukrainian', 'אוקראינית'],
-  ['sv', 'Svenska', 'Swedish', 'שוודית'],
-  ['zh', '中文', 'Chinese', 'סינית'],
-  ['am', 'አማርኛ', 'Amharic', 'אמהרית'],
-  ['pt', 'Português (Brasil)', 'Portuguese (Brazil)', 'פורטוגזית (ברזיל)'],
-  ['pt-PT', 'Português (Portugal)', 'Portuguese (Portugal)', 'פורטוגזית (פורטוגל)'],
-  ['tl', 'Filipino', 'Filipino', 'פיליפינית'],
-  ['th', 'ไทย', 'Thai', 'תאילנדית'],
-  ['el', 'Ελληνικά', 'Greek', 'יוונית'],
-  ['ka', 'ქართული', 'Georgian', 'גאורגית'],
-  ['hi', 'हिन्दी', 'Hindi', 'הינדית'],
-  ['ro', 'Română', 'Romanian', 'רומנית'],
-  ['ne', 'नेपाली', 'Nepali', 'נפאלית'],
-  ['si', 'සිංහල', 'Sinhala', 'סינהלית'],
-  ['tr', 'Türkçe', 'Turkish', 'טורקית'],
-  ['af', 'Afrikaans', 'Afrikaans', 'אפריקאנס'],
-  ['zu', 'isiZulu', 'Zulu', 'זולו'],
-  ['st', 'Sesotho', 'Sotho (Southern)', 'סותו (דרומית)'],
-  ['nso', 'Sepedi', 'Sotho (Northern)', 'סותו (צפונית)'],
+  ['he', 'עברית', 'Hebrew', 'עברית', 'Hébreu', 'Hebräisch', 'Иврит'],
+  ['en', 'English', 'English', 'אנגלית', 'Anglais', 'Englisch', 'Английский'],
+  ['ar', 'العربية', 'Arabic', 'ערבית', 'Arabe', 'Arabisch', 'Арабский'],
+  ['ru', 'Русский', 'Russian', 'רוסית', 'Russe', 'Russisch', 'Русский'],
+  ['es', 'Español', 'Spanish', 'ספרדית', 'Espagnol', 'Spanisch', 'Испанский'],
+  ['es-419', 'Español (Latinoamérica)', 'Spanish (Latin America)', 'ספרדית (אמריקה הלטינית)', 'Espagnol (Amérique latine)', 'Spanisch (Lateinamerika)', 'Испанский (Латинская Америка)'],
+  ['es-MX', 'Español (México)', 'Spanish (Mexico)', 'ספרדית (מקסיקו)', 'Espagnol (Mexique)', 'Spanisch (Mexiko)', 'Испанский (Мексика)'],
+  ['fr', 'Français', 'French', 'צרפתית', 'Français', 'Französisch', 'Французский'],
+  ['de', 'Deutsch', 'German', 'גרמנית', 'Allemand', 'Deutsch', 'Немецкий'],
+  ['it', 'Italiano', 'Italian', 'איטלקית', 'Italien', 'Italienisch', 'Итальянский'],
+  ['nl', 'Nederlands', 'Dutch', 'הולנדית', 'Néerlandais', 'Niederländisch', 'Нидерландский'],
+  ['pl', 'Polski', 'Polish', 'פולנית', 'Polonais', 'Polnisch', 'Польский'],
+  ['uk', 'Українська', 'Ukrainian', 'אוקראינית', 'Ukrainien', 'Ukrainisch', 'Украинский'],
+  ['sv', 'Svenska', 'Swedish', 'שוודית', 'Suédois', 'Schwedisch', 'Шведский'],
+  ['zh', '中文', 'Chinese', 'סינית', 'Chinois', 'Chinesisch', 'Китайский'],
+  ['am', 'አማርኛ', 'Amharic', 'אמהרית', 'Amharique', 'Amharisch', 'Амхарский'],
+  ['pt', 'Português (Brasil)', 'Portuguese (Brazil)', 'פורטוגזית (ברזיל)', 'Portugais (Brésil)', 'Portugiesisch (Brasilien)', 'Португальский (Бразилия)'],
+  ['pt-PT', 'Português (Portugal)', 'Portuguese (Portugal)', 'פורטוגזית (פורטוגל)', 'Portugais (Portugal)', 'Portugiesisch (Portugal)', 'Португальский (Португалия)'],
+  ['tl', 'Filipino', 'Filipino', 'פיליפינית', 'Filipino', 'Filipino', 'Филиппинский'],
+  ['th', 'ไทย', 'Thai', 'תאילנדית', 'Thaï', 'Thailändisch', 'Тайский'],
+  ['el', 'Ελληνικά', 'Greek', 'יוונית', 'Grec', 'Griechisch', 'Греческий'],
+  ['ka', 'ქართული', 'Georgian', 'גאורגית', 'Géorgien', 'Georgisch', 'Грузинский'],
+  ['hi', 'हिन्दी', 'Hindi', 'הינדית', 'Hindi', 'Hindi', 'Хинди'],
+  ['ro', 'Română', 'Romanian', 'רומנית', 'Roumain', 'Rumänisch', 'Румынский'],
+  ['ne', 'नेपाली', 'Nepali', 'נפאלית', 'Népalais', 'Nepalesisch', 'Непальский'],
+  ['si', 'සිංහල', 'Sinhala', 'סינהלית', 'Cinghalais', 'Singhalesisch', 'Сингальский'],
+  ['tr', 'Türkçe', 'Turkish', 'טורקית', 'Turc', 'Türkisch', 'Турецкий'],
+  ['af', 'Afrikaans', 'Afrikaans', 'אפריקאנס', 'Afrikaans', 'Afrikaans', 'Африкаанс'],
+  ['zu', 'isiZulu', 'Zulu', 'זולו', 'Zoulou', 'Zulu', 'Зулу'],
+  ['st', 'Sesotho', 'Sotho (Southern)', 'סותו (דרומית)', 'Sotho du Sud', 'Süd-Sotho', 'Сесото (южный)'],
+  ['nso', 'Sepedi', 'Sotho (Northern)', 'סותו (צפונית)', 'Sotho du Nord', 'Nord-Sotho', 'Сепеди (северный сото)'],
 ];
 // Sample shown in the hero, by code
 const HERO_LANGS = ['he', 'en', 'ar', 'ru', 'zh', 'es', 'fr', 'hi'];
+
+const PAGE_LANGS = ['en', 'he', 'fr', 'de', 'ru'];
 
 const translations = {
   en: {
@@ -1194,7 +1205,7 @@ const translations = {
     'cta-title': 'Ready to break the Tower of Babel?',
     'cta-desc': 'Start communicating in your natural language. No barriers, no boundaries.',
     'cta-btn': 'Contact Us',
-    'cta-href': 'https://wa.me/972526044425?text=I%27d+like+more+information+about+LifeSync+Duet',
+    'cta-msg': "I'd like more information about LifeSync Duet",
     'footer-tag': 'Communication without language barriers',
     'footer-privacy': 'Privacy Policy',
     'footer-delete': 'Delete Account',
@@ -1340,10 +1351,448 @@ const translations = {
     'cta-title': 'מוכנים לשבור את מגדל בבל?',
     'cta-desc': 'התחילו לתקשר בשפה הטבעית שלכם. בלי מחסומים, בלי גבולות.',
     'cta-btn': 'צרו קשר',
-    'cta-href': 'https://wa.me/972526044425?text=%D7%90%D7%A9%D7%9E%D7%97+%D7%9C%D7%A7%D7%91%D7%9C+%D7%A2%D7%95%D7%93+%D7%A4%D7%A8%D7%98%D7%99%D7%9D+%D7%A2%D7%9C+LifeSync+Duet',
+    'cta-msg': 'אשמח לקבל עוד פרטים על LifeSync Duet',
     'footer-tag': 'תקשורת בלי גבולות שפה',
     'footer-privacy': 'מדיניות פרטיות',
     'footer-delete': 'מחיקת חשבון',
+    'footer-by': 'by BEST-IT © 2026',
+  },
+  fr: {
+    'page-title': "LS Duet - Briser la tour de Babel",
+    'hero-eyebrow': "WhatsApp, dans votre langue",
+    'hero-sub': "Briser la tour de Babel",
+    'hero-tag': "Communiquez dans votre langue naturelle. Vos messages WhatsApp sont traduits automatiquement — écrivez en français, votre interlocuteur les reçoit en chinois. Il répond en chinois, vous lisez en français. Aussi simple que ça.",
+    'hero-cta': "Comment ça marche ?",
+    'hero-more': "+{n} autres",
+    'babel-badge': "Notre histoire",
+    'babel-title': "La tour de Babel ? Nous l'avons brisée",
+    'babel-desc': "Dans le monde des affaires d'aujourd'hui, nous travaillons avec des clients, des fournisseurs et des partenaires du monde entier. Mais les langues différentes créent des frictions : messages peu clairs, traductions embarrassantes et affaires qui restent bloquées en chemin.<br/><br/><strong>LS Duet</strong> ne réinvente pas la roue : il relie simplement les gens via WhatsApp, dans leur langue naturelle. Sans barrières, sans malentendus, sans traductions automatiques gênantes.",
+    'card1-title': "Traduction transparente",
+    'card1-p': "Écrivez dans votre langue, votre interlocuteur reçoit le message dans la sienne. Le message original est toujours conservé.",
+    'card2-title': "Réglages par contact",
+    'card2-p': "Définissez les langues d'entrée et de sortie pour chaque contact. Chacun reçoit exactement ce dont il a besoin.",
+    'card3-title': "Un ton naturel",
+    'card3-p': "Pas une traduction sèche et mécanique. LS Duet traduit comme vous écririez : naturel, amical, humain.",
+    'card4-title': "Glossaire professionnel",
+    'card4-p': "Définissez un glossaire pour chaque contact : noms de marque, termes techniques et jargon à ne pas traduire, ou à traduire avec précision.",
+    'vid-badge': "Démo",
+    'vid-title': "Voyez-le en action",
+    'vid-desc': "Ajout d'un contact chinois, envoi d'un message en anglais qui arrive en chinois, puis réception d'une réponse en chinois traduite en anglais",
+    'vid-src': 'duet-video-en.mp4',
+    'f1-title': "Traduction WhatsApp en direct",
+    'f1-p1': "Chaque message reçu est traduit automatiquement dans votre langue. Chaque message envoyé est traduit dans la langue du contact. Le message original reste accessible d'un simple toucher, pour vérifier l'exactitude.",
+    'f1-p2': "Fonctionne aussi dans les groupes, avec le nom de l'expéditeur et la détection automatique de la langue source.",
+    'chat-hdr-sub': "Traduction auto · Chinois",
+    'chat-recv1': "Bonjour, comment allez-vous aujourd'hui ?",
+    'chat-badge1': "Traduit du chinois",
+    'chat-sent2': "Très bien ! Je voulais vous parler de la réunion de mardi",
+    'chat-badge2': "Envoyé en chinois",
+    'chat-recv3': "Bien sûr, retrouvons-nous à 15 h, heure de Pékin",
+    'chat-badge3': "Traduit du chinois",
+    'chat-show-orig': "Voir l'original",
+    'chat-hide-orig': "Masquer l'original",
+    'chat-will-translate': "Sera traduit en chinois avant l'envoi",
+    'chat-placeholder': "Message",
+    'm2-prev': "Merci beaucoup pour la livraison !",
+    'm3-prev': "À la semaine prochaine à Dubaï",
+    'm5-prev': "Les documents sont signés",
+    'm6-prev': "Peut-on décaler l'appel à vendredi ?",
+    'day-today': "Aujourd'hui",
+    'day-tomorrow': "Demain",
+    'day-yesterday': "Hier",
+    'day-mon': "Lun.",
+    'day-sun': "Dim.",
+    'chip-all': "Tous",
+    'chip-unread': "Non lus",
+    'chip-fav': "Favoris",
+    'chip-translated': "Traduits",
+    'nav-chats': "Messages",
+    'nav-contacts': "Contacts",
+    'nav-kb': "Savoir",
+    'nav-more': "Plus",
+    'contacts-title': "Contacts",
+    'contacts-search': "Rechercher des contacts",
+    'role-vip': "VIP",
+    'role-client': "Client",
+    'role-partner': "Partenaire",
+    'role-friend': "Ami",
+    'out-lang': 'FR',
+    'f2-title': "Gestion intelligente des contacts",
+    'f2-p1': "Chaque contact a un profil complet : nom, entreprise, fuseau horaire, niveau de priorité et langue de communication. Voyez l'heure qu'il est chez lui, quand vous vous êtes parlé pour la dernière fois et quand le relancer.",
+    'f2-p2': "Marquez vos contacts les plus importants comme favoris et filtrez-les d'un seul geste.",
+    'f3-badge': "Programmation des messages",
+    'f3-title': "Programmez vos messages au moment idéal",
+    'f3-p': "Écrivez maintenant, envoyez au bon moment. Les fuseaux horaires sont détectés automatiquement : s'il est 3 h du matin à Pékin chez Wei, programmez pour une heure raisonnable. Le message est traduit automatiquement avant l'envoi.",
+    'f3-kb-title': "Base de connaissances personnelle",
+    'f3-kb-p': "Enregistrez les informations importantes de vos conversations : liens, comptes rendus de réunion, notes. Classées par catégories et étiquettes, avec recherche rapide et favoris.",
+    'sched-title': "Messages programmés",
+    'sched-sub': "2 messages en attente",
+    'status-pending': "En attente",
+    'sched1-msg': "Bonjour ! Je voulais juste confirmer que la réunion est maintenue...",
+    'sched1-tz': "15:00 heure de Pékin",
+    'sched2-msg': "Merci beaucoup pour la livraison ! Arrivée à temps",
+    'sched2-tz': "21:00 heure de Tokyo",
+    'sched3-msg': "Salut ! J'ai vu la proposition, ça a l'air super",
+    'kb1-title': "Compte rendu - Projet Shanghai",
+    'kb1-meta': "Travail · Note",
+    'kb1-snippet': "Wei a approuvé un budget de 50K. Échéance : fin du T2. Envoyer le contrat avant dimanche.",
+    'tag-work': "Travail",
+    'f4-badge': "Glossaire",
+    'f4-screen-title': "Glossaire",
+    'g-entry1-sub': "Ne pas traduire - nom de marque",
+    'g-entry4-sub': "Ne pas traduire - acronyme",
+    'g-no-trans': "Ne pas traduire",
+    'g-custom-trans': "Traduction personnalisée",
+    'g-add-btn': "Ajouter un terme",
+    'g-example-label': "Exemple de traduction avec glossaire :",
+    'g-example-msg': "Parlons des OKR de LifeSync à la prochaine Sprint Review",
+    'g-example-note': "OKR + LifeSync inchangés, Sprint Review traduit selon le glossaire",
+    'f4-title': "Termes professionnels et glossaire",
+    'f4-p1': "Chaque métier a des termes qui ne doivent pas être traduits : noms de marque, acronymes, jargon. Et d'autres qui doivent être traduits avec précision, pas comme le pense Google.",
+    'f4-p2': "Avec le glossaire de LS Duet, définissez une liste de termes pour chaque contact :",
+    'f4-li1': "<strong>Ne pas traduire</strong> - le terme reste tel quel (noms de marque, acronymes)",
+    'f4-li2': "<strong>Traduction personnalisée</strong> - définissez exactement comment traduire chaque terme",
+    'f4-li3': "<strong>Par contact</strong> - car « Stakeholder » ne se traduit pas de la même façon en chinois et en français",
+    'f4-p3': "Le moteur basé sur l'IA repère les termes dans votre message et les remplace précisément selon votre glossaire, avant l'envoi de la traduction.",
+    'howto-badge': "Guide d'utilisation",
+    'howto-title': "Comment démarrer ?",
+    'howto-desc': "5 étapes simples et c'est parti.",
+    's1-title': "Connectez votre compte WhatsApp",
+    's1-p': "Ouvrez l'application et touchez « Connecter ». Vous recevez un code d'association : saisissez-le dans WhatsApp sous « Appareils connectés ». C'est tout, la connexion est sécurisée et chiffrée.",
+    's1-header': "Connexion à WhatsApp",
+    's1-code-label': "Votre code d'association :",
+    's1-code-hint': "À saisir dans WhatsApp > Appareils connectés",
+    's2-title': "Importez vos contacts et choisissez les langues",
+    's2-p': "Importez vos contacts depuis WhatsApp en un geste, sans rien saisir. Pour chaque contact, définissez la langue d'entrée (celle dans laquelle il vous écrit) et la langue de sortie (celle dans laquelle traduire vos messages).",
+    's2-header': "Langues - Wei",
+    's2-in-label': "Langue d'entrée (il écrit en...)",
+    's2-in-val': "Chinois (ZH)",
+    's2-out-label': "Langue de sortie (j'écris en...)",
+    's2-out-val': "Français (FR)",
+    's2-auto': "Traduction auto",
+    's3-title': "Commencez à discuter !",
+    's3-p': "Écrivez simplement en français (ou dans la langue de votre choix). LS Duet traduit automatiquement chaque message envoyé dans la langue du contact, et chaque message reçu dans la vôtre. Le message original reste toujours visible.",
+    's3-header': "Discussion avec Wei",
+    's3-msg1': "Salut, quoi de neuf ?",
+    's3-msg2': "Tout va bien ! J'attends la réunion",
+    's4-title': "Programmez selon le fuseau horaire",
+    's4-p': "Un message important, mais il est 3 h du matin chez le destinataire ? Écrivez-le maintenant, choisissez la date et l'heure, et LS Duet l'enverra pile à temps, déjà traduit.",
+    's4-header': "Nouveau message programmé",
+    's4-msg': "Bonjour ! Je voulais confirmer...",
+    's4-tz': "= 15:00 heure de Pékin",
+    's4-btn': "Programmer l'envoi",
+    's5-title': "Enregistrez l'essentiel dans la base de connaissances",
+    's5-p': "Une information importante dans une conversation ? Appuyez longuement sur le message et choisissez « Enregistrer dans la base ». Elle est classée par catégories et étiquettes, avec une recherche rapide quand vous en avez besoin.",
+    's5-header': "Base de connaissances",
+    's5-kb1-title': "Compte rendu",
+    's5-kb1-desc': "Budget 50K, échéance T2...",
+    's5-kb1-tag': "Travail",
+    's5-kb2-title': "Nouvelle adresse du bureau",
+    's5-kb2-desc': 'Nanjing Road 42, Shanghai',
+    's5-kb2-tag': "Contacts",
+    'langs-badge': "{n} langues",
+    'langs-title': "Langues de traduction prises en charge",
+    'langs-desc': "LS Duet traduit entre {n} langues et variantes régionales : choisissez-les séparément pour chaque contact, dans les deux sens.",
+    'langs-ui': "L'application elle-même est disponible en 7 langues",
+    'cta-title': "Prêt à briser la tour de Babel ?",
+    'cta-desc': "Communiquez dans votre langue naturelle. Sans barrières, sans frontières.",
+    'cta-btn': "Nous contacter",
+    'cta-msg': "J'aimerais plus d'informations sur LifeSync Duet",
+    'footer-tag': "La communication sans barrière de langue",
+    'footer-privacy': "Politique de confidentialité",
+    'footer-delete': "Supprimer le compte",
+    'footer-by': 'by BEST-IT © 2026',
+  },
+  de: {
+    'page-title': "LS Duet - Den Turm zu Babel überwinden",
+    'hero-eyebrow': "WhatsApp, in Ihrer Sprache",
+    'hero-sub': "Den Turm zu Babel überwinden",
+    'hero-tag': "Kommunizieren Sie in Ihrer eigenen Sprache. WhatsApp-Nachrichten werden automatisch übersetzt – Sie schreiben auf Deutsch, Ihr Gegenüber liest auf Chinesisch. Die Antwort kommt auf Chinesisch, Sie lesen sie auf Deutsch. So einfach ist das.",
+    'hero-cta': "Wie funktioniert es?",
+    'hero-more': "+{n} weitere",
+    'babel-badge': "Unsere Geschichte",
+    'babel-title': "Turmbau zu Babel? Wir haben ihn überwunden",
+    'babel-desc': "In der heutigen Geschäftswelt arbeiten wir mit Kunden, Lieferanten und Partnern aus aller Welt. Doch unterschiedliche Sprachen sorgen für Reibung – unklare Nachrichten, peinliche Übersetzungen und Geschäfte, die unterwegs ins Stocken geraten.<br/><br/><strong>LS Duet</strong> erfindet das Rad nicht neu – es verbindet Menschen einfach über WhatsApp, in ihrer eigenen Sprache. Ohne Barrieren, ohne Missverständnisse, ohne peinliche Maschinenübersetzungen.",
+    'card1-title': "Transparente Übersetzung",
+    'card1-p': "Sie schreiben in Ihrer Sprache, Ihr Gegenüber liest in seiner. Die Originalnachricht bleibt immer erhalten.",
+    'card2-title': "Einstellungen pro Kontakt",
+    'card2-p': "Legen Sie Ein- und Ausgangssprache für jeden Kontakt einzeln fest. Jeder bekommt genau das, was er braucht.",
+    'card3-title': "Natürlicher Ton",
+    'card3-p': "Keine trockene, mechanische Übersetzung. LS Duet übersetzt so, wie Sie schreiben würden – natürlich, freundlich, menschlich.",
+    'card4-title': "Fachglossar",
+    'card4-p': "Legen Sie für jeden Kontakt ein Glossar an – Markennamen, Fachbegriffe und Jargon, die nicht oder ganz präzise übersetzt werden sollen.",
+    'vid-badge': "Demo",
+    'vid-title': "So sieht es aus",
+    'vid-desc': "Ein chinesischer Kontakt wird angelegt, eine Nachricht auf Englisch kommt auf Chinesisch an, und die chinesische Antwort wird ins Englische übersetzt",
+    'vid-src': 'duet-video-en.mp4',
+    'f1-title': "WhatsApp-Übersetzung in Echtzeit",
+    'f1-p1': "Jede eingehende Nachricht wird automatisch in Ihre Sprache übersetzt, jede ausgehende in die Sprache des Kontakts. Die Originalnachricht ist jederzeit mit einem Tipp abrufbar – so können Sie die Genauigkeit prüfen.",
+    'f1-p2': "Funktioniert auch in Gruppen – mit Absendername und automatischer Erkennung der Ausgangssprache.",
+    'chat-hdr-sub': "Auto-Übersetzung · Chinesisch",
+    'chat-recv1': "Hallo, wie geht es Ihnen heute?",
+    'chat-badge1': "Aus dem Chinesischen übersetzt",
+    'chat-sent2': "Sehr gut! Ich wollte nach dem Meeting am Dienstag fragen",
+    'chat-badge2': "Auf Chinesisch gesendet",
+    'chat-recv3': "Gern, treffen wir uns um 15 Uhr Pekinger Zeit",
+    'chat-badge3': "Aus dem Chinesischen übersetzt",
+    'chat-show-orig': "Original anzeigen",
+    'chat-hide-orig': "Original ausblenden",
+    'chat-will-translate': "Wird vor dem Senden ins Chinesische übersetzt",
+    'chat-placeholder': "Nachricht",
+    'm2-prev': "Vielen Dank für die Lieferung!",
+    'm3-prev': "Wir sehen uns nächste Woche in Dubai",
+    'm5-prev': "Die Unterlagen sind unterschrieben",
+    'm6-prev': "Können wir den Anruf auf Freitag verschieben?",
+    'day-today': "Heute",
+    'day-tomorrow': "Morgen",
+    'day-yesterday': "Gestern",
+    'day-mon': "Mo.",
+    'day-sun': "So.",
+    'chip-all': "Alle",
+    'chip-unread': "Ungelesen",
+    'chip-fav': "Favoriten",
+    'chip-translated': "Übersetzt",
+    'nav-chats': "Nachrichten",
+    'nav-contacts': "Kontakte",
+    'nav-kb': "Wissen",
+    'nav-more': "Mehr",
+    'contacts-title': "Kontakte",
+    'contacts-search': "Kontakte suchen",
+    'role-vip': "VIP",
+    'role-client': "Kunde",
+    'role-partner': "Partner",
+    'role-friend': "Freundin",
+    'out-lang': 'DE',
+    'f2-title': "Intelligente Kontaktverwaltung",
+    'f2-p1': "Jeder Kontakt hat ein vollständiges Profil: Name, Firma, Zeitzone, Priorität und Kommunikationssprache. Sie sehen genau, wie spät es dort ist, wann Sie zuletzt gesprochen haben und wann es Zeit für ein Follow-up ist.",
+    'f2-p2': "Markieren Sie Ihre wichtigsten Kontakte als Favoriten und filtern Sie mit einem Tipp danach.",
+    'f3-badge': "Nachrichten planen",
+    'f3-title': "Nachrichten für den perfekten Moment planen",
+    'f3-p': "Jetzt schreiben, später senden. Zeitzonen werden automatisch erkannt – wenn es bei Wei in Peking 3 Uhr nachts ist, planen Sie für eine vernünftige Uhrzeit. Die Nachricht wird vor dem Senden automatisch übersetzt.",
+    'f3-kb-title': "Persönliche Wissensdatenbank",
+    'f3-kb-p': "Speichern Sie wichtige Informationen aus Gesprächen – Links, Meeting-Notizen, Zusammenfassungen. Nach Kategorien und Tags geordnet, mit Schnellsuche und Favoriten.",
+    'sched-title': "Geplante Nachrichten",
+    'sched-sub': "2 Nachrichten ausstehend",
+    'status-pending': "Ausstehend",
+    'sched1-msg': "Guten Morgen! Ich wollte nur bestätigen, dass das Meeting stattfindet...",
+    'sched1-tz': "15:00 Pekinger Zeit",
+    'sched2-msg': "Vielen Dank für die Lieferung! Pünktlich angekommen",
+    'sched2-tz': "21:00 Tokioter Zeit",
+    'sched3-msg': "Hallo! Habe das Angebot gesehen, klingt super",
+    'kb1-title': "Meeting-Notiz - Projekt Shanghai",
+    'kb1-meta': "Arbeit · Notiz",
+    'kb1-snippet': "Wei hat ein Budget von 50K freigegeben. Frist: Ende Q2. Vertrag bis Sonntag schicken.",
+    'tag-work': "Arbeit",
+    'f4-badge': "Glossar",
+    'f4-screen-title': "Glossar",
+    'g-entry1-sub': "Nicht übersetzen - Markenname",
+    'g-entry4-sub': "Nicht übersetzen - Abkürzung",
+    'g-no-trans': "Nicht übersetzen",
+    'g-custom-trans': "Eigene Übersetzung",
+    'g-add-btn': "Begriff hinzufügen",
+    'g-example-label': "Übersetzungsbeispiel mit Glossar:",
+    'g-example-msg': "Lass uns die OKR von LifeSync beim nächsten Sprint Review besprechen",
+    'g-example-note': "OKR + LifeSync unverändert, Sprint Review laut Glossar übersetzt",
+    'f4-title': "Fachbegriffe & Glossar",
+    'f4-p1': "Jede Branche hat Begriffe, die nicht übersetzt werden sollen – Markennamen, Abkürzungen, Fachjargon. Und Begriffe, die präzise übersetzt werden müssen, nicht so, wie Google es für richtig hält.",
+    'f4-p2': "Mit dem Glossar von LS Duet legen Sie für jeden Kontakt eine eigene Begriffsliste an:",
+    'f4-li1': "<strong>Nicht übersetzen</strong> - der Begriff bleibt unverändert (Markennamen, Abkürzungen)",
+    'f4-li2': "<strong>Eigene Übersetzung</strong> - legen Sie genau fest, wie ein Begriff übersetzt wird",
+    'f4-li3': "<strong>Pro Kontakt</strong> - denn „Stakeholder“ wird im Chinesischen anders übersetzt als im Französischen",
+    'f4-p3': "Die KI-gestützte Engine erkennt die Begriffe in Ihrer Nachricht und ersetzt sie genau nach Ihrem Glossar, bevor die Übersetzung versendet wird.",
+    'howto-badge': "Anleitung",
+    'howto-title': "Wie fange ich an?",
+    'howto-desc': "5 einfache Schritte, und schon geht es los.",
+    's1-title': "WhatsApp-Konto verbinden",
+    's1-p': "Öffnen Sie die App und tippen Sie auf „Verbinden“. Sie erhalten einen Kopplungscode – geben Sie ihn in WhatsApp unter „Verknüpfte Geräte“ ein. Das war's, die Verbindung ist sicher und verschlüsselt.",
+    's1-header': "Mit WhatsApp verbinden",
+    's1-code-label': "Ihr Kopplungscode:",
+    's1-code-hint': "In WhatsApp > Verknüpfte Geräte eingeben",
+    's2-title': "Kontakte importieren & Sprachen festlegen",
+    's2-p': "Importieren Sie Kontakte mit einem Tipp direkt aus WhatsApp – ohne manuelles Tippen. Legen Sie für jeden Kontakt die Eingangssprache (in der er Ihnen schreibt) und die Ausgangssprache (in die Ihre Nachrichten übersetzt werden) fest.",
+    's2-header': "Spracheinstellungen - Wei",
+    's2-in-label': "Eingangssprache (er schreibt auf...)",
+    's2-in-val': "Chinesisch (ZH)",
+    's2-out-label': "Ausgangssprache (ich schreibe auf...)",
+    's2-out-val': "Deutsch (DE)",
+    's2-auto': "Auto-Übersetzung",
+    's3-title': "Loschatten!",
+    's3-p': "Schreiben Sie jetzt einfach auf Deutsch (oder in jeder anderen Sprache). LS Duet übersetzt jede ausgehende Nachricht automatisch in die Sprache des Kontakts und jede eingehende in Ihre. Die Originalnachricht können Sie jederzeit ansehen.",
+    's3-header': "Chat mit Wei",
+    's3-msg1': "Hey, was gibt's Neues?",
+    's3-msg2': "Alles gut! Ich warte auf das Meeting",
+    's4-title': "Nachrichten nach Zeitzone planen",
+    's4-p': "Eine wichtige Nachricht, aber beim Empfänger ist es 3 Uhr nachts? Schreiben Sie sie jetzt, wählen Sie Datum und Uhrzeit, und LS Duet sendet sie pünktlich – bereits übersetzt.",
+    's4-header': "Neue geplante Nachricht",
+    's4-msg': "Guten Morgen! Ich wollte bestätigen...",
+    's4-tz': "= 15:00 Pekinger Zeit",
+    's4-btn': "Senden planen",
+    's5-title': "Wichtiges in der Wissensdatenbank speichern",
+    's5-p': "Wichtige Information in einem Gespräch? Halten Sie die Nachricht gedrückt und wählen Sie „In Wissensdatenbank speichern“. Sie wird nach Kategorien und Tags geordnet und ist mit der Schnellsuche jederzeit auffindbar.",
+    's5-header': "Wissensdatenbank",
+    's5-kb1-title': "Meeting-Notiz",
+    's5-kb1-desc': "Budget 50K, Frist Q2...",
+    's5-kb1-tag': "Arbeit",
+    's5-kb2-title': "Neue Büroadresse",
+    's5-kb2-desc': 'Nanjing Road 42, Shanghai',
+    's5-kb2-tag': "Kontakte",
+    'langs-badge': "{n} Sprachen",
+    'langs-title': "Unterstützte Übersetzungssprachen",
+    'langs-desc': "LS Duet übersetzt zwischen {n} Sprachen und regionalen Varianten – für jeden Kontakt einzeln wählbar, in beide Richtungen.",
+    'langs-ui': "Die App selbst gibt es in 7 Sprachen",
+    'cta-title': "Bereit, den Turm zu Babel zu überwinden?",
+    'cta-desc': "Kommunizieren Sie in Ihrer eigenen Sprache. Ohne Barrieren, ohne Grenzen.",
+    'cta-btn': "Kontakt aufnehmen",
+    'cta-msg': "Ich hätte gern mehr Informationen über LifeSync Duet",
+    'footer-tag': "Kommunikation ohne Sprachbarrieren",
+    'footer-privacy': "Datenschutzerklärung",
+    'footer-delete': "Konto löschen",
+    'footer-by': 'by BEST-IT © 2026',
+  },
+  ru: {
+    'page-title': "LS Duet - Разрушая Вавилонскую башню",
+    'hero-eyebrow': "WhatsApp на вашем языке",
+    'hero-sub': "Разрушая Вавилонскую башню",
+    'hero-tag': "Общайтесь на родном языке. Сообщения WhatsApp переводятся автоматически — вы пишете по-русски, собеседник получает текст на китайском. Он отвечает по-китайски, вы читаете по-русски. Вот и всё.",
+    'hero-cta': "Как это работает?",
+    'hero-more': "Ещё +{n}",
+    'babel-badge': "Наша история",
+    'babel-title': "Вавилонская башня? Мы её разрушили",
+    'babel-desc': "Сегодня мы работаем с клиентами, поставщиками и партнёрами по всему миру. Но разные языки создают трение — непонятные сообщения, неловкие переводы и сделки, которые застревают на полпути.<br/><br/><strong>LS Duet</strong> не изобретает велосипед — он просто соединяет людей через WhatsApp, на их родном языке. Без барьеров, без недопониманий, без неловких машинных переводов.",
+    'card1-title': "Прозрачный перевод",
+    'card1-p': "Вы пишете на своём языке, собеседник получает сообщение на своём. Оригинал всегда сохраняется.",
+    'card2-title': "Настройки для каждого контакта",
+    'card2-p': "Задайте входящий и исходящий язык для каждого контакта отдельно. Каждый получает именно то, что ему нужно.",
+    'card3-title': "Естественный тон",
+    'card3-p': "Не сухой механический перевод. LS Duet переводит так, как написали бы вы, — естественно, дружелюбно, по-человечески.",
+    'card4-title': "Профессиональный глоссарий",
+    'card4-p': "Создайте глоссарий для каждого контакта — названия брендов, профессиональные термины и жаргон, которые не нужно переводить или нужно переводить точно.",
+    'vid-badge': "Демо",
+    'vid-title': "Посмотрите в действии",
+    'vid-desc': "Добавление китайского контакта, отправка сообщения на английском, которое приходит на китайском, и ответ на китайском с переводом на английский",
+    'vid-src': 'duet-video-en.mp4',
+    'f1-title': "Перевод WhatsApp в реальном времени",
+    'f1-p1': "Каждое входящее сообщение автоматически переводится на ваш язык, каждое исходящее — на язык контакта. Оригинал всегда доступен одним касанием, чтобы проверить точность.",
+    'f1-p2': "Работает и в группах — с именем отправителя и автоматическим определением исходного языка.",
+    'chat-hdr-sub': "Автоперевод · китайский",
+    'chat-recv1': "Здравствуйте, как у вас дела сегодня?",
+    'chat-badge1': "Переведено с китайского",
+    'chat-sent2': "Отлично! Хотел уточнить насчёт встречи во вторник",
+    'chat-badge2': "Отправлено на китайском",
+    'chat-recv3': "Конечно, встретимся в 15:00 по пекинскому времени",
+    'chat-badge3': "Переведено с китайского",
+    'chat-show-orig': "Показать оригинал",
+    'chat-hide-orig': "Скрыть оригинал",
+    'chat-will-translate': "Будет переведено на китайский перед отправкой",
+    'chat-placeholder': "Сообщение",
+    'm2-prev': "Большое спасибо за доставку!",
+    'm3-prev': "Увидимся в Дубае на следующей неделе",
+    'm5-prev': "Документы подписаны",
+    'm6-prev': "Можно перенести звонок на пятницу?",
+    'day-today': "Сегодня",
+    'day-tomorrow': "Завтра",
+    'day-yesterday': "Вчера",
+    'day-mon': "Пн",
+    'day-sun': "Вс",
+    'chip-all': "Все",
+    'chip-unread': "Непрочитанные",
+    'chip-fav': "Избранные",
+    'chip-translated': "С переводом",
+    'nav-chats': "Сообщения",
+    'nav-contacts': "Контакты",
+    'nav-kb': "База",
+    'nav-more': "Ещё",
+    'contacts-title': "Контакты",
+    'contacts-search': "Поиск контактов",
+    'role-vip': "VIP",
+    'role-client': "Клиент",
+    'role-partner': "Партнёр",
+    'role-friend': "Друг",
+    'out-lang': 'RU',
+    'f2-title': "Умное управление контактами",
+    'f2-p1': "У каждого контакта полный профиль: имя, компания, часовой пояс, приоритет и язык общения. Видно, который у него час, когда вы общались в последний раз и когда пора напомнить о себе.",
+    'f2-p2': "Отмечайте самые важные контакты как избранные и находите их одним касанием.",
+    'f3-badge': "Отложенные сообщения",
+    'f3-title': "Отправляйте сообщения в идеальный момент",
+    'f3-p': "Пишите сейчас, отправляйте, когда удобно. Часовые пояса определяются автоматически: если у Вэя в Пекине 3 часа ночи, запланируйте отправку на разумное время. Сообщение автоматически переводится перед отправкой.",
+    'f3-kb-title': "Личная база знаний",
+    'f3-kb-p': "Сохраняйте важное из переписки — ссылки, итоги встреч, заметки. Всё разложено по категориям и тегам, с быстрым поиском и избранным.",
+    'sched-title': "Отложенные сообщения",
+    'sched-sub': "Ожидают отправки: 2",
+    'status-pending': "Ожидает",
+    'sched1-msg': "Доброе утро! Хотел подтвердить, что встреча в силе...",
+    'sched1-tz': "15:00 по Пекину",
+    'sched2-msg': "Большое спасибо за доставку! Пришло вовремя",
+    'sched2-tz': "21:00 по Токио",
+    'sched3-msg': "Привет! Посмотрел предложение, звучит отлично",
+    'kb1-title': "Итоги встречи - проект Шанхай",
+    'kb1-meta': "Работа · Заметка",
+    'kb1-snippet': "Вэй утвердил бюджет 50K. Срок: конец Q2. Отправить договор до воскресенья.",
+    'tag-work': "Работа",
+    'f4-badge': "Глоссарий",
+    'f4-screen-title': "Глоссарий",
+    'g-entry1-sub': "Не переводить - название бренда",
+    'g-entry4-sub': "Не переводить - аббревиатура",
+    'g-no-trans': "Не переводить",
+    'g-custom-trans': "Свой перевод",
+    'g-add-btn': "Добавить термин",
+    'g-example-label': "Пример перевода с глоссарием:",
+    'g-example-msg': "Обсудим OKR по LifeSync на следующем Sprint Review",
+    'g-example-note': "OKR и LifeSync остались без изменений, Sprint Review переведён по глоссарию",
+    'f4-title': "Профессиональные термины и глоссарий",
+    'f4-p1': "В любой профессии есть термины, которые не нужно переводить, — названия брендов, аббревиатуры, жаргон. И термины, которые нужно переводить точно, а не так, как решит Google.",
+    'f4-p2': "С глоссарием LS Duet вы задаёте свой список терминов для каждого контакта:",
+    'f4-li1': "<strong>Не переводить</strong> - термин остаётся как есть (бренды, аббревиатуры)",
+    'f4-li2': "<strong>Свой перевод</strong> - точно задайте, как переводить каждый термин",
+    'f4-li3': "<strong>Для каждого контакта</strong> - ведь «Stakeholder» по-разному переводится на китайский и французский",
+    'f4-p3': "Движок на основе ИИ находит термины в вашем сообщении и заменяет их точно по глоссарию, прежде чем перевод будет отправлен.",
+    'howto-badge': "Руководство",
+    'howto-title': "С чего начать?",
+    'howto-desc': "5 простых шагов — и всё готово.",
+    's1-title': "Подключите свой WhatsApp",
+    's1-p': "Откройте приложение и нажмите «Подключить». Вы получите код привязки — введите его в WhatsApp в разделе «Связанные устройства». Вот и всё, соединение защищено и зашифровано.",
+    's1-header': "Подключение к WhatsApp",
+    's1-code-label': "Ваш код привязки:",
+    's1-code-hint': "Введите в WhatsApp > Связанные устройства",
+    's2-title': "Импортируйте контакты и выберите языки",
+    's2-p': "Импортируйте контакты прямо из WhatsApp одним касанием — ничего не нужно вводить вручную. Для каждого контакта задайте входящий язык (на котором он вам пишет) и исходящий (на который переводить ваши сообщения).",
+    's2-header': "Языки - Wei",
+    's2-in-label': "Входящий язык (он пишет на...)",
+    's2-in-val': "Китайский (ZH)",
+    's2-out-label': "Исходящий язык (я пишу на...)",
+    's2-out-val': "Русский (RU)",
+    's2-auto': "Автоперевод",
+    's3-title': "Начните общение!",
+    's3-p': "Просто пишите по-русски (или на любом удобном языке). LS Duet автоматически переведёт каждое исходящее сообщение на язык контакта, а каждое входящее — на ваш. Оригинал всегда можно посмотреть.",
+    's3-header': "Чат с Wei",
+    's3-msg1': "Привет, как дела?",
+    's3-msg2': "Всё хорошо! Жду встречи",
+    's4-title': "Планируйте с учётом часового пояса",
+    's4-p': "Важное сообщение, а у получателя 3 часа ночи? Напишите его сейчас, выберите дату и время — LS Duet отправит его точно в срок, уже переведённым.",
+    's4-header': "Новое отложенное сообщение",
+    's4-msg': "Доброе утро! Хотел подтвердить...",
+    's4-tz': "= 15:00 по Пекину",
+    's4-btn': "Запланировать",
+    's5-title': "Сохраняйте важное в базу знаний",
+    's5-p': "Нашли важную информацию в переписке? Нажмите и удерживайте сообщение и выберите «Сохранить в базу знаний». Информация будет разложена по категориям и тегам, а быстрый поиск поможет найти её снова.",
+    's5-header': "База знаний",
+    's5-kb1-title': "Итоги встречи",
+    's5-kb1-desc': "Бюджет 50K, срок Q2...",
+    's5-kb1-tag': "Работа",
+    's5-kb2-title': "Новый адрес офиса",
+    's5-kb2-desc': 'Nanjing Road 42, Shanghai',
+    's5-kb2-tag': "Контакты",
+    'langs-badge': "Языков: {n}",
+    'langs-title': "Поддерживаемые языки перевода",
+    'langs-desc': "Языков и региональных вариантов: {n}. Выбирайте любой для каждого контакта отдельно, в обоих направлениях.",
+    'langs-ui': "Интерфейс приложения доступен на 7 языках",
+    'cta-title': "Готовы разрушить Вавилонскую башню?",
+    'cta-desc': "Общайтесь на родном языке. Без барьеров и границ.",
+    'cta-btn': "Связаться с нами",
+    'cta-msg': "Хочу узнать больше о LifeSync Duet",
+    'footer-tag': "Общение без языковых барьеров",
+    'footer-privacy': "Политика конфиденциальности",
+    'footer-delete': "Удалить аккаунт",
     'footer-by': 'by BEST-IT © 2026',
   }
 };
@@ -1361,7 +1810,7 @@ function el(tag, cls, text) {
 
 function renderLanguages(lang) {
   const t = translations[lang];
-  const local = lang === 'he' ? 3 : 2;
+  const local = 2 + PAGE_LANGS.indexOf(lang);
   const collator = new Intl.Collator(lang);
 
   // Full grid, sorted by the name in the page language
@@ -1427,7 +1876,7 @@ function setLang(lang) {
   currentT = t;
   if (counting) document.querySelectorAll('[data-i18n="langs-badge"]').forEach(e => { e.textContent = t['langs-badge'].replace('{n}', counting.value); });
 
-  document.querySelectorAll('.cta-link').forEach(a => { if (t['cta-href']) a.href = t['cta-href']; });
+  document.querySelectorAll('.cta-link').forEach(a => { a.href = 'https://wa.me/972526044425?text=' + encodeURIComponent(t['cta-msg']); });
 
   const src = document.getElementById('demo-source');
   const vid = document.getElementById('demo-video');
@@ -1438,10 +1887,7 @@ function setLang(lang) {
 
   renderLanguages(lang);
 
-  document.getElementById('btn-en').setAttribute('aria-pressed', String(lang === 'en'));
-  document.getElementById('btn-he').setAttribute('aria-pressed', String(lang === 'he'));
-
-  try { localStorage.setItem('ls-lang', lang); } catch (e) {}
+  document.querySelectorAll('.segmented [data-lang]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
 }
 
 // ===== Motion =====
@@ -1592,10 +2038,9 @@ if (finePointer && !reduceMotion) {
 }
 
 // Init
-// ?lang=he|en wins over the remembered choice (shareable links)
+// English on every entry; ?lang=he|fr|de|ru opens another language (shareable links)
 const fromUrl = new URLSearchParams(location.search).get('lang');
-const saved = (() => { try { return localStorage.getItem('ls-lang'); } catch (e) { return null; } })();
-setLang((fromUrl || saved) === 'he' ? 'he' : 'en');
+setLang(PAGE_LANGS.includes(fromUrl) ? fromUrl : 'en');
 onScroll();
 requestAnimationFrame(() => requestAnimationFrame(() => {
   document.body.classList.add('loaded');
